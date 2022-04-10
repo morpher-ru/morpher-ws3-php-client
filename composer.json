@@ -1,0 +1,21 @@
+{
+    "name": "morpher/ws3_client",
+    "description": "PHP client for morpher.ru Web Service API version 3",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Morpher\\Ws3Client\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mikhail Lukovnikov"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+      "phpunit/phpunit": "9.5.*",
+      "mockery/mockery": "1.5.*"
+    }
+}
