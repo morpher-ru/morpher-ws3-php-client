@@ -8,12 +8,14 @@ require_once "SameNumberForms.php";
 class DeclensionResult extends SameNumberForms
 {
 
-    public readonly SameNumberForms $Plural;
+    public readonly ?SameNumberForms $Plural;
 
-    function __construct($data,$data_plural)
+    function __construct($data)
     {
         parent::__construct($data);
-        $this->Plural=new SameNumberForms($data_plural);
+
+        $this->Plural= isset($data['көпше']) ? new SameNumberForms($data['көпше']) : null;
+
 
     }
 
