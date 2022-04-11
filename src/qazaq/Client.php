@@ -2,7 +2,7 @@
 namespace Morpher\Ws3Client\Qazaq;
 
 require_once __DIR__."/../../vendor/autoload.php";
-require_once(__DIR__."/../webclientbase.php");
+require_once __DIR__."/../WebClientBase.php";
 
 use Morpher\Ws3Client\WebClientBase;
 use Morpher\Ws3Client\Qazaq\DeclensionResult;
