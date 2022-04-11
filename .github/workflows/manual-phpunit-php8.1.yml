@@ -1,4 +1,4 @@
-name: github actions phpunit
+name: Run Tests
 on: [workflow_dispatch]
 jobs:
   RunTests:
