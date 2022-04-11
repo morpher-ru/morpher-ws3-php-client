@@ -1,7 +1,7 @@
 name: github actions phpunit
 on: [push,workflow_dispatch]
 jobs:
-  EmailTest:
+  RunTests:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP with tools
