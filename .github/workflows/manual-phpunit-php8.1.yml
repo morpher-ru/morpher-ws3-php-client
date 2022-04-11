@@ -1,0 +1,15 @@
+name: github actions phpunit
+on: [push,workflow_dispatch]
+jobs:
+  EmailTest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP with tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: phpunit
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Execute tests
+        run: phpunit tests
