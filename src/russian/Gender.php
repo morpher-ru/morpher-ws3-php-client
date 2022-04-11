@@ -14,10 +14,10 @@ class Gender
 
     const decode_array=['Мужской'=>self::Masculine,'Женский'=>self::Feminine, 'Средний'=>self::Neuter, 'Множественное'=>self::Plural];   
 
-    public static function DecodeName(string $gender_name): string
+    public static function DecodeName(string $gender_name): ?string
     {
 
-        return self::decode_array[$gender_name];
+        return self::decode_array[$gender_name] ?? null;
 
     }
 }

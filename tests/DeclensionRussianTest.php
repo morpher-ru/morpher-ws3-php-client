@@ -16,7 +16,6 @@ final class DeclensionRussianTest extends TestCase
 
     public function testParse_SuccessMockery(): void
     {
-        //$WebClientMock=new TestWebClient();
 
         $parseResults=[
             "Р"=> "теста",
@@ -42,15 +41,13 @@ final class DeclensionRussianTest extends TestCase
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $lemma='тест';
-        //$WebClientMock->setup($return_text);
+
         $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
         //$WebClientMock->shouldReceive('get_request')->with("/russian/declension",['s'=>$lemma])->andReturn($return_text);
         $WebClientMock->shouldReceive('get_request')->andReturn($return_text);
     
         $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
-    
-
-    
+        
         $declensionResult=$testMorpher->russian->Parse($lemma);
 
 

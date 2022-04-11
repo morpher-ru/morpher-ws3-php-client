@@ -54,8 +54,8 @@ class WebClient extends WebClientBase
 						  'Authorization: Basic '.$this->_token));
 		$result = curl_exec($ch);
 		if ($result === false) { $result = curl_error($ch); }
-		$json = json_decode($result);
+		//$json = json_decode($result);
 		curl_close($ch);
-		return $json;     
+		return $result;     
 	}	
 }
