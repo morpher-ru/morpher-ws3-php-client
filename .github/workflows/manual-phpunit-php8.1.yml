@@ -21,7 +21,5 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
-      - name: Composer install
-        run: composer install
       - name: Execute tests
         run: phpunit tests
