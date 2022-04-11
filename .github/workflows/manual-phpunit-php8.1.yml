@@ -1,5 +1,5 @@
 name: github actions phpunit
-on: [push,workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   RunTests:
     runs-on: ubuntu-latest
@@ -11,5 +11,7 @@ jobs:
           tools: phpunit
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Composer install
+        run: composer install
       - name: Execute tests
         run: phpunit tests
