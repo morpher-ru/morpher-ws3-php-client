@@ -2,7 +2,7 @@
 require_once __DIR__."/../vendor/autoload.php";
 require_once __DIR__."/../src/Morpher.php";
 require_once __DIR__."/../src/WebClientBase.php";
-require_once __DIR__."/../src/Russian/Gender.php";
+require_once __DIR__."/../src/russian/Gender.php";
 
 
 use PHPUnit\Framework\TestCase;
