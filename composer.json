@@ -13,7 +13,9 @@
             "name": "Mikhail Lukovnikov"
         }
     ],
-    "require": {},
+    "require": {
+        "guzzlehttp/guzzle": "^7.4"
+    },
     "require-dev": {
       "phpunit/phpunit": "9.5.*",
       "mockery/mockery": "1.5.*"

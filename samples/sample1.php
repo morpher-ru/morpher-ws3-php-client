@@ -14,6 +14,3 @@ $morpher=new Morpher($webClient);
 
 $rus_dec=$morpher->russian->Parse('Соединенное королевство');
 print_r($rus_dec);
-
-$pl=$rus_dec->Plural();
-print_r($pl);

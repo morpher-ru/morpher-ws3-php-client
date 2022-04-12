@@ -10,12 +10,15 @@ use PHPUnit\Framework\TestCase;
 //use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
+
+
 final class RussianDeclensionTest extends TestCase
 {
 
 
     public function testParse_Success(): void
     {
+        global $testtoken;
 
         $parseResults=[
             "Р"=> "теста",
@@ -43,8 +46,20 @@ final class RussianDeclensionTest extends TestCase
         $lemma='тест';
 
         $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
-        //$WebClientMock->shouldReceive('get_request')->with("/russian/declension",['s'=>$lemma])->andReturn($return_text);
-        $WebClientMock->shouldReceive('get_request')->andReturn($return_text);
+
+        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
+        $WebClientMock->shouldReceive('send')->withArgs(
+            function ($request)
+            {
+                global $testtoken;
+                if ($request->Endpoint!='/russian/declension') return false;
+                if ($request->Method!='GET') return false;
+                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
+                if (!($request->QueryParameters===['s' =>'тест'])) return false;
+                return true;
+            }
+
+        )->andReturn($return_text);
     
         $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
         
@@ -102,7 +117,22 @@ final class RussianDeclensionTest extends TestCase
 
     
         $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
-        $WebClientMock->shouldReceive('get_request')->andReturn($return_text);
+
+        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
+        $WebClientMock->shouldReceive('send')->withArgs(
+            function ($request)
+            {
+                global $testtoken;
+                if ($request->Endpoint!='/russian/declension') return false;
+                if ($request->Method!='GET') return false;
+                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
+                if (!($request->QueryParameters===['s' =>'Александр Пушкин Сергеевич'])) return false;
+                return true;
+            }
+
+        )->andReturn($return_text);
+    
+
     
         $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
 
@@ -126,7 +156,20 @@ final class RussianDeclensionTest extends TestCase
 
     
         $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
-        $WebClientMock->shouldReceive('get_request')->andReturn($return_text);
+
+        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
+        $WebClientMock->shouldReceive('send')->withArgs(
+            function ($request)
+            {
+                global $testtoken;
+                if ($request->Endpoint!='/russian/declension') return false;
+                if ($request->Method!='GET') return false;
+                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
+                if (!($request->QueryParameters===['s' =>''])) return false;
+                return true;
+            }
+
+        )->andReturn($return_text);
     
         $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
     
@@ -149,7 +192,20 @@ final class RussianDeclensionTest extends TestCase
 
     
         $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
-        $WebClientMock->shouldReceive('get_request')->andReturn($return_text);
+
+        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
+        $WebClientMock->shouldReceive('send')->withArgs(
+            function ($request)
+            {
+                global $testtoken;
+                if ($request->Endpoint!='/russian/declension') return false;
+                if ($request->Method!='GET') return false;
+                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
+                if (!($request->QueryParameters===['s' =>'теля'])) return false;
+                return true;
+            }
+
+        )->andReturn($return_text);
     
         $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
     

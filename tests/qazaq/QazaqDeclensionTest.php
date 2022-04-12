@@ -39,7 +39,20 @@ final class QazaqDeclensionTest extends TestCase
 
     
         $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
-        $WebClientMock->shouldReceive('get_request')->andReturn($return_text);
+
+        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
+        $WebClientMock->shouldReceive('send')->withArgs(
+            function ($request)
+            {
+                global $testtoken;
+                if ($request->Endpoint!='/qazaq/declension') return false;
+                if ($request->Method!='GET') return false;
+                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
+                if (!($request->QueryParameters===['s' =>'тест'])) return false;
+                return true;
+            }
+
+        )->andReturn($return_text);
     
         $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
     

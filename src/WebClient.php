@@ -6,56 +6,38 @@ require_once("WebClientBase.php");
 
 class WebClient extends WebClientBase
 {
-	private $_url='';
-	private $_token='';	
-	public function __construct($url='https://ws3.morpher.ru',$token='')
+	private string $_url='';
+	private string $_token='';	
+	private $client;
+
+	public function getToken(): string
+	{
+		return $this->_token;
+	}
+
+	public function __construct($url='https://ws3.morpher.ru',$token='',$timeout=10.0)
 	{
 		$this->_url=$url;
 		$this->_token=$token;
-	}
-	
-	public function get_request($endpoint, $params = NULL) {
-		$url=$this->_url . $endpoint;
-		//$url='';
-		$ch = curl_init();
 
-		if ($params !== NULL && !empty($params)){
-			$url .= '?';
-			foreach($params as $key => $value) {
-				$url .= $key . '=' . curl_escape($ch, $value) . '&';
-			}
-			$url = rtrim($url, '&');
-		}
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch,
-					CURLOPT_HTTPHEADER,
-					array('Accept: application/json',
-						  'Authorization: Basic '.$this->_token));
-		$result = curl_exec($ch);
-		if ($result === false) { $result = curl_error($ch); }
-		//$json = json_decode($result,true);
-		curl_close($ch);
+		$this->client=new \GuzzleHttp\Client([
+			'base_uri'=>$url,
+			'timeout'=>$timeout
+			]);	
+	}
+
+
+	public function send(HttpRequest $request): string {
+
+		$response=$this->client->request($request->Method, $request->Endpoint, [
+			'query' => $request->QueryParameters,
+			'headers'=>$request->Headers,
+			'http_errors'=>true
+		]);
+
+		$result = $response->getBody();
+
 		return $result;
 	}
-	
-	public function post_raw($endpoint, $body) {
-		$url=$this->url.$endpoint;
-		$ch = curl_init();
-		
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-		curl_setopt($ch,
-					CURLOPT_HTTPHEADER,
-					array('Content-Type: text/plain',
-						  'Accept: application/json',
-						  'Authorization: Basic '.$this->_token));
-		$result = curl_exec($ch);
-		if ($result === false) { $result = curl_error($ch); }
-		//$json = json_decode($result);
-		curl_close($ch);
-		return $result;     
-	}	
+
 }
