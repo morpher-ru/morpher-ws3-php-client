@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
-require_once __DIR__."/../vendor/autoload.php";
-require_once __DIR__."/../src/Morpher.php";
-require_once __DIR__."/../src/WebClientBase.php";
-require_once __DIR__."/../src/russian/Gender.php";
+require_once __DIR__."/../../vendor/autoload.php";
+require_once __DIR__."/../../src/Morpher.php";
+require_once __DIR__."/../../src/WebClientBase.php";
+require_once __DIR__."/../../src/russian/Gender.php";
 
 
 use PHPUnit\Framework\TestCase;
@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 //use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
-final class DeclensionRussianTest extends TestCase
+final class RussianDeclensionTest extends TestCase
 {
 
 

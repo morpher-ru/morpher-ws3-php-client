@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__."/../vendor/autoload.php";
-require_once __DIR__."/../src/Morpher.php";
-require_once __DIR__."/../src/WebClientBase.php";
+require_once __DIR__."/../../vendor/autoload.php";
+require_once __DIR__."/../../src/Morpher.php";
+require_once __DIR__."/../../src/WebClientBase.php";
 
 use PHPUnit\Framework\TestCase;
 
@@ -11,7 +11,7 @@ use Morpher\Ws3Client\Qazaq as Qazaq;
 
 
 
-final class DeclensionQazaqTest extends TestCase
+final class QazaqDeclensionTest extends TestCase
 {
 
     public function testQazaqDeclension(): void
