@@ -24,7 +24,7 @@ final class RussianDeclensionTest extends TestCase
 {
 
 
-    public function testParse_Success_GuzzleMock(): void
+    public function testParse_Success(): void
     {
 
         $parseResults=[
