@@ -1,12 +1,20 @@
 <?php declare(strict_types=1);
 require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/../../src/Morpher.php";
-require_once __DIR__."/../../src/WebClientBase.php";
+require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../../src/russian/Gender.php";
 
 
 use PHPUnit\Framework\TestCase;
 
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Middleware;
+
+use Morpher\Ws3Client\WebClient;
 //use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
@@ -16,9 +24,8 @@ final class RussianDeclensionTest extends TestCase
 {
 
 
-    public function testParse_Success(): void
+    public function testParse_Success_GuzzleMock(): void
     {
-        global $testtoken;
 
         $parseResults=[
             "Р"=> "теста",
@@ -45,27 +52,39 @@ final class RussianDeclensionTest extends TestCase
 
         $lemma='тест';
 
-        $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
 
-        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
-        $WebClientMock->shouldReceive('send')->withArgs(
-            function ($request)
-            {
-                global $testtoken;
-                if ($request->Endpoint!='/russian/declension') return false;
-                if ($request->Method!='GET') return false;
-                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
-                if (!($request->QueryParameters===['s' =>'тест'])) return false;
-                return true;
-            }
+        $mock = new MockHandler([
+            new Response(200, [], $return_text)
+        ]);
 
-        )->andReturn($return_text);
-    
-        $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
+        
+        $handlerStack = HandlerStack::create($mock);
+        
+        $container = [];
+        $history = Middleware::history($container);
+        // Add the history middleware to the handler stack.
+        $handlerStack->push($history);
+                
+        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
+  
+        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
         
         $declensionResult=$testMorpher->russian->Parse($lemma);
 
 
+        $transaction=reset($container);//get first element of requests history
+
+        //check request parameters, headers, uri
+        $request=$transaction['request'];        
+        $this->assertEquals("GET", $request->getMethod());   
+        $this->assertTrue($request->hasHeader('Accept'));
+        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
+        $this->assertTrue($request->hasHeader('Authorization'));
+        $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
+        $uri=$request->getUri();
+        $this->assertEquals('/russian/declension',$uri->getPath());
+        $this->assertEquals('test.uu',$uri->getHost());
+        $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
 
         $this->assertInstanceOf(Russian\DeclensionForms::class ,$declensionResult);
         //Assert.IsNotNull($declensionResult);
@@ -97,6 +116,9 @@ final class RussianDeclensionTest extends TestCase
 
     }
 
+
+   
+
     public function testSplitFio_Success(): void
     {
 
@@ -115,28 +137,40 @@ final class RussianDeclensionTest extends TestCase
         ]; 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-    
-        $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
+        $lemma="Александр Пушкин Сергеевич";
+        $mock = new MockHandler([
+            new Response(200, [], $return_text)
+        ]);
 
-        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
-        $WebClientMock->shouldReceive('send')->withArgs(
-            function ($request)
-            {
-                global $testtoken;
-                if ($request->Endpoint!='/russian/declension') return false;
-                if ($request->Method!='GET') return false;
-                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
-                if (!($request->QueryParameters===['s' =>'Александр Пушкин Сергеевич'])) return false;
-                return true;
-            }
+        
+        $handlerStack = HandlerStack::create($mock);
+        
+        $container = [];
+        $history = Middleware::history($container);
+        // Add the history middleware to the handler stack.
+        $handlerStack->push($history);
+                
+        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
+  
+        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+        
+        $declensionResult=$testMorpher->russian->Parse($lemma);
 
-        )->andReturn($return_text);
-    
 
-    
-        $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
+        $transaction=reset($container);//get first element of requests history
 
-        $declensionResult = $testMorpher->russian->Parse("Александр Пушкин Сергеевич");
+        //check request parameters, headers, uri
+        $request=$transaction['request'];        
+        $this->assertEquals("GET", $request->getMethod());   
+        $this->assertTrue($request->hasHeader('Accept'));
+        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
+        $this->assertTrue($request->hasHeader('Authorization'));
+        $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
+        $uri=$request->getUri();
+        $this->assertEquals('/russian/declension',$uri->getPath());
+        $this->assertEquals('test.uu',$uri->getHost());
+        $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
+
         $this->assertInstanceOf(Russian\DeclensionForms::class ,$declensionResult);
         //Assert.IsNotNull($declensionResult);
         $this->assertNotNull($declensionResult->FullName);
@@ -146,7 +180,7 @@ final class RussianDeclensionTest extends TestCase
         $this->assertEquals("Сергеевич", $declensionResult->FullName->Pantronymic);
     }
 
-    public function  testParse_Exception(): void
+    public function testParse_Exception(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -154,24 +188,15 @@ final class RussianDeclensionTest extends TestCase
         $parseResults=[]; 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-    
-        $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
+        $mock = new MockHandler([
+            new Response(200, [], $return_text)
+        ]);
 
-        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
-        $WebClientMock->shouldReceive('send')->withArgs(
-            function ($request)
-            {
-                global $testtoken;
-                if ($request->Endpoint!='/russian/declension') return false;
-                if ($request->Method!='GET') return false;
-                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
-                if (!($request->QueryParameters===['s' =>''])) return false;
-                return true;
-            }
-
-        )->andReturn($return_text);
+        
+        $handlerStack = HandlerStack::create($mock);    
+        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
     
-        $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
+        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
     
         $lemma='';
     
@@ -189,30 +214,43 @@ final class RussianDeclensionTest extends TestCase
   
         ]; 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-
-    
-        $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
-
-        $WebClientMock->shouldReceive('getToken')->andReturn('testtoken');
-        $WebClientMock->shouldReceive('send')->withArgs(
-            function ($request)
-            {
-                global $testtoken;
-                if ($request->Endpoint!='/russian/declension') return false;
-                if ($request->Method!='GET') return false;
-                if ($request->Headers!=['Accept'=>'application/json','Authorization'=>'Basic testtoken']) return false;
-                if (!($request->QueryParameters===['s' =>'теля'])) return false;
-                return true;
-            }
-
-        )->andReturn($return_text);
-    
-        $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
-    
         $lemma='теля';
+    
+        $mock = new MockHandler([
+            new Response(200, [], $return_text)
+        ]);
 
-
+        
+        $handlerStack = HandlerStack::create($mock);
+        
+        $container = [];
+        $history = Middleware::history($container);
+        // Add the history middleware to the handler stack.
+        $handlerStack->push($history);
+                
+        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
+  
+        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+        
         $genitive = $testMorpher->russian->Parse($lemma)->Genitive;
+
+
+        $transaction=reset($container);//get first element of requests history
+
+        //check request parameters, headers, uri
+        $request=$transaction['request'];        
+        $this->assertEquals("GET", $request->getMethod());   
+        $this->assertTrue($request->hasHeader('Accept'));
+        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
+        $this->assertTrue($request->hasHeader('Authorization'));
+        $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
+        $uri=$request->getUri();
+        $this->assertEquals('/russian/declension',$uri->getPath());
+        $this->assertEquals('test.uu',$uri->getHost());
+        $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
+
+    
+
         $this->assertNull($genitive);
     }
 
