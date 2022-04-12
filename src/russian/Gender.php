@@ -16,6 +16,7 @@ class Gender
 
     public static function DecodeName(string $gender_name): ?string
     {
+        if ($gender_name=='') return self::Plural; //Множественное число кодируется пустым тегом
 
         return self::decode_array[$gender_name] ?? null;
 
