@@ -14,7 +14,7 @@ final class DeclensionRussianTest extends TestCase
 {
 
 
-    public function testParse_SuccessMockery(): void
+    public function testParse_Success(): void
     {
 
         $parseResults=[
@@ -81,78 +81,6 @@ final class DeclensionRussianTest extends TestCase
         $this->assertEquals(Russian\Gender::Masculine, $declensionResult->Gender);
 
     }
-
-
-
-    public function testParse_Success(): void
-    {
-
-
-        $parseResults=[
-            "Р"=> "теста",
-            "Д"=> "тесту",
-            "В"=> "тест",
-            "Т"=> "тестом",
-            "П"=> "тесте",
-            "П_о"=> "о тесте",
-            "род"=> "Мужской",
-            "множественное"=> [
-                "И"=> "тесты",
-                "Р"=> "тестов",
-                "Д"=> "тестам",
-                "В"=> "тесты",
-                "Т"=> "тестами",
-                "П"=> "тестах",
-                "П_о"=>"о тестах"
-            ],
-            "где"=> "в тесте",
-            "куда"=> "в тест",
-            "откуда"=> "из теста"
-        ]; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-
-    
-        $WebClientMock=Mockery::mock(Morpher\Ws3Client\WebClientBase::class);
-        $WebClientMock->shouldReceive('get_request')->andReturn($return_text);
-    
-        $testMorpher=new Morpher\Ws3Client\Morpher($WebClientMock);
-    
-        $lemma='тест';
-    
-        $declensionResult=$testMorpher->russian->Parse($lemma);
-
-
-
-        $this->assertInstanceOf(Russian\DeclensionForms::class ,$declensionResult);
-        //Assert.IsNotNull($declensionResult);
-        $this->assertInstanceOf(Russian\DeclensionResult::class,$declensionResult);
-
-
-        $this->assertEquals("тест", $declensionResult->Nominative);
-        $this->assertEquals("теста", $declensionResult->Genitive);
-        $this->assertEquals("тесту", $declensionResult->Dative);
-        $this->assertEquals("тест", $declensionResult->Accusative);
-        $this->assertEquals("тестом", $declensionResult->Instrumental);
-        $this->assertEquals("тесте", $declensionResult->Prepositional);
-        
-        $this->assertEquals("о тесте", $declensionResult->PrepositionalWithO);
-
-        $this->assertEquals("в тесте", $declensionResult->Where);
-        $this->assertEquals("в тест", $declensionResult->To);
-        $this->assertEquals("из теста", $declensionResult->From);
-
-        $this->assertEquals("тесты", $declensionResult->Plural->Nominative);
-        $this->assertEquals("тестов", $declensionResult->Plural->Genitive);
-        $this->assertEquals("тестам", $declensionResult->Plural->Dative);
-        $this->assertEquals("тесты", $declensionResult->Plural->Accusative);
-        $this->assertEquals("тестами", $declensionResult->Plural->Instrumental);
-        $this->assertEquals("тестах", $declensionResult->Plural->Prepositional);
-        $this->assertEquals("о тестах", $declensionResult->Plural->PrepositionalWithO);
-
-        $this->assertEquals(Russian\Gender::Masculine, $declensionResult->Gender);
-
-    }
-
 
     public function testSplitFio_Success(): void
     {
