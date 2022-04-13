@@ -20,13 +20,17 @@ class Client
 		$this->webClient=$webClient;
 	}
 	
-	public function Parse(string $lemma)
+	public function Parse(string $lemma,array $flags=[])
 	{
-		if (trim($lemma)=='') throw new \InvalidArgumentException("пустая строка");
+		if (trim($lemma)=='') throw new \Morpher\Ws3Client\EmptyString();
 		
-
+		$query="s=".rawurlencode($lemma);
+		if (!empty($flags))
+		{
+			$query.="&flags=".implode(',',$flags);
+		}
 		try{
-			$result_raw=$this->webClient->send("/russian/declension", ['s' => $lemma],'GET',
+			$result_raw=$this->webClient->send("/russian/declension",$query,'GET',
 				[
 					'Accept'=> 'application/json',
 					'Authorization'=> 'Basic '.$this->webClient->getToken()

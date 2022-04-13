@@ -26,7 +26,7 @@ class WebClient
 			]);	
 	}
 
-	public function send(string $Endpoint,array $QueryParameters=[],string $Method='GET',array $Headers=[]): string {
+	public function send(string $Endpoint,$QueryParameters=[],string $Method='GET',array $Headers=[]): string {
 
 		try
 		{
@@ -56,7 +56,7 @@ class WebClient
 					$msg=(string)($data['message'] ?? "Неизвестная ошибка");
 					$morpher_code=(int)($data['code'] ?? $code);
 
-					if ($morpher_code==6) throw new NotSpecifiedParameterS($msg);
+					if ($morpher_code==6) throw new EmptyString();
 					if ($morpher_code==12) throw new InvalidFlags($msg);
 					if ($morpher_code==4) throw new DeclensionNotSupportedUseSpell($msg);
 

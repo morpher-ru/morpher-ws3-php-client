@@ -8,7 +8,7 @@ require_once __DIR__."/../MorpherTestHelper.php";
 require_once __DIR__."/../../src/exceptions/MorpherError.php";
 require_once __DIR__."/../../src/exceptions/InvalidFlags.php";
 require_once __DIR__."/../../src/exceptions/DeclensionNotSupportedUseSpell.php";
-require_once __DIR__."/../../src/exceptions/NotSpecifiedParameterS.php";
+require_once __DIR__."/../../src/exceptions/EmptyString.php";
 require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
 use PHPUnit\Framework\TestCase;
 
@@ -529,12 +529,12 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(Morpher\Ws3Client\NotSpecifiedParameterS::class);
+        $this->expectException(Morpher\Ws3Client\EmptyString::class);
         //$this->expectExceptionCode(6);
-        $this->expectExceptionMessage('Не указан обязательный параметр: s.');
+        $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
-        'message'=> 'Не указан обязательный параметр: s.']; //тело сообщения об ошибке содержит информацию
+        'message'=> 'Передана пустая строка.']; //тело сообщения об ошибке содержит информацию
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];

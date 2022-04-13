@@ -7,7 +7,7 @@ require_once __DIR__."/../MorpherTestHelper.php";
 require_once __DIR__."/../../src/exceptions/MorpherError.php";
 require_once __DIR__."/../../src/exceptions/InvalidFlags.php";
 require_once __DIR__."/../../src/exceptions/DeclensionNotSupportedUseSpell.php";
-require_once __DIR__."/../../src/exceptions/NotSpecifiedParameterS.php";
+require_once __DIR__."/../../src/exceptions/EmptyString.php";
 require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
 require_once __DIR__."/../../src/russian/exceptions/RussianWordsNotFound.php";
 
@@ -53,6 +53,35 @@ final class RussianDeclensionTest extends TestCase
         $this->assertTrue($request->hasHeader('Authorization'));
         $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
 
+    
+    }
+
+
+    
+    public function testFlags(): void
+    {
+
+        $parseResults=[
+        ]; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $lemma='тест';
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        
+        $declensionResult=$testMorpher->russian->Parse($lemma,['flagA','flagB','flagC']);
+
+        $transaction=reset($container);//get first element of requests history
+
+        //check request parameters, headers, uri
+        $request=$transaction['request'];        
+
+        $uri=$request->getUri();
+        $this->assertEquals('/russian/declension',$uri->getPath());
+        $this->assertEquals('test.uu',$uri->getHost());
+        $this->assertEquals('s='.rawurlencode($lemma).'&flags=flagA,flagB,flagC',$uri->getQuery());
     
     }
 
@@ -273,11 +302,30 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(Morpher\Ws3Client\NotSpecifiedParameterS::class);
-        $this->expectExceptionMessage('Не указан обязательный параметр: s.');
+        $this->expectException(Morpher\Ws3Client\EmptyString::class);
+        $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
-        'message'=> 'Не указан обязательный параметр: s.'];
+        'message'=> 'Передана пустая строка.'];
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,400);
+    
+        $lemma='+++';
+    
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+    }
+
+    public function testParse_ExceptionNoS2(): void
+    {
+        $this->expectException(Morpher\Ws3Client\EmptyString::class);
+        $this->expectExceptionMessage('Передана пустая строка.');
+
+        $parseResults=[        'code'=>6,
+        'message'=> 'Другое сообщение от сервера']; //с кодом 6 любое сообшение от сервера не учитывается
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
