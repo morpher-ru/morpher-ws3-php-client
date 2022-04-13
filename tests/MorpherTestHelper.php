@@ -34,4 +34,19 @@ class MorpherTestHelper
         return $testMorpher;
     }    
     
+    public static function createMockMorpherWithException(\GuzzleHttp\Exception\TransferException $exception): Morpher\Ws3Client\Morpher
+    {
+         $mock = new MockHandler([
+             $exception                 //new RequestException('Error Communicating with Server', new Request('GET', 'test'))
+         ]);
+
+        
+        $handlerStack = HandlerStack::create($mock);      
+                
+        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
+  
+        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+
+        return $testMorpher;
+    }    
 }

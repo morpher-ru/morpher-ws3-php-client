@@ -282,7 +282,7 @@ final class RussianDeclensionTest extends TestCase
     }
 
 
-    public function testParse_ExceptionNoWords2(): void
+    public function testParse_InvalidServerResponse(): void
     {
         $this->expectException(Morpher\Ws3Client\InvalidServerResponse::class);
 
@@ -306,7 +306,7 @@ final class RussianDeclensionTest extends TestCase
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
-        'message'=> 'Передана пустая строка.'];
+        'message'=> 'Не указан обязательный параметр: s.'];
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
@@ -396,4 +396,19 @@ final class RussianDeclensionTest extends TestCase
         $declensionResult=$testMorpher->russian->Parse($lemma);
 
     }
+
+    public function testParse_NetworkError1(): void
+    {
+        $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
+        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ConnectException('connection cannot be established', new \GuzzleHttp\Psr7\Request('GET', 'test')));
+        $declensionResult=$testMorpher->russian->Parse('двадцать');
+    }
+
+    public function testParse_NetworkError2(): void
+    {
+        $this->expectException(\GuzzleHttp\Exception\RequestException::class);
+        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\RequestException('connection cannot be established', new \GuzzleHttp\Psr7\Request('GET', 'test')));
+        $declensionResult=$testMorpher->russian->Parse('двадцать');
+    }
+
 }

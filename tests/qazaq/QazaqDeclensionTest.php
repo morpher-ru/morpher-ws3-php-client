@@ -532,7 +532,7 @@ final class QazaqDeclensionTest extends TestCase
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
-        'message'=> 'Передана пустая строка.']; //тело сообщения об ошибке содержит информацию
+        'message'=> 'Не указан обязательный параметр: s.']; //тело сообщения об ошибке содержит информацию
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
@@ -543,6 +543,20 @@ final class QazaqDeclensionTest extends TestCase
     
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
 
+    }
+
+    public function testParse_NetworkError1(): void
+    {
+        $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
+        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ConnectException('connection cannot be established', new \GuzzleHttp\Psr7\Request('GET', 'test')));
+        $declensionResult=$testMorpher->qazaq->Parse('двадцать');
+    }
+
+    public function testParse_NetworkError2(): void
+    {
+        $this->expectException(\GuzzleHttp\Exception\RequestException::class);
+        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\RequestException('connection cannot be established', new \GuzzleHttp\Psr7\Request('GET', 'test')));
+        $declensionResult=$testMorpher->qazaq->Parse('двадцать');
     }
 
 }
