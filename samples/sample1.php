@@ -13,4 +13,5 @@ $webClient=new WebClient($base_url,$token);
 $morpher=new Morpher($webClient);
 
 $rus_dec=$morpher->russian->Parse('Соединенное королевство');
+//$rus_dec=$morpher->russian->Parse('+++');
 print_r($rus_dec);

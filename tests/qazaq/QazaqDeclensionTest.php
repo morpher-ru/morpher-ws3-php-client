@@ -4,6 +4,7 @@ require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/../../src/Morpher.php";
 require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../MorpherTestHelper.php";
+require_once __DIR__."/../../src/exceptions/MorpherError.php";
 
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +19,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Middleware;
 
 use Morpher\Ws3Client\WebClient;
-
+use Morpher\Ws3Client\MorpherError;
 use Morpher\Ws3Client\Qazaq as Qazaq;
 
 final class QazaqDeclensionTest extends TestCase
@@ -499,5 +500,65 @@ final class QazaqDeclensionTest extends TestCase
         $this->assertEquals("балаларында", $declensionResult->Plural->ThirdPersonPlural->Locative);
         $this->assertEquals("балаларымен", $declensionResult->Plural->ThirdPersonPlural->Instrumental);
     }    
+
+    public function testParse_ExceptionNoWords(): void
+    {
+        $this->expectException(MorpherError::class);
+        $this->expectExceptionCode(5);
+        $this->expectExceptionMessage('Не найдено казахских слов.');
+
+        $parseResults=[        'code'=>5,
+        'message'=> 'Не найдено казахских слов.']; //тело сообщения об ошибке содержит информацию
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,496);
+    
+        $lemma='test';
+    
+        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+
+    }
+
+
+    public function testParse_ExceptionNoWords2(): void
+    {
+        $this->expectException(MorpherError::class);
+        $this->expectExceptionCode(496);
+        //$this->expectExceptionMessage('Не найдено казахских слов.');
+
+        $parseResults=[]; //если пустое тело сообщения об ошибке
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,496);
+    
+        $lemma='test';
+    
+        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+
+    }
+
+    public function testParse_ExceptionNoS(): void
+    {
+        $this->expectException(MorpherError::class);
+        $this->expectExceptionCode(6);
+        $this->expectExceptionMessage('Не указан обязательный параметр: s.');
+
+        $parseResults=[        'code'=>6,
+        'message'=> 'Не указан обязательный параметр: s.']; //тело сообщения об ошибке содержит информацию
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,400);
+    
+        $lemma='+++';
+    
+        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+
+    }
 
 }

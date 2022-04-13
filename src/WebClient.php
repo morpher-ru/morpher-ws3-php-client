@@ -2,7 +2,7 @@
 namespace Morpher\Ws3Client;
 require_once __DIR__."/../vendor/autoload.php";
 
-
+use GuzzleHttp\Exception\ClientException;
 class WebClient 
 {
 	private string $_url='';
@@ -42,14 +42,36 @@ class WebClient
 
 	public function send(string $Endpoint,array $QueryParameters=[],string $Method='GET',array $Headers=[]): string {
 
-		$response=$this->client->request($Method, $Endpoint, [
-			'query' => $QueryParameters,
-			'headers'=>$Headers,
-			'http_errors'=>true
-		]);
+		try
+		{
+			$response=$this->client->request($Method, $Endpoint, [
+				'query' => $QueryParameters,
+				'headers'=>$Headers,
+				'http_errors'=>true
+			]);
 
-		$result = $response->getBody();
+			$result = $response->getBody();
+		}
+		catch (ClientException $ex)
+		{
 
+			if ($ex->hasResponse())
+			{
+				$response=$ex->getResponse();
+				$code=$response->getStatusCode();
+				if ($code>=400)
+				{
+					$data=json_decode($response->getBody(),true);
+					$msg=(string)($data['message'] ?? "Неизвестная ошибка");
+					$code=(int)($data['code'] ?? $code);
+					throw new MorpherError($msg,$code);
+				}
+
+			}
+			throw $ex;
+
+
+		}
 		return $result;
 	}
 

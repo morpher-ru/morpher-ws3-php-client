@@ -4,6 +4,7 @@ require_once __DIR__."/../../src/Morpher.php";
 require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../../src/russian/Gender.php";
 require_once __DIR__."/../MorpherTestHelper.php";
+require_once __DIR__."/../../src/exceptions/MorpherError.php";
 
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +16,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Middleware;
 
 use Morpher\Ws3Client\WebClient;
+use Morpher\Ws3Client\MorpherError;
 //use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
@@ -231,5 +233,66 @@ final class RussianDeclensionTest extends TestCase
 
         $this->assertNull($genitive);
     }
+
+    public function testParse_ExceptionNoWords(): void
+    {
+        $this->expectException(MorpherError::class);
+
+
+        $parseResults=[        'code'=>5,
+        'message'=> 'Не найдено русских слов.']; //тело сообщения об ошибке содержит информацию
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,496);
+    
+        $lemma='test';
+    
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+    }
+
+
+    public function testParse_ExceptionNoWords2(): void
+    {
+        $this->expectException(MorpherError::class);
+
+
+        $parseResults=[]; //если пустое тело сообщения об ошибке
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,496);
+    
+        $lemma='test';
+    
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+    }
+
+    public function testParse_ExceptionNoS(): void
+    {
+        $this->expectException(MorpherError::class);
+
+
+        $parseResults=[        'code'=>6,
+        'message'=> 'Не указан обязательный параметр: s.']; //тело сообщения об ошибке содержит информацию
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,400);
+    
+        $lemma='+++';
+    
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+    }
+
+
+
+
 
 }
