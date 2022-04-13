@@ -8,13 +8,6 @@ require_once __DIR__."/../../src/exceptions/MorpherError.php";
 
 use PHPUnit\Framework\TestCase;
 
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Middleware;
-
 use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\MorpherError;
 //use Morpher\Ws3Client\Morpher;
