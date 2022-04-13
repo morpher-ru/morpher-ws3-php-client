@@ -5,11 +5,17 @@ require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../../src/russian/Gender.php";
 require_once __DIR__."/../MorpherTestHelper.php";
 require_once __DIR__."/../../src/exceptions/MorpherError.php";
+require_once __DIR__."/../../src/exceptions/InvalidFlags.php";
+require_once __DIR__."/../../src/exceptions/DeclensionNotSupportedUseSpell.php";
+require_once __DIR__."/../../src/exceptions/NotSpecifiedParameterS.php";
+require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
+require_once __DIR__."/../../src/russian/exceptions/RussianWordsNotFound.php";
 
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\WebClient;
-use Morpher\Ws3Client\MorpherError;
+
+
 //use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
@@ -22,7 +28,7 @@ final class RussianDeclensionTest extends TestCase
 
 
     
-    public function testAuthorizarion(): void
+    public function testAuthorization(): void
     {
 
         $parseResults=[
@@ -229,11 +235,11 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoWords(): void
     {
-        $this->expectException(MorpherError::class);
-
+        $this->expectException(Russian\RussianWordsNotFound::class);
+        $this->expectExceptionMessage('Не найдено русских слов.');
 
         $parseResults=[        'code'=>5,
-        'message'=> 'Не найдено русских слов.']; //тело сообщения об ошибке содержит информацию
+        'message'=> 'Не найдено русских слов.']; 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
@@ -249,7 +255,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoWords2(): void
     {
-        $this->expectException(MorpherError::class);
+        $this->expectException(Morpher\Ws3Client\InvalidServerResponse::class);
 
 
         $parseResults=[]; //если пустое тело сообщения об ошибке
@@ -267,11 +273,11 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(MorpherError::class);
-
+        $this->expectException(Morpher\Ws3Client\NotSpecifiedParameterS::class);
+        $this->expectExceptionMessage('Не указан обязательный параметр: s.');
 
         $parseResults=[        'code'=>6,
-        'message'=> 'Не указан обязательный параметр: s.']; //тело сообщения об ошибке содержит информацию
+        'message'=> 'Не указан обязательный параметр: s.'];
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
@@ -284,8 +290,62 @@ final class RussianDeclensionTest extends TestCase
 
     }
 
+    public function testParse_DeclensionNotSupportedUseSpell(): void
+    {
+        $this->expectException(Morpher\Ws3Client\DeclensionNotSupportedUseSpell::class);
+        $this->expectExceptionMessage('Склонение числительных в declension не поддерживается. Используйте метод spell.');
 
 
+        $parseResults=[        'code'=>4,
+        'message'=> 'Склонение числительных в declension не поддерживается. Используйте метод spell.']; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,495);
+    
+        $lemma='двадцать';
+    
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+    }
 
 
+    public function testParse_InvalidFlags(): void
+    {
+        $this->expectException(Morpher\Ws3Client\InvalidFlags::class);
+        $this->expectExceptionMessage('Указаны неправильные флаги.');
+
+        $parseResults=[        'code'=>12,
+        'message'=> 'Указаны неправильные флаги.']; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,494);
+    
+        $lemma='двадцать';
+    
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+    }
+
+    public function testParse_UnknownError(): void
+    {
+        $this->expectException(Morpher\Ws3Client\MorpherError::class);
+
+
+        $parseResults=[        'code'=>100,
+        'message'=> 'Непонятная ошибка.']; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,444);
+    
+        $lemma='двадцать';
+    
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+    }
 }

@@ -3,6 +3,7 @@ namespace Morpher\Ws3Client\Qazaq;
 
 require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/../WebClient.php";
+require_once "exceptions/QazaqWordsNotFound.php";
 
 require_once "DeclensionResult.php";
 
@@ -19,15 +20,23 @@ class Client
 	
 	public function Parse(string $lemma)
 	{
-		if (trim($lemma)=='') throw new ValueError("пустая строка");
+		if (trim($lemma)=='') throw new \InvalidArgumentException("пустая строка");
 
-		$result_raw=$this->webClient->send("/qazaq/declension", ['s' => $lemma],'GET',
-			[
-				'Accept'=> 'application/json',
-				'Authorization'=> 'Basic '.$this->webClient->getToken()
-			]		  
-		);
+		try
+		{
+			$result_raw=$this->webClient->send("/qazaq/declension", ['s' => $lemma],'GET',
+				[
+					'Accept'=> 'application/json',
+					'Authorization'=> 'Basic '.$this->webClient->getToken()
+				]		  
+			);
+		}
+		catch (\Morpher\Ws3Client\MorpherError $ex)
+		{
+			if ($ex->getCode()==5) throw new QazaqWordsNotFound($ex->getMessage());
 
+			throw $ex;
+		}
 
 		$result = json_decode($result_raw,true);
 

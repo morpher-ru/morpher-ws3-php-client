@@ -4,8 +4,12 @@ require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/../../src/Morpher.php";
 require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../MorpherTestHelper.php";
-require_once __DIR__."/../../src/exceptions/MorpherError.php";
 
+require_once __DIR__."/../../src/exceptions/MorpherError.php";
+require_once __DIR__."/../../src/exceptions/InvalidFlags.php";
+require_once __DIR__."/../../src/exceptions/DeclensionNotSupportedUseSpell.php";
+require_once __DIR__."/../../src/exceptions/NotSpecifiedParameterS.php";
+require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
 use PHPUnit\Framework\TestCase;
 
 //use Morpher\Ws3Client\Morpher;
@@ -13,12 +17,12 @@ use PHPUnit\Framework\TestCase;
 
 
 use Morpher\Ws3Client\WebClient;
-use Morpher\Ws3Client\MorpherError;
+
 use Morpher\Ws3Client\Qazaq as Qazaq;
 
 final class QazaqDeclensionTest extends TestCase
 {
-    public function testAuthorizarion(): void
+    public function testAuthorization(): void
     {
 
         $parseResults=[
@@ -487,8 +491,8 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoWords(): void
     {
-        $this->expectException(MorpherError::class);
-        $this->expectExceptionCode(5);
+        $this->expectException(Qazaq\QazaqWordsNotFound::class);
+        //$this->expectExceptionCode(5);
         $this->expectExceptionMessage('Не найдено казахских слов.');
 
         $parseResults=[        'code'=>5,
@@ -506,11 +510,9 @@ final class QazaqDeclensionTest extends TestCase
     }
 
 
-    public function testParse_ExceptionNoWords2(): void
+    public function testParse_InvalidServerResponse(): void
     {
-        $this->expectException(MorpherError::class);
-        $this->expectExceptionCode(496);
-        //$this->expectExceptionMessage('Не найдено казахских слов.');
+        $this->expectException(Morpher\Ws3Client\InvalidServerResponse::class);
 
         $parseResults=[]; //если пустое тело сообщения об ошибке
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
@@ -527,8 +529,8 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(MorpherError::class);
-        $this->expectExceptionCode(6);
+        $this->expectException(Morpher\Ws3Client\NotSpecifiedParameterS::class);
+        //$this->expectExceptionCode(6);
         $this->expectExceptionMessage('Не указан обязательный параметр: s.');
 
         $parseResults=[        'code'=>6,

@@ -26,20 +26,6 @@ class WebClient
 			]);	
 	}
 
-
-	public function send_old(HttpRequest $request): string {
-
-		$response=$this->client->request($request->Method, $request->Endpoint, [
-			'query' => $request->QueryParameters,
-			'headers'=>$request->Headers,
-			'http_errors'=>true
-		]);
-
-		$result = $response->getBody();
-
-		return $result;
-	}
-
 	public function send(string $Endpoint,array $QueryParameters=[],string $Method='GET',array $Headers=[]): string {
 
 		try
@@ -62,9 +48,19 @@ class WebClient
 				if ($code>=400)
 				{
 					$data=json_decode($response->getBody(),true);
+					if (!isset($data['message']) || empty($data['message']))
+						throw new InvalidServerResponse();
+					if (!isset($data['code']) || empty($data['code']))
+						throw new InvalidServerResponse();
+					
 					$msg=(string)($data['message'] ?? "Неизвестная ошибка");
-					$code=(int)($data['code'] ?? $code);
-					throw new MorpherError($msg,$code);
+					$morpher_code=(int)($data['code'] ?? $code);
+
+					if ($morpher_code==6) throw new NotSpecifiedParameterS($msg);
+					if ($morpher_code==12) throw new InvalidFlags($msg);
+					if ($morpher_code==4) throw new DeclensionNotSupportedUseSpell($msg);
+
+					throw new MorpherError($msg,$morpher_code);
 				}
 
 			}
