@@ -3,7 +3,7 @@ require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/../../src/Morpher.php";
 require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../../src/russian/Gender.php";
-
+require_once __DIR__."/../MorpherTestHelper.php";
 
 use PHPUnit\Framework\TestCase;
 
@@ -23,6 +23,9 @@ use Morpher\Ws3Client\Russian as Russian;
 final class RussianDeclensionTest extends TestCase
 {
 
+
+
+
     
     public function testAuthorizarion(): void
     {
@@ -33,25 +36,11 @@ final class RussianDeclensionTest extends TestCase
 
         $lemma='тест';
 
-
-        $mock = new MockHandler([
-            new Response(200, [], $return_text)
-        ]);
-
-        
-        $handlerStack = HandlerStack::create($mock);
-        
         $container = [];
-        $history = Middleware::history($container);
-        // Add the history middleware to the handler stack.
-        $handlerStack->push($history);
-                
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
-  
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $declensionResult=$testMorpher->russian->Parse($lemma);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -95,21 +84,9 @@ final class RussianDeclensionTest extends TestCase
         $lemma='тест';
 
 
-        $mock = new MockHandler([
-            new Response(200, [], $return_text)
-        ]);
-
-        
-        $handlerStack = HandlerStack::create($mock);
-        
         $container = [];
-        $history = Middleware::history($container);
-        // Add the history middleware to the handler stack.
-        $handlerStack->push($history);
-                
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
-  
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $declensionResult=$testMorpher->russian->Parse($lemma);
 
@@ -176,21 +153,10 @@ final class RussianDeclensionTest extends TestCase
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $lemma="Александр Пушкин Сергеевич";
-        $mock = new MockHandler([
-            new Response(200, [], $return_text)
-        ]);
 
-        
-        $handlerStack = HandlerStack::create($mock);
-        
         $container = [];
-        $history = Middleware::history($container);
-        // Add the history middleware to the handler stack.
-        $handlerStack->push($history);
-                
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
-  
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $declensionResult=$testMorpher->russian->Parse($lemma);
 
@@ -222,15 +188,9 @@ final class RussianDeclensionTest extends TestCase
         $parseResults=[]; 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $mock = new MockHandler([
-            new Response(200, [], $return_text)
-        ]);
+        $container = [];
 
-        
-        $handlerStack = HandlerStack::create($mock);    
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
-    
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
     
         $lemma='';
     
@@ -250,21 +210,9 @@ final class RussianDeclensionTest extends TestCase
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
         $lemma='теля';
     
-        $mock = new MockHandler([
-            new Response(200, [], $return_text)
-        ]);
-
-        
-        $handlerStack = HandlerStack::create($mock);
-        
         $container = [];
-        $history = Middleware::history($container);
-        // Add the history middleware to the handler stack.
-        $handlerStack->push($history);
-                
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
-  
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $genitive = $testMorpher->russian->Parse($lemma)->Genitive;
 

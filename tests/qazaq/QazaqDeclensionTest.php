@@ -3,6 +3,7 @@
 require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/../../src/Morpher.php";
 require_once __DIR__."/../../src/WebClient.php";
+require_once __DIR__."/../MorpherTestHelper.php";
 
 use PHPUnit\Framework\TestCase;
 
@@ -32,21 +33,9 @@ final class QazaqDeclensionTest extends TestCase
         $lemma='тест';
 
 
-        $mock = new MockHandler([
-            new Response(200, [], $return_text)
-        ]);
-
-        
-        $handlerStack = HandlerStack::create($mock);
-        
         $container = [];
-        $history = Middleware::history($container);
-        // Add the history middleware to the handler stack.
-        $handlerStack->push($history);
-                
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
-  
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
 
@@ -92,23 +81,9 @@ final class QazaqDeclensionTest extends TestCase
     
         $lemma='тест';
 
-
-
-        $mock = new MockHandler([
-            new Response(200, [], $return_text)
-        ]);
-
-        
-        $handlerStack = HandlerStack::create($mock);
-        
         $container = [];
-        $history = Middleware::history($container);
-        // Add the history middleware to the handler stack.
-        $handlerStack->push($history);
-                
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
-  
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
 
