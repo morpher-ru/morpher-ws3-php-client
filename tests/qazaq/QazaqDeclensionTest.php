@@ -22,7 +22,47 @@ use Morpher\Ws3Client\Qazaq as Qazaq;
 
 final class QazaqDeclensionTest extends TestCase
 {
+    public function testAuthorizarion(): void
+    {
 
+        $parseResults=[
+        ]; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $lemma='тест';
+
+
+        $mock = new MockHandler([
+            new Response(200, [], $return_text)
+        ]);
+
+        
+        $handlerStack = HandlerStack::create($mock);
+        
+        $container = [];
+        $history = Middleware::history($container);
+        // Add the history middleware to the handler stack.
+        $handlerStack->push($history);
+                
+        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
+  
+        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+        
+        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+
+
+        $transaction=reset($container);//get first element of requests history
+
+        //check request parameters, headers, uri
+        $request=$transaction['request'];        
+        $this->assertEquals("GET", $request->getMethod());   
+        $this->assertTrue($request->hasHeader('Accept'));
+        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
+        $this->assertTrue($request->hasHeader('Authorization'));
+        $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
+
+    
+    }
     public function testQazaqParse_Success(): void
     {
 
@@ -76,11 +116,7 @@ final class QazaqDeclensionTest extends TestCase
 
         //check request parameters, headers, uri
         $request=$transaction['request'];        
-        $this->assertEquals("GET", $request->getMethod());   
-        $this->assertTrue($request->hasHeader('Accept'));
-        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
-        $this->assertTrue($request->hasHeader('Authorization'));
-        $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
+
         $uri=$request->getUri();
         $this->assertEquals('/qazaq/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
@@ -314,11 +350,7 @@ final class QazaqDeclensionTest extends TestCase
 
         //check request parameters, headers, uri
         $request=$transaction['request'];        
-        $this->assertEquals("GET", $request->getMethod());   
-        $this->assertTrue($request->hasHeader('Accept'));
-        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
-        $this->assertTrue($request->hasHeader('Authorization'));
-        $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
+
         $uri=$request->getUri();
         $this->assertEquals('/qazaq/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
