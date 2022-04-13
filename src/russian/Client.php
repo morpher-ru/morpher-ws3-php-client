@@ -6,10 +6,10 @@ require_once __DIR__."/../WebClient.php";
 require_once "DeclensionResult.php";
 require_once __DIR__."/../exceptions/MorpherError.php";
 require_once "exceptions/RussianWordsNotFound.php";
-
 use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Russian\DeclensionResult;
-
+require_once "exceptions/InvalidFlags.php";
+require_once "exceptions/DeclensionNotSupportedUseSpell.php";
 
 class Client
 {
@@ -39,8 +39,11 @@ class Client
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
-			if ($ex->getCode()==5) throw new RussianWordsNotFound($ex->getMessage());
-
+			$morpher_code=$ex->getCode();
+			$msg=$ex->getMessage();
+			if ($morpher_code==5) throw new RussianWordsNotFound($msg);
+			if ($morpher_code==12) throw new InvalidFlags($msg);
+			if ($morpher_code==4) throw new DeclensionNotSupportedUseSpell($msg);
 			throw $ex;
 		}
 		$result = json_decode($result_raw,true);

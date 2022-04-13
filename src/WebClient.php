@@ -57,8 +57,7 @@ class WebClient
 					$morpher_code=(int)($data['code'] ?? $code);
 
 					if ($morpher_code==6) throw new EmptyString();
-					if ($morpher_code==12) throw new InvalidFlags($msg);
-					if ($morpher_code==4) throw new DeclensionNotSupportedUseSpell($msg);
+
 
 					throw new MorpherError($msg,$morpher_code);
 				}

@@ -6,8 +6,6 @@ require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../MorpherTestHelper.php";
 
 require_once __DIR__."/../../src/exceptions/MorpherError.php";
-require_once __DIR__."/../../src/exceptions/InvalidFlags.php";
-require_once __DIR__."/../../src/exceptions/DeclensionNotSupportedUseSpell.php";
 require_once __DIR__."/../../src/exceptions/EmptyString.php";
 require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
 use PHPUnit\Framework\TestCase;

@@ -5,8 +5,8 @@ require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../../src/russian/Gender.php";
 require_once __DIR__."/../MorpherTestHelper.php";
 require_once __DIR__."/../../src/exceptions/MorpherError.php";
-require_once __DIR__."/../../src/exceptions/InvalidFlags.php";
-require_once __DIR__."/../../src/exceptions/DeclensionNotSupportedUseSpell.php";
+require_once __DIR__."/../../src/russian/exceptions/InvalidFlags.php";
+require_once __DIR__."/../../src/russian/exceptions/DeclensionNotSupportedUseSpell.php";
 require_once __DIR__."/../../src/exceptions/EmptyString.php";
 require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
 require_once __DIR__."/../../src/russian/exceptions/RussianWordsNotFound.php";
@@ -340,7 +340,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_DeclensionNotSupportedUseSpell(): void
     {
-        $this->expectException(Morpher\Ws3Client\DeclensionNotSupportedUseSpell::class);
+        $this->expectException(Russian\DeclensionNotSupportedUseSpell::class);
         $this->expectExceptionMessage('Склонение числительных в declension не поддерживается. Используйте метод spell.');
 
 
@@ -361,7 +361,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_InvalidFlags(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidFlags::class);
+        $this->expectException(Russian\InvalidFlags::class);
         $this->expectExceptionMessage('Указаны неправильные флаги.');
 
         $parseResults=[        'code'=>12,
