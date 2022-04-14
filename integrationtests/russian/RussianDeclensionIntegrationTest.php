@@ -15,7 +15,7 @@ require_once __DIR__."/../../src/russian/exceptions/RussianWordsNotFound.php";
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\WebClient;
-
+use Morpher\Ws3Client\Morpher;
 
 //use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
@@ -26,16 +26,30 @@ final class RussianDeclensionIntegrationTest extends TestCase
 {
     public function testSimple(): void
     {
-        //$token='';
+        $token='';
         foreach (getenv() as $settingKey => $settingValue) {
             /*if (strpos($settingKey, 'MORPHER_') === 0) {
                 ...
-            }*/
+            }
             print ($settingKey.' = '.$settingValue."\r\n");
-            
+*/
+            if ($settingKey=='MORPHER_RU_TOKEN')
+            {
+                $token=$settingValue;
+                break;
+            }
+        }
+        $this->assertNotEmpty($token);    
 
-        }        
-        print("haha");
+ 
+        
+        $base_url = 'https://ws3.morpher.ru';
+        $webClient=new WebClient($base_url,$token);
+        $morpher=new Morpher($webClient);
+        
+        $rus_dec=$morpher->russian->Parse('Соединенное королевство');
+        //$rus_dec=$morpher->russian->Parse('+++');
+        print_r($rus_dec);
         $this->assertTrue(true);    
     }
 
