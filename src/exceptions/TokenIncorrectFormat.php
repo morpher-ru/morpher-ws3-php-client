@@ -1,7 +1,7 @@
 <?php
 namespace Morpher\Ws3Client;
 
-class TokenIcorrectFormat extends \Exception
+class TokenIncorrectFormat extends \Exception
 {
     function __construct(string $message='Неверный формат токена.',int $code=0)
     {

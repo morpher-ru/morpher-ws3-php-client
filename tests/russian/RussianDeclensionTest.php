@@ -132,8 +132,6 @@ final class RussianDeclensionTest extends TestCase
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
 
-        $this->assertInstanceOf(Russian\DeclensionForms::class ,$declensionResult);
-        //Assert.IsNotNull($declensionResult);
         $this->assertInstanceOf(Russian\DeclensionResult::class,$declensionResult);
 
 
@@ -149,6 +147,8 @@ final class RussianDeclensionTest extends TestCase
         $this->assertEquals("в тесте", $declensionResult->Where);
         $this->assertEquals("в тест", $declensionResult->To);
         $this->assertEquals("из теста", $declensionResult->From);
+
+        $this->assertInstanceOf(Russian\DeclensionForms::class,$declensionResult->Plural);
 
         $this->assertEquals("тесты", $declensionResult->Plural->Nominative);
         $this->assertEquals("тестов", $declensionResult->Plural->Genitive);

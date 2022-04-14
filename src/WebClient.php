@@ -6,7 +6,7 @@ require_once "exceptions/InvalidServerResponse.php";
 require_once "exceptions/IpBlocked.php";
 require_once "exceptions/MorpherError.php";
 require_once "exceptions/RequestsDailyLimit.php";
-require_once "exceptions/TokenIcorrectFormat.php";
+require_once "exceptions/TokenIncorrectFormat.php";
 require_once "exceptions/TokenNotFound.php";
 
 use GuzzleHttp\Exception\ClientException;
@@ -67,7 +67,7 @@ class WebClient
 					if ($morpher_code==1) throw new RequestsDailyLimit($data['message']);
 					if ($morpher_code==3) throw new IpBlocked($data['message']);
 					if ($morpher_code==9) throw new TokenNotFound($data['message']);
-					if ($morpher_code==10) throw new TokenIcorrectFormat($data['message']);
+					if ($morpher_code==10) throw new TokenIncorrectFormat($data['message']);
 
 					throw new MorpherError($msg,$morpher_code);
 				}
