@@ -8,7 +8,7 @@ require_once __DIR__."/../../src/exceptions/MorpherError.php";
 require_once __DIR__."/../../src/exceptions/IpBlocked.php";
 require_once __DIR__."/../../src/russian/exceptions/InvalidFlags.php";
 require_once __DIR__."/../../src/russian/exceptions/DeclensionNotSupportedUseSpell.php";
-require_once __DIR__ . "/../../src/exceptions/InvalidArgumentEmptyString.php";
+require_once __DIR__."/../../src/exceptions/InvalidArgumentEmptyString.php";
 require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
 require_once __DIR__."/../../src/russian/exceptions/RussianWordsNotFound.php";
 

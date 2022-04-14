@@ -68,8 +68,6 @@ class WebClient
 					if ($morpher_code==3) throw new IpBlocked($data['message']);
 					if ($morpher_code==9) throw new TokenNotFound($data['message']);
 					if ($morpher_code==10) throw new TokenIcorrectFormat($data['message']);
-					//if ($morpher_code==11) throw new TokenIcorrectFormat($data['message']); //status 500
-
 
 					throw new MorpherError($msg,$morpher_code);
 				}
