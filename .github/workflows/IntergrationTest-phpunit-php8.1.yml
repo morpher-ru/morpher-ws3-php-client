@@ -1,4 +1,4 @@
-name: Run Tests NoWorkflowCache
+name: Integration test
 on: [workflow_dispatch]
 jobs:
   RunTests:
