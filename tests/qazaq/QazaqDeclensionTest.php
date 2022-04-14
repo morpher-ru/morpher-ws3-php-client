@@ -545,6 +545,46 @@ final class QazaqDeclensionTest extends TestCase
 
     }
 
+
+    public function testParse_ExceptionNoS2(): void
+    {
+        $this->expectException(Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectExceptionMessage('Передана пустая строка.');
+
+        $parseResults=[        'code'=>6,
+        'message'=> 'Другое сообщение от сервера']; //с кодом 6 любое сообшение от сервера не учитывается
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,400);
+    
+        $lemma='+++';
+    
+        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+
+    }
+
+
+    public function testParse_UnknownError(): void
+    {
+        $this->expectException(Morpher\Ws3Client\MorpherError::class);
+
+
+        $parseResults=[        'code'=>100,
+        'message'=> 'Непонятная ошибка.']; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,444);
+    
+        $lemma='двадцать';
+    
+        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+
+    }
+
     public function testParse_NetworkError1(): void
     {
         $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
@@ -557,6 +597,61 @@ final class QazaqDeclensionTest extends TestCase
         $this->expectException(\GuzzleHttp\Exception\RequestException::class);
         $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\RequestException('connection cannot be established', new \GuzzleHttp\Psr7\Request('GET', 'test')));
         $declensionResult=$testMorpher->qazaq->Parse('двадцать');
+    }
+
+
+
+
+    public function testServerkError500(): void
+    {
+        $this->expectException(\GuzzleHttp\Exception\ServerException::class);
+        $this->expectExceptionMessage('Error 500');
+    
+
+        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ServerException(
+            'Error 500', 
+            new \GuzzleHttp\Psr7\Request('GET', 'test'), 
+            new \GuzzleHttp\Psr7\Response(500,[],'')
+        ));
+        $declensionResult=$testMorpher->qazaq->Parse('двадцать');
+
+    }
+
+
+
+    public function testInvalidJsonResponse(): void
+    {
+        $return_text='{"И":"тест","Р":"тесте",-}';
+        try 
+        {
+            $lemma='тест';
+            $container = [];
+            $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);       
+            $declensionResult=$testMorpher->qazaq->Parse($lemma);
+        }
+        catch (\Morpher\Ws3Client\InvalidServerResponse $ex)
+        {
+            $this->assertEquals($ex->response, $return_text);
+            return;
+        }
+        $this->assertTrue(false); //test failed if exception not catched
+    
+    }
+
+
+    public function testIpBlocked(): void
+    {
+        $this->expectException(Morpher\Ws3Client\IpBlocked::class);
+        $this->expectExceptionMessage('IP заблокирован.');
+
+        $parseResults=[        'code'=>3,
+        'message'=> 'IP заблокирован.']; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $container = [];
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,444);
+        $lemma='двадцать';
+        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+
     }
 
 }

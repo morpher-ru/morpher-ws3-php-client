@@ -4,7 +4,7 @@ namespace Morpher\Ws3Client\Qazaq;
 require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/../WebClient.php";
 require_once "exceptions/QazaqWordsNotFound.php";
-
+require_once __DIR__."/../exceptions/InvalidServerResponse.php";
 require_once "DeclensionResult.php";
 
 use Morpher\Ws3Client\WebClient;
@@ -38,7 +38,15 @@ class Client
 			throw $ex;
 		}
 
-		$result = json_decode($result_raw,true);
+		try
+		{
+			$result = json_decode($result_raw,true,512,JSON_THROW_ON_ERROR);
+		}
+		catch (\JsonException $ex)
+		{
+			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$result_raw);
+		}
+		//
 
 		$result['A']=$lemma;	
 
