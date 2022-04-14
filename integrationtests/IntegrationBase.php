@@ -17,7 +17,6 @@ class IntegrationBase extends TestCase
 {
     const BASE_URL='https://ws3.morpher.ru';
     protected static string $token='';
-    protected static $base_url;
     protected static $webClient;
     protected static $testMorpher;
 
@@ -32,8 +31,7 @@ class IntegrationBase extends TestCase
             }
         }
 
-        //$token="YThkYWI1ZmUtN2E0Ny00YzE3LTg0ZWEtNDZmYWNiN2QxOWZl";        
-
+ 
         //if (empty($token)) throw new Exception('Secret token not found or empty. Tests will not run.');
         if (empty($token)) $token="YThkYWI1ZmUtN2E0Ny00YzE3LTg0ZWEtNDZmYWNiN2QxOWZl";    
 
