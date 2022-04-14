@@ -1,7 +1,7 @@
 <?php
 namespace Morpher\Ws3Client;
 
-class EmptyString extends \InvalidArgumentException
+class InvalidArgumentEmptyString extends \InvalidArgumentException
 {
     function __construct(string $message='Передана пустая строка.',int $code=0)
     {

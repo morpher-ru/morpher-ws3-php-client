@@ -6,7 +6,7 @@ require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../MorpherTestHelper.php";
 
 require_once __DIR__."/../../src/exceptions/MorpherError.php";
-require_once __DIR__."/../../src/exceptions/EmptyString.php";
+require_once __DIR__ . "/../../src/exceptions/InvalidArgumentEmptyString.php";
 require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
 use PHPUnit\Framework\TestCase;
 
@@ -527,7 +527,7 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(Morpher\Ws3Client\EmptyString::class);
+        $this->expectException(Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         //$this->expectExceptionCode(6);
         $this->expectExceptionMessage('Передана пустая строка.');
 

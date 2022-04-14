@@ -7,7 +7,7 @@ require_once __DIR__."/../MorpherTestHelper.php";
 require_once __DIR__."/../../src/exceptions/MorpherError.php";
 require_once __DIR__."/../../src/russian/exceptions/InvalidFlags.php";
 require_once __DIR__."/../../src/russian/exceptions/DeclensionNotSupportedUseSpell.php";
-require_once __DIR__."/../../src/exceptions/EmptyString.php";
+require_once __DIR__ . "/../../src/exceptions/InvalidArgumentEmptyString.php";
 require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
 require_once __DIR__."/../../src/russian/exceptions/RussianWordsNotFound.php";
 
@@ -302,7 +302,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(Morpher\Ws3Client\EmptyString::class);
+        $this->expectException(Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
@@ -321,7 +321,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS2(): void
     {
-        $this->expectException(Morpher\Ws3Client\EmptyString::class);
+        $this->expectException(Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,

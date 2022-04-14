@@ -56,7 +56,7 @@ class WebClient
 					$msg=(string)($data['message'] ?? "Неизвестная ошибка");
 					$morpher_code=(int)($data['code'] ?? $code);
 
-					if ($morpher_code==6) throw new EmptyString();
+					if ($morpher_code==6) throw new InvalidArgumentEmptyString();
 
 
 					throw new MorpherError($msg,$morpher_code);

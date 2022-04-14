@@ -22,7 +22,7 @@ class Client
 	
 	public function Parse(string $lemma,array $flags=[])
 	{
-		if (trim($lemma)=='') throw new \Morpher\Ws3Client\EmptyString();
+		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
 		
 		$query="s=".rawurlencode($lemma);
 		if (!empty($flags))
