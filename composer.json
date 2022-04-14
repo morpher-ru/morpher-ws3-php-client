@@ -5,8 +5,11 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Morpher\\Ws3Client\\": "src/"
-        }
+   
+        },   
+        "classmap": [
+            "src"
+        ]
     },
     "authors": [
         {

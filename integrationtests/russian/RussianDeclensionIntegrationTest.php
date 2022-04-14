@@ -1,16 +1,6 @@
 <?php declare(strict_types=1);
 require_once __DIR__."/../../vendor/autoload.php";
-require_once __DIR__."/../../src/Morpher.php";
-require_once __DIR__."/../../src/WebClient.php";
-require_once __DIR__."/../../src/russian/Gender.php";
-//require_once __DIR__."/../MorpherTestHelper.php";
-require_once __DIR__."/../../src/exceptions/MorpherError.php";
-require_once __DIR__."/../../src/exceptions/IpBlocked.php";
-require_once __DIR__."/../../src/russian/exceptions/InvalidFlags.php";
-require_once __DIR__."/../../src/russian/exceptions/DeclensionNotSupportedUseSpell.php";
-require_once __DIR__."/../../src/exceptions/InvalidArgumentEmptyString.php";
-require_once __DIR__."/../../src/exceptions/InvalidServerResponse.php";
-require_once __DIR__."/../../src/russian/exceptions/RussianWordsNotFound.php";
+
 require_once __DIR__."/../IntegrationBase.php";
 use PHPUnit\Framework\TestCase;
 

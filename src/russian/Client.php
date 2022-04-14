@@ -2,15 +2,10 @@
 namespace Morpher\Ws3Client\Russian;
 
 require_once __DIR__."/../../vendor/autoload.php";
-require_once __DIR__."/../WebClient.php";
-require_once "DeclensionResult.php";
-require_once __DIR__."/../exceptions/MorpherError.php";
-require_once "exceptions/RussianWordsNotFound.php";
+
 use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Russian\DeclensionResult;
-require_once "exceptions/InvalidFlags.php";
-require_once "exceptions/DeclensionNotSupportedUseSpell.php";
-require_once __DIR__."/../exceptions/InvalidServerResponse.php";
+
 
 class Client
 {

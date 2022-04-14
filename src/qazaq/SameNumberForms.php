@@ -2,7 +2,6 @@
 namespace Morpher\Ws3Client\Qazaq;
 
 require_once __DIR__."/../../vendor/autoload.php";
-require_once "DeclensionForms.php";
 
 class SameNumberForms extends DeclensionForms
 {

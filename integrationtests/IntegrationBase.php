@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 require_once __DIR__."/../vendor/autoload.php";
-require_once __DIR__."/../src/Morpher.php";
-require_once __DIR__."/../src/WebClient.php";
+
+@include_once __DIR__."/../secret.php";//файл секретов есть только локально, на github не выгружаю. отсутствие файла - не ошибка.
 
 use PHPUnit\Framework\TestCase;
 
@@ -23,7 +23,12 @@ class IntegrationBase extends TestCase
     public static function setUpBeforeClass(): void
     {
         $token='';
-        foreach (getenv() as $settingKey => $settingValue) {
+
+        if (defined("MORPHER_RU_TOKEN"))
+        {//если токен задан константой
+            $token=MORPHER_RU_TOKEN;
+        } else
+        foreach (getenv() as $settingKey => $settingValue) { //если токен задан в секретах на github
             if ($settingKey=='MORPHER_RU_TOKEN')
             {
                 $token=$settingValue;

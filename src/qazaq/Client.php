@@ -2,10 +2,7 @@
 namespace Morpher\Ws3Client\Qazaq;
 
 require_once __DIR__."/../../vendor/autoload.php";
-require_once __DIR__."/../WebClient.php";
-require_once "exceptions/QazaqWordsNotFound.php";
-require_once __DIR__."/../exceptions/InvalidServerResponse.php";
-require_once "DeclensionResult.php";
+
 
 use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Qazaq\DeclensionResult;

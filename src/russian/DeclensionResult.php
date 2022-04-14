@@ -3,9 +3,7 @@ namespace Morpher\Ws3Client\Russian;
 
 require_once __DIR__."/../../vendor/autoload.php";
 
-require_once "DeclensionForms.php";
-require_once "Gender.php";
-require_once "FullName.php";
+
 
 class DeclensionResult extends DeclensionForms
 {

@@ -2,9 +2,7 @@
 namespace Morpher\Ws3Client;
 
 require_once __DIR__."/../vendor/autoload.php";
-require_once("WebClient.php");
-require_once("russian/Client.php");
-require_once("qazaq/Client.php");
+
 
 class Morpher
 {

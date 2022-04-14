@@ -1,4 +1,5 @@
-runtest.bat
+*.bat
+secret.php
 
 composer.phar
 /vendor/
