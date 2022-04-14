@@ -31,7 +31,7 @@ final class RussianDeclensionIntegration2Test extends TestCase
 
     public function testTokenIncorrectFormatError(): void
     {
-        $token='YThkYEI1ZmUtN2E0Ny00YzE3LTg0ZEEtNDZmYENiN2QxOEZl';// incorrect format token, valid length
+        $token='23525555555555555555555555555555555555555555555555';// incorrect format token, valid length
 
  
         $token=$token;
@@ -49,11 +49,11 @@ final class RussianDeclensionIntegration2Test extends TestCase
 
     public function testTokenNotFoundError(): void
     {
-        $token='YThkYWI1ZmUtN2E0Ny02YzE3LTg0ZWEtNDZmYWNiN2QxOWZl';// not existing token, valid length
+        $token='41e2111a-767b-4a07-79A3-d52c02cb5a0d';// not existing token, valid length
  
         $token=$token;
 
-        $webClient=new WebClient(self::BASE_URL,$token);
+        $webClient=new WebClient(IntegrationBase::BASE_URL,$token);
         $testMorpher=new Morpher($webClient);     
 
         $this->expectException(\Morpher\Ws3Client\TokenNotFound::class);

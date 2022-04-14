@@ -14,6 +14,7 @@ class WebClient
 {
 	private string $_url='';
 	private string $_token='';	
+	private string $_tokenBase64='';	
 	private $client;
 
 	public function getToken(): string
@@ -21,10 +22,16 @@ class WebClient
 		return $this->_token;
 	}
 
+	public function getTokenBase64(): string
+	{
+		return $this->_tokenBase64;
+	}
+
 	public function __construct($url='https://ws3.morpher.ru',$token='',$timeout=10.0,$handler=null)
 	{
 		$this->_url=$url;
 		$this->_token=$token;
+		$this->_tokenBase64=base64_encode($token);
 
 		$this->client=new \GuzzleHttp\Client([
 			'base_uri'=>$url,

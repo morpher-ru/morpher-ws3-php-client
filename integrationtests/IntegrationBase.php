@@ -32,8 +32,8 @@ class IntegrationBase extends TestCase
         }
 
  
-        //if (empty($token)) throw new Exception('Secret token not found or empty. Tests will not run.');
-        if (empty($token)) $token="YThkYWI1ZmUtN2E0Ny00YzE3LTg0ZWEtNDZmYWNiN2QxOWZl";    
+        if (empty($token)) throw new Exception('Secret token not found or empty. Tests will not run.');
+        //if (empty($token)) $token="";    
 
         self::$token=$token;
 

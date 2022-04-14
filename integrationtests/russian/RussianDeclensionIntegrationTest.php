@@ -24,45 +24,6 @@ use Morpher\Ws3Client\Russian as Russian;
 
 final class RussianDeclensionIntegrationTest extends IntegrationBase
 {
-    /*
-    private static string $token='';
-    private static $base_url;
-    private static $webClient;
-    private static $testMorpher;
-
-    public static function setUpBeforeClass(): void
-    {
-        $token='';
-        foreach (getenv() as $settingKey => $settingValue) {
-            if ($settingKey=='MORPHER_RU_TOKEN')
-            {
-                $token=$settingValue;
-                break;
-            }
-        }
-
-        //$token="YThkYWI1ZmUtN2E0Ny00YzE3LTg0ZWEtNDZmYWNiN2QxOWZl";        
-
-        //if (empty($token)) throw new Exception('Secret token not found or empty. Tests will not run.');
-        if (empty($token)) $token="YThkYWI1ZmUtN2E0Ny00YzE3LTg0ZWEtNDZmYWNiN2QxOWZl";    
-
-        self::$token=$token;
-
-        self::$base_url = 'https://ws3.morpher.ru';
-        self::$webClient=new WebClient(self::$base_url,self::$token);
-        self::$testMorpher=new Morpher(self::$webClient);        
-
-    }
-*/
-    // public function testSimple(): void
-    // {
-    //     $testMorpher=self::$testMorpher;
-        
-    //     $rus_dec=$testMorpher->russian->Parse('Соединенное королевство');
-    //     //$rus_dec=$testMorpher->russian->Parse('+++');
-    //     print_r($rus_dec);
-    //     $this->assertTrue(true);    
-    // }
 
     public function testParse_Success(): void
     {
@@ -186,6 +147,6 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
    
         $lemma='тест';
     
-        $declensionResult=self::$testMorpher->russian->Parse($lemma);
+        $declensionResult=self::$testMorpher->russian->Parse($lemma,["AAA","BBB"]);
     }
 }

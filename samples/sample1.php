@@ -8,7 +8,8 @@ use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;
 
 $base_url = 'https://ws3.morpher.ru';
-$token="YThkYWI1ZmUtN2E0Ny00YzE3LTg0ZWEtNDZmYWNiN2QxOWZl";
+
+$token="xxx";
 $webClient=new WebClient($base_url,$token);
 $morpher=new Morpher($webClient);
 

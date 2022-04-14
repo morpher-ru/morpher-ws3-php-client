@@ -52,7 +52,7 @@ final class RussianDeclensionTest extends TestCase
         $this->assertTrue($request->hasHeader('Accept'));
         $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
         $this->assertTrue($request->hasHeader('Authorization'));
-        $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
+        $this->assertEquals(["Basic ".base64_encode('testtoken')], $request->getHeaders()['Authorization']);
 
     
     }
@@ -375,7 +375,7 @@ final class RussianDeclensionTest extends TestCase
     
         $lemma='двадцать';
     
-        $declensionResult=$testMorpher->russian->Parse($lemma);
+        $declensionResult=$testMorpher->russian->Parse($lemma,["AAA","BBB"]);
 
     }
 

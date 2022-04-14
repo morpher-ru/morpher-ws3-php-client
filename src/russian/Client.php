@@ -35,7 +35,7 @@ class Client
 			$result_raw=$this->webClient->send("/russian/declension",$query,'GET',
 				[
 					'Accept'=> 'application/json',
-					'Authorization'=> 'Basic '.$this->webClient->getToken()
+					'Authorization'=> 'Basic '.$this->webClient->getTokenBase64()
 				]		  
 			);
 		}
