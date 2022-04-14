@@ -10,6 +10,7 @@ use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Russian\DeclensionResult;
 require_once "exceptions/InvalidFlags.php";
 require_once "exceptions/DeclensionNotSupportedUseSpell.php";
+require_once __DIR__."/../exceptions/InvalidServerResponse.php";
 
 class Client
 {
@@ -29,6 +30,7 @@ class Client
 		{
 			$query.="&flags=".implode(',',$flags);
 		}
+		$result_raw="";
 		try{
 			$result_raw=$this->webClient->send("/russian/declension",$query,'GET',
 				[
@@ -46,7 +48,15 @@ class Client
 			if ($morpher_code==4) throw new DeclensionNotSupportedUseSpell($msg);
 			throw $ex;
 		}
-		$result = json_decode($result_raw,true);
+		$result ="";
+		try
+		{
+			$result = json_decode($result_raw,true,512,JSON_THROW_ON_ERROR);
+		}
+		catch (\JsonException $ex)
+		{
+			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$result_raw);
+		}
 		//
 		//parse result
 

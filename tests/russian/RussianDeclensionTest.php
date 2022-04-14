@@ -411,4 +411,42 @@ final class RussianDeclensionTest extends TestCase
         $declensionResult=$testMorpher->russian->Parse('двадцать');
     }
 
+
+    public function testServerkError500(): void
+    {
+        $this->expectException(\GuzzleHttp\Exception\ServerException::class);
+        $this->expectExceptionMessage('Error 500');
+        //$this->assertTrue(true);
+    
+
+        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ServerException(
+            'Error 500', 
+            new \GuzzleHttp\Psr7\Request('GET', 'test'), 
+            new \GuzzleHttp\Psr7\Response(200,[],'Error 500')
+        ));
+        $declensionResult=$testMorpher->russian->Parse('двадцать');
+
+    }
+
+
+
+    public function testInvalidJsonResponse(): void
+    {
+        $return_text='{"И":"тест","Р":"тесте",-}';
+        try 
+        {
+
+            $lemma='тест';
+            $container = [];
+            $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);       
+            $declensionResult=$testMorpher->russian->Parse($lemma);
+        }
+        catch (\Morpher\Ws3Client\InvalidServerResponse $ex)
+        {
+            $this->assertEquals($ex->response, $return_text);
+            return;
+        }
+        $this->assertTrue(false); //test failed if exception not catched
+    
+    }
 }
