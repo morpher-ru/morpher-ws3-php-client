@@ -416,13 +416,12 @@ final class RussianDeclensionTest extends TestCase
     {
         $this->expectException(\GuzzleHttp\Exception\ServerException::class);
         $this->expectExceptionMessage('Error 500');
-        //$this->assertTrue(true);
     
 
         $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ServerException(
             'Error 500', 
             new \GuzzleHttp\Psr7\Request('GET', 'test'), 
-            new \GuzzleHttp\Psr7\Response(200,[],'Error 500')
+            new \GuzzleHttp\Psr7\Response(500,[],'')
         ));
         $declensionResult=$testMorpher->russian->Parse('двадцать');
 
