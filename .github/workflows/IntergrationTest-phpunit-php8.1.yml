@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      - name: Execute tests
+      - name: Execute integrationtests
         env:
           MORPHER_RU_TOKEN: ${{ secrets.MORPHER_RU_TOKEN }}
-        run: phpunit tests
+        run: phpunit integrationtests
