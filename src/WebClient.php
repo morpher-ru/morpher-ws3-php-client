@@ -1,6 +1,13 @@
 <?php
 namespace Morpher\Ws3Client;
 require_once __DIR__."/../vendor/autoload.php";
+require_once "exceptions/InvalidArgumentEmptyString.php";
+require_once "exceptions/InvalidServerResponse.php";
+require_once "exceptions/IpBlocked.php";
+require_once "exceptions/MorpherError.php";
+require_once "exceptions/RequestsDailyLimit.php";
+require_once "exceptions/TokenIcorrectFormat.php";
+require_once "exceptions/TokenNotFound.php";
 
 use GuzzleHttp\Exception\ClientException;
 class WebClient 
@@ -57,6 +64,11 @@ class WebClient
 					$morpher_code=(int)($data['code'] ?? $code);
 
 					if ($morpher_code==6) throw new InvalidArgumentEmptyString();
+					if ($morpher_code==1) throw new RequestsDailyLimit($data['message']);
+					if ($morpher_code==3) throw new IpBlocked($data['message']);
+					if ($morpher_code==9) throw new TokenNotFound($data['message']);
+					if ($morpher_code==10) throw new TokenIcorrectFormat($data['message']);
+					//if ($morpher_code==11) throw new TokenIcorrectFormat($data['message']); //status 500
 
 
 					throw new MorpherError($msg,$morpher_code);

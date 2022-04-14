@@ -5,6 +5,7 @@ require_once __DIR__."/../../src/WebClient.php";
 require_once __DIR__."/../../src/russian/Gender.php";
 require_once __DIR__."/../MorpherTestHelper.php";
 require_once __DIR__."/../../src/exceptions/MorpherError.php";
+require_once __DIR__."/../../src/exceptions/IpBlocked.php";
 require_once __DIR__."/../../src/russian/exceptions/InvalidFlags.php";
 require_once __DIR__."/../../src/russian/exceptions/DeclensionNotSupportedUseSpell.php";
 require_once __DIR__ . "/../../src/exceptions/InvalidArgumentEmptyString.php";
@@ -447,5 +448,21 @@ final class RussianDeclensionTest extends TestCase
         }
         $this->assertTrue(false); //test failed if exception not catched
     
+    }
+
+
+    public function testIpBlocked(): void
+    {
+        $this->expectException(Morpher\Ws3Client\IpBlocked::class);
+        $this->expectExceptionMessage('IP заблокирован.');
+
+        $parseResults=[        'code'=>3,
+        'message'=> 'IP заблокирован.']; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $container = [];
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,444);
+        $lemma='двадцать';
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
     }
 }
