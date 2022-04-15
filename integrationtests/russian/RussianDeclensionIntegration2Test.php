@@ -21,10 +21,6 @@ final class RussianDeclensionIntegration2Test extends TestCase
     {
         $token='23525555555555555555555555555555555555555555555555';// incorrect format token, valid length
 
- 
-        $token=$token;
-
-
         $webClient=new WebClient(IntegrationBase::BASE_URL,$token);
         $testMorpher=new Morpher($webClient);     
 
@@ -39,12 +35,26 @@ final class RussianDeclensionIntegration2Test extends TestCase
     {
         $token='41e2111a-767b-4a07-79A3-d52c02cb5a0d';// not existing token, valid length
  
-        $token=$token;
-
-        $webClient=new WebClient(IntegrationBase::BASE_URL,$token);
+        $webClient=new WebClient(IntegrationBase::BASE_URL,$token,);
         $testMorpher=new Morpher($webClient);     
 
         $this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
+
+        $lemma='тест';
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+    }
+
+
+
+    public function testTimeoutError(): void
+    {
+        $token='41e2111a-767b-4a07-79A3-d52c02cb5a0d';// not existing token, valid length
+ 
+        $webClient=new WebClient('http://10.200.200.200',$token,0.1);//not existiong ip, timeout in 0.1 sec
+        $testMorpher=new Morpher($webClient);     
+
+        $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
 
         $lemma='тест';
         $declensionResult=$testMorpher->russian->Parse($lemma);
