@@ -2,14 +2,14 @@
 namespace Morpher\Ws3Client;
 require_once __DIR__."/../vendor/autoload.php";
 
-
 use GuzzleHttp\Exception\ClientException;
-class WebClient 
+
+class WebClient
 {
 	private string $_url='';
 	private string $_token='';	
 	private string $_tokenBase64='';	
-	private $client;
+	private \GuzzleHttp\Client $client;
 
 	public function getToken(): string
 	{
@@ -34,8 +34,8 @@ class WebClient
 			]);	
 	}
 
-	public function send(string $Endpoint,$QueryParameters=[],string $Method='GET',array $Headers=[]): string {
-
+	public function send(string $Endpoint,$QueryParameters=[],string $Method='GET',array $Headers=[]): string
+    {
 		try
 		{
 			$response=$this->client->request($Method, $Endpoint, [
@@ -48,7 +48,6 @@ class WebClient
 		}
 		catch (ClientException $ex)
 		{
-
 			if ($ex->hasResponse())
 			{
 				$response=$ex->getResponse();
@@ -72,12 +71,11 @@ class WebClient
 
 					throw new MorpherError($msg,$morpher_code);
 				}
-
 			}
+
 			throw $ex;
-
-
 		}
+
 		return $result;
 	}
 
@@ -90,7 +88,7 @@ class WebClient
 		catch (\JsonException $ex)
 		{
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$text);
-		}		
+		}
 	}
 
 

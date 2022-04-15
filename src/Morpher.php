@@ -9,7 +9,7 @@ class Morpher
 	public readonly Russian\Client $russian;
 	public readonly Qazaq\Client $qazaq;
 	
-	private $_webClient;
+	private readonly WebClient $_webClient;
 	
 	public function __construct(WebClient $webClient)
 	{
