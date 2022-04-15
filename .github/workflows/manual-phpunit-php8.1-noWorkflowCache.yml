@@ -20,4 +20,4 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Execute tests
-        run: phpunit tests
+        run: phpunit tests/unit

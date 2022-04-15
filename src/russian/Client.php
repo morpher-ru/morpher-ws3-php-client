@@ -43,15 +43,8 @@ class Client
 			if ($morpher_code==4) throw new DeclensionNotSupportedUseSpell($msg);
 			throw $ex;
 		}
-		$result ="";
-		try
-		{
-			$result = json_decode($result_raw,true,512,JSON_THROW_ON_ERROR);
-		}
-		catch (\JsonException $ex)
-		{
-			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$result_raw);
-		}
+
+		$result=WebClient::JsonDecode($result_raw);
 		//
 		//parse result
 

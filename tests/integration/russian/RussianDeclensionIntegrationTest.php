@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
-require_once __DIR__."/../../vendor/autoload.php";
+require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
 use PHPUnit\Framework\TestCase;
@@ -33,7 +33,7 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
         $this->assertEquals("тестом", $declensionResult->Instrumental);
         $this->assertEquals("тесте", $declensionResult->Prepositional);
         
-        $this->assertEquals("о тесте", $declensionResult->PrepositionalWithO);
+        $this->assertEquals("о тесте", $declensionResult->PrepositionalWithO);//не работает с токеном от бесплатной версии
 
         $this->assertEquals("в тесте", $declensionResult->Where);
         $this->assertEquals("в тест", $declensionResult->To);
@@ -47,7 +47,7 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
         $this->assertEquals("тесты", $declensionResult->Plural->Accusative);
         $this->assertEquals("тестами", $declensionResult->Plural->Instrumental);
         $this->assertEquals("тестах", $declensionResult->Plural->Prepositional);
-        $this->assertEquals("о тестах", $declensionResult->Plural->PrepositionalWithO);
+        $this->assertEquals("о тестах", $declensionResult->Plural->PrepositionalWithO); //не работает с токеном от бесплатной версии
 
         $this->assertEquals(Russian\Gender::Masculine, $declensionResult->Gender);
 
@@ -60,7 +60,7 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
         $lemma="Александр Пушкин Сергеевич";
 
          
-        $declensionResult=self::$testMorpher->russian->Parse($lemma);
+        $declensionResult=self::$testMorpher->russian->Parse($lemma,[Flags::Name]);
 
         $this->assertInstanceOf(Russian\DeclensionForms::class ,$declensionResult);
         //Assert.IsNotNull($declensionResult);

@@ -81,5 +81,17 @@ class WebClient
 		return $result;
 	}
 
+	public static function JsonDecode(string $text):array
+	{
+		try
+		{
+			return json_decode($text,true,512,JSON_THROW_ON_ERROR);
+		}
+		catch (\JsonException $ex)
+		{
+			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$text);
+		}		
+	}
+
 
 }

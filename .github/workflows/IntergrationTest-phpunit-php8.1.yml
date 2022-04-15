@@ -22,4 +22,4 @@ jobs:
       - name: Execute integrationtests
         env:
           MORPHER_RU_TOKEN: ${{ secrets.MORPHER_RU_TOKEN }}
-        run: phpunit integrationtests
+        run: phpunit tests/integration
