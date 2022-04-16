@@ -52,7 +52,7 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
     {
         $lemma="Пушкин Александр Сергеевич";
 
-        $declensionResult=self::$testMorpher->russian->Parse($lemma, [Flags::Name]);
+        $declensionResult=self::$testMorpher->russian->Parse($lemma, [Russian\Flags::Name]);
 
         $this->assertInstanceOf(Russian\DeclensionForms::class, $declensionResult);
         $this->assertNotNull($declensionResult->FullName);

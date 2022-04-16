@@ -32,7 +32,7 @@ class Client
 		{
 			if ($ex->getCode()==5) throw new QazaqWordsNotFound($ex->getMessage());
 
-			throw $ex;
+			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
 		}
 
 		//

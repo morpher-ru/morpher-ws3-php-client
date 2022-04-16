@@ -373,7 +373,8 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_UnknownError(): void
     {
-        $this->expectException(Morpher\Ws3Client\MorpherError::class);
+        $this->expectException(Morpher\Ws3Client\InvalidServerResponse::class);
+        $this->expectExceptionMessage('Неизвестный код ошибки');
 
 
         $parseResults=[        'code'=>100,

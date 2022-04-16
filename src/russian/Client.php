@@ -41,7 +41,8 @@ class Client
 			if ($morpher_code==5) throw new RussianWordsNotFound($msg);
 			if ($morpher_code==12) throw new InvalidFlags($msg);
 			if ($morpher_code==4) throw new DeclensionNotSupportedUseSpell($msg);
-			throw $ex;
+			
+			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
 		}
 
 		$result=WebClient::JsonDecode($result_raw);
