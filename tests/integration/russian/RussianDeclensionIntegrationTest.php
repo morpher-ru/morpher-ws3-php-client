@@ -13,17 +13,13 @@ use Morpher\Ws3Client\Russian as Russian;
 
 final class RussianDeclensionIntegrationTest extends IntegrationBase
 {
-
     public function testParse_Success(): void
     {
         $lemma='тест';
 
-
         $declensionResult=self::$testMorpher->russian->Parse($lemma);
 
-
         $this->assertInstanceOf(Russian\DeclensionResult::class,$declensionResult);
-
 
         $this->assertEquals("тест", $declensionResult->Nominative);
         $this->assertEquals("теста", $declensionResult->Genitive);
@@ -49,20 +45,16 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
         $this->assertEquals("о тестах", $declensionResult->Plural->PrepositionalWithO); //не работает с токеном от бесплатной версии
 
         $this->assertEquals(Russian\Gender::Masculine, $declensionResult->Gender);
-
     }
 
 
     public function testSplitFio_Success(): void
     {
+        $lemma="Пушкин Александр Сергеевич";
 
-        $lemma="Александр Пушкин Сергеевич";
+        $declensionResult=self::$testMorpher->russian->Parse($lemma, [Flags::Name]);
 
-         
-        $declensionResult=self::$testMorpher->russian->Parse($lemma,[Flags::Name]);
-
-        $this->assertInstanceOf(Russian\DeclensionForms::class ,$declensionResult);
-        //Assert.IsNotNull($declensionResult);
+        $this->assertInstanceOf(Russian\DeclensionForms::class, $declensionResult);
         $this->assertNotNull($declensionResult->FullName);
         $this->assertInstanceOf(Russian\FullName::class ,$declensionResult->FullName);        
         $this->assertEquals("Пушкин", $declensionResult->FullName->Surname);
@@ -76,18 +68,15 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
     
         $lemma='';
     
-        $declensionResult=self::$testMorpher->russian->Parse($lemma);
-
+        self::$testMorpher->russian->Parse($lemma);
     }
 
 
     public function testNullGenitive(): void
     {
-
         $lemma='теля';
    
         $genitive = self::$testMorpher->russian->Parse($lemma)->Genitive;
-  
 
         $this->assertNull($genitive);
     }
@@ -99,9 +88,7 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
         $this->expectExceptionMessage('Не найдено русских слов.');
    
         $lemma='test';
-    
-        $declensionResult=self::$testMorpher->russian->Parse($lemma);
-
+        self::$testMorpher->russian->Parse($lemma);
     }
 
 
@@ -110,11 +97,8 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-    
         $lemma='';
-    
-        $declensionResult=self::$testMorpher->russian->Parse($lemma);
-
+        self::$testMorpher->russian->Parse($lemma);
     }
 
 
@@ -124,9 +108,7 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
         $this->expectExceptionMessage('Склонение числительных в declension не поддерживается. Используйте метод spell.');
    
         $lemma='двадцать';
-    
-        $declensionResult=self::$testMorpher->russian->Parse($lemma);
-
+        self::$testMorpher->russian->Parse($lemma);
     }
 
     public function testParse_InvalidFlags(): void
@@ -135,7 +117,6 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
         $this->expectExceptionMessage('Указаны неправильные флаги.');
    
         $lemma='тест';
-    
-        $declensionResult=self::$testMorpher->russian->Parse($lemma,["AAA","BBB"]);
+        self::$testMorpher->russian->Parse($lemma,["AAA","BBB"]);
     }
 }

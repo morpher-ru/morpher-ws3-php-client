@@ -14,8 +14,6 @@ use Morpher\Ws3Client\Russian as Russian;
 
 final class RussianDeclensionIntegration2Test extends TestCase
 {
-
-
     public function testTokenIncorrectFormatError(): void
     {
         $token='23525555555555555555555555555555555555555555555555';// incorrect format token, valid length
@@ -26,8 +24,7 @@ final class RussianDeclensionIntegration2Test extends TestCase
         $this->expectException(\Morpher\Ws3Client\TokenIncorrectFormat::class);
 
         $lemma='тест';
-        $declensionResult=$testMorpher->russian->Parse($lemma);
-
+        $testMorpher->russian->Parse($lemma);
     }
 
     public function testTokenNotFoundError(): void
@@ -40,11 +37,8 @@ final class RussianDeclensionIntegration2Test extends TestCase
         $this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
 
         $lemma='тест';
-        $declensionResult=$testMorpher->russian->Parse($lemma);
-
+        $testMorpher->russian->Parse($lemma);
     }
-
-
 
     public function testTimeoutError(): void
     {
@@ -56,8 +50,6 @@ final class RussianDeclensionIntegration2Test extends TestCase
         $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
 
         $lemma='тест';
-        $declensionResult=$testMorpher->russian->Parse($lemma);
-
+        $testMorpher->russian->Parse($lemma);
     }
-
 }

@@ -8,9 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;
 
-//use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
-
 
 
 class IntegrationBase extends TestCase
@@ -36,16 +34,11 @@ class IntegrationBase extends TestCase
             }
         }
 
- 
         if (empty($token)) throw new Exception('Secret token not found or empty. Tests will not run.');
-        //if (empty($token)) $token="";    
 
         self::$token=$token;
 
         self::$webClient=new WebClient(self::BASE_URL,self::$token);
         self::$testMorpher=new Morpher(self::$webClient);        
-
     }
-
-
 }
