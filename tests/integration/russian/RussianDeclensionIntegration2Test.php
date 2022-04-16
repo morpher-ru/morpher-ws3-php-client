@@ -44,7 +44,7 @@ final class RussianDeclensionIntegration2Test extends TestCase
     {
         $token='41e2111a-767b-4a07-79A3-d52c02cb5a0d';// not existing token, valid length
  
-        $webClient=new WebClient('http://10.200.200.200',$token,0.1);//not existiong ip, timeout in 0.1 sec
+        $webClient=new WebClient('http://10.200.200.200',$token,0.1);//not existing ip, timeout in 0.1 sec
         $testMorpher=new Morpher($webClient);     
 
         $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
