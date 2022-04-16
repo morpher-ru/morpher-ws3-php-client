@@ -27,12 +27,14 @@ class Client
 		}
 		$result_raw="";
 		try{
-			$result_raw=$this->webClient->send("/russian/declension",$query,'GET',
-				[
-					'Accept'=> 'application/json',
-					'Authorization'=> 'Basic '.$this->webClient->getTokenBase64()
-				]		  
-			);
+			$headers=['Accept'=> 'application/json'];
+			$tokenBase64=$this->webClient->getTokenBase64();
+			if (!empty($tokenBase64))
+			{
+				$headers['Authorization']= 'Basic '.$tokenBase64;
+
+			}
+			$result_raw=$this->webClient->send("/russian/declension",$query,'GET',	$headers);
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{

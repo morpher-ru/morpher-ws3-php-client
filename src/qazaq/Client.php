@@ -17,16 +17,22 @@ class Client
 	
 	public function Parse(string $lemma)
 	{
-		if (trim($lemma)=='') throw new \InvalidArgumentException("пустая строка");
+		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
+
+		$query="s=".rawurlencode($lemma);
 
 		try
 		{
-			$result_raw=$this->webClient->send("/qazaq/declension", ['s' => $lemma],'GET',
-				[
-					'Accept'=> 'application/json',
-					'Authorization'=> 'Basic '.$this->webClient->getToken()
-				]		  
-			);
+			$headers=['Accept'=> 'application/json'];
+			$tokenBase64=$this->webClient->getTokenBase64();
+			if (!empty($tokenBase64))
+			{
+				$headers['Authorization']= 'Basic '.$tokenBase64;
+
+			}
+			$result_raw=$this->webClient->send("/qazaq/declension",$query,'GET',	$headers);
+
+
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{

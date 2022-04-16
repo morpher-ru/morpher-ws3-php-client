@@ -41,10 +41,41 @@ final class QazaqDeclensionTest extends TestCase
         $this->assertTrue($request->hasHeader('Accept'));
         $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
         $this->assertTrue($request->hasHeader('Authorization'));
-        $this->assertEquals(["Basic testtoken"], $request->getHeaders()['Authorization']);
+        $this->assertEquals(["Basic ".base64_encode('testtoken')], $request->getHeaders()['Authorization']);
 
     
     }
+
+    public function testNoToken(): void
+    {
+
+        $parseResults=[
+        ]; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $lemma='тест';
+
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,200,'');
+        
+        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+
+
+        $transaction=reset($container);//get first element of requests history
+
+        //check request parameters, headers, uri
+        $request=$transaction['request'];        
+        $this->assertEquals("GET", $request->getMethod());   
+        $this->assertTrue($request->hasHeader('Accept'));
+        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
+        $this->assertFalse($request->hasHeader('Authorization'));
+      
+
+    
+    }
+
     public function testQazaqParse_Success(): void
     {
 
@@ -506,7 +537,7 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testParse_InvalidServerResponse(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidServerResponse::class);
+        $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
 
         $parseResults=[]; //если пустое тело сообщения об ошибке
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
@@ -523,7 +554,7 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         //$this->expectExceptionCode(6);
         $this->expectExceptionMessage('Передана пустая строка.');
 
@@ -544,7 +575,7 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS2(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
@@ -564,7 +595,7 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testParse_UnknownError(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidServerResponse::class);
+        $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
         $this->expectExceptionMessage('Неизвестный код ошибки');
 
 
@@ -638,7 +669,7 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testIpBlocked(): void
     {
-        $this->expectException(Morpher\Ws3Client\IpBlocked::class);
+        $this->expectException(\Morpher\Ws3Client\IpBlocked::class);
         $this->expectExceptionMessage('IP заблокирован.');
 
         $parseResults=[        'code'=>3,

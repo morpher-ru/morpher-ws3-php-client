@@ -13,6 +13,7 @@ $token=MORPHER_RU_TOKEN;
 $webClient=new WebClient($base_url,$token);
 $morpher=new Morpher($webClient);
 
-$rus_dec=$morpher->russian->Parse('Соединенное королевство');
+//$rus_dec=$morpher->russian->Parse('Соединенное королевство');
+$rus_dec=$morpher->qazaq->Parse('тест');
 //$rus_dec=$morpher->russian->Parse('+++');
 print_r($rus_dec);

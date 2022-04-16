@@ -50,6 +50,35 @@ final class RussianDeclensionTest extends TestCase
     }
 
 
+
+    public function testNoToken(): void
+    {
+
+        $parseResults=[
+        ]; 
+        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+
+        $lemma='тест';
+
+        $container = [];
+
+        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,200,'');
+        
+        $declensionResult=$testMorpher->russian->Parse($lemma);
+
+        $transaction=reset($container);//get first element of requests history
+
+        //check request parameters, headers, uri
+        $request=$transaction['request'];        
+        $this->assertEquals("GET", $request->getMethod());   
+        $this->assertTrue($request->hasHeader('Accept'));
+        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
+        $this->assertFalse($request->hasHeader('Authorization'));
+
+
+    
+    }
+
     
     public function testFlags(): void
     {
@@ -277,7 +306,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_InvalidServerResponse(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidServerResponse::class);
+        $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
 
 
         $parseResults=[]; //если пустое тело сообщения об ошибке
@@ -295,7 +324,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
@@ -314,7 +343,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS2(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
@@ -373,7 +402,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_UnknownError(): void
     {
-        $this->expectException(Morpher\Ws3Client\InvalidServerResponse::class);
+        $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
         $this->expectExceptionMessage('Неизвестный код ошибки');
 
 
@@ -446,7 +475,7 @@ final class RussianDeclensionTest extends TestCase
 
     public function testIpBlocked(): void
     {
-        $this->expectException(Morpher\Ws3Client\IpBlocked::class);
+        $this->expectException(\Morpher\Ws3Client\IpBlocked::class);
         $this->expectExceptionMessage('IP заблокирован.');
 
         $parseResults=[        'code'=>3,

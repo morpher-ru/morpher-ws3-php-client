@@ -11,7 +11,7 @@ use Morpher\Ws3Client\Russian as Russian;
 
 
 
-final class RussianDeclensionIntegrationTest extends IntegrationBase
+final class RussianDeclensionTest extends IntegrationBase
 {
     public function testParse_Success(): void
     {
@@ -46,6 +46,7 @@ final class RussianDeclensionIntegrationTest extends IntegrationBase
 
         $this->assertEquals(Russian\Gender::Masculine, $declensionResult->Gender);
     }
+
 
 
     public function testSplitFio_Success(): void

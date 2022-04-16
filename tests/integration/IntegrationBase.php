@@ -14,14 +14,12 @@ use Morpher\Ws3Client\Russian as Russian;
 class IntegrationBase extends TestCase
 {
     const BASE_URL='https://ws3.morpher.ru';
-    protected static string $token='';
     protected static $webClient;
     protected static $testMorpher;
 
-    public static function setUpBeforeClass(): void
+    protected static function getToken(): string
     {
-        $token='';
-
+        $token='';        
         if (defined("MORPHER_RU_TOKEN"))
         {//если токен задан константой
             $token=MORPHER_RU_TOKEN;
@@ -35,10 +33,13 @@ class IntegrationBase extends TestCase
         }
 
         if (empty($token)) throw new Exception('Secret token not found or empty. Tests will not run.');
+        return $token;
+    }
 
-        self::$token=$token;
-
-        self::$webClient=new WebClient(self::BASE_URL,self::$token);
+    public static function setUpBeforeClass(): void
+    {
+        $token=self::getToken();
+        self::$webClient=new WebClient(self::BASE_URL,$token);
         self::$testMorpher=new Morpher(self::$webClient);        
     }
 }

@@ -12,7 +12,7 @@ use Morpher\Ws3Client\Russian as Russian;
 
 
 
-final class RussianDeclensionIntegration2Test extends TestCase
+final class RussianDeclension2Test extends TestCase
 {
     public function testTokenIncorrectFormatError(): void
     {
@@ -31,7 +31,7 @@ final class RussianDeclensionIntegration2Test extends TestCase
     {
         $token='41e2111a-767b-4a07-79A3-d52c02cb5a0d';// not existing token, valid length
  
-        $webClient=new WebClient(IntegrationBase::BASE_URL,$token,);
+        $webClient=new WebClient(IntegrationBase::BASE_URL,$token);
         $testMorpher=new Morpher($webClient);     
 
         $this->expectException(\Morpher\Ws3Client\TokenNotFound::class);

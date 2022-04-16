@@ -13,7 +13,7 @@ use Morpher\Ws3Client\WebClient;
 
 class MorpherTestHelper
 {
-    public static function createMockMorpher(Array &$container,string $return_text='',int $code=200): Morpher\Ws3Client\Morpher
+    public static function createMockMorpher(Array &$container,string $return_text='',int $code=200,$token='testtoken'): \Morpher\Ws3Client\Morpher
     {
          $mock = new MockHandler([
              new Response($code, [], $return_text)
@@ -27,14 +27,14 @@ class MorpherTestHelper
         // Add the history middleware to the handler stack.
         $handlerStack->push($history);
                 
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
+        $webClientMock=new WebClient('https://test.uu',$token,10,$handlerStack);
   
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+        $testMorpher=new \Morpher\Ws3Client\Morpher($webClientMock);
 
         return $testMorpher;
     }    
     
-    public static function createMockMorpherWithException(\GuzzleHttp\Exception\TransferException $exception): Morpher\Ws3Client\Morpher
+    public static function createMockMorpherWithException(\GuzzleHttp\Exception\TransferException $exception): \Morpher\Ws3Client\Morpher
     {
          $mock = new MockHandler([
              $exception                 //new RequestException('Error Communicating with Server', new Request('GET', 'test'))
@@ -45,7 +45,7 @@ class MorpherTestHelper
                 
         $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
   
-        $testMorpher=new Morpher\Ws3Client\Morpher($webClientMock);
+        $testMorpher=new \Morpher\Ws3Client\Morpher($webClientMock);
 
         return $testMorpher;
     }    
