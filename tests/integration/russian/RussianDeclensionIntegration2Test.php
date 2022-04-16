@@ -16,7 +16,7 @@ final class RussianDeclensionIntegration2Test extends TestCase
 {
     public function testTokenIncorrectFormatError(): void
     {
-        $token='23525555555555555555555555555555555555555555555555';// incorrect format token, valid length
+        $token='23525555555555555555555555555555555555555555555555';// incorrect format token
 
         $webClient=new WebClient(IntegrationBase::BASE_URL,$token);
         $testMorpher=new Morpher($webClient);     
