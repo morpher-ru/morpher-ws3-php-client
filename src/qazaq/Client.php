@@ -19,18 +19,12 @@ class Client
 	{
 		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
 
-		$query="s=".rawurlencode($lemma);
+		$query=["s"=>$lemma];
 
 		try
 		{
-			$headers=['Accept'=> 'application/json'];
-			$tokenBase64=$this->webClient->getTokenBase64();
-			if (!empty($tokenBase64))
-			{
-				$headers['Authorization']= 'Basic '.$tokenBase64;
 
-			}
-			$result_raw=$this->webClient->send("/qazaq/declension",$query,'GET',	$headers);
+			$result_raw=$this->webClient->send("/qazaq/declension",$query,'GET');
 
 
 		}

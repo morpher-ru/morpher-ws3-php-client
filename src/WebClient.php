@@ -6,7 +6,6 @@ use GuzzleHttp\Exception\ClientException;
 
 class WebClient
 {
-	private string $_url='';
 	private string $_token='';	
 	private string $_tokenBase64='';	
 	private \GuzzleHttp\Client $client;
@@ -34,14 +33,32 @@ class WebClient
 			]);	
 	}
 
-	public function send(string $Endpoint,$QueryParameters=[],string $Method='GET',array $Headers=[]): string
+	public function getStandartHeaders():array
+	{
+		$headers=['Accept'=> 'application/json'];
+
+		if (!empty($this->_tokenBase64))
+		{
+			$headers['Authorization']= 'Basic '.$this->_tokenBase64;
+
+		}
+		return $headers;
+	}
+
+	public function send(string $Endpoint,$QueryParameters=[],string $Method='GET',$Headers=null,$body=null,$form_params=null): string
     {
+		if ($Headers===null)
+		{
+			$Headers=$this->getStandartHeaders();
+		}
 		try
 		{
 			$response=$this->client->request($Method, $Endpoint, [
 				'query' => $QueryParameters,
 				'headers'=>$Headers,
-				'http_errors'=>true
+				'http_errors'=>true,
+				'body'=>$body,
+				'form_params'=>$form_params
 			]);
 
 			$result = $response->getBody();
@@ -68,6 +85,7 @@ class WebClient
 					if ($morpher_code==3) throw new IpBlocked($data['message']);
 					if ($morpher_code==9) throw new TokenNotFound($data['message']);
 					if ($morpher_code==10) throw new TokenIncorrectFormat($data['message']);
+					if ($morpher_code==25) throw new TokenRequired($data['message']);
 
 					throw new MorpherError($msg,$morpher_code);
 				}
@@ -79,7 +97,7 @@ class WebClient
 		return $result;
 	}
 
-	public static function JsonDecode(string $text):array
+	public static function JsonDecode(string $text):mixed
 	{
 		try
 		{

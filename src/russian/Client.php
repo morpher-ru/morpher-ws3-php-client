@@ -16,10 +16,11 @@ class Client
 		$this->webClient=$webClient;
 	}
 	
-	public function Parse(string $lemma,array $flags=[])
+	
+	public function Parse(string $lemma,array $flags=[]): DeclensionResult
 	{
 		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
-		
+
 		$query=["s"=>$lemma];
 		if (!empty($flags))
 		{
@@ -28,14 +29,8 @@ class Client
 
 		$result_raw="";
 		try{
-			$headers=['Accept'=> 'application/json'];
-			$tokenBase64=$this->webClient->getTokenBase64();
-			if (!empty($tokenBase64))
-			{
-				$headers['Authorization']= 'Basic '.$tokenBase64;
 
-			}
-			$result_raw=$this->webClient->send("/russian/declension",$query,'GET',	$headers);
+			$result_raw=$this->webClient->send("/russian/declension",$query,'GET');
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
