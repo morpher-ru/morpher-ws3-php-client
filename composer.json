@@ -1,6 +1,8 @@
 {
-    "name": "morpher/ws3_client",
-    "description": "PHP client for morpher.ru Web Service API version 3",
+    "name": "morpher/ws3-client",
+    "description": "PHP client for morpher.ru API offering declension in Russian, Ukrainian and Qazaq",
+    "keywords": ["declension","inflection","pluralization","russian","ukrainian","qazaq"],
+    "homepage": "https://github.com/morpher-ru/morpher-ws3-php-client",
     "type": "library",
     "license": "MIT",
     "autoload": {
