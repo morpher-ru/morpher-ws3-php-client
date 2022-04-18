@@ -61,21 +61,22 @@ class WebClient
 				if ($code>=400)
 				{
 					$data=json_decode($response->getBody(),true);
-                    $error_code = $data['code'];
-                    $message = $data['message'];
-                    if (empty($message) || empty($error_code))
+					if (!isset($data['message']) || empty($data['message']))
 						throw new InvalidServerResponse();
-
-					$morpher_code=(int)($error_code);
+					if (!isset($data['code']) || empty($data['code']))
+						throw new InvalidServerResponse();
+					
+					$msg=(string)($data['message'] ?? "Неизвестная ошибка");
+					$morpher_code=(int)($data['code'] ?? $code);
 
 					if ($morpher_code==6) throw new InvalidArgumentEmptyString();
-					if ($morpher_code==1) throw new RequestsDailyLimit($message);
-					if ($morpher_code==3) throw new IpBlocked($message);
-					if ($morpher_code==9) throw new TokenNotFound($message);
-					if ($morpher_code==10) throw new TokenIncorrectFormat($message);
-					if ($morpher_code==25) throw new TokenRequired($message);
+					if ($morpher_code==1) throw new RequestsDailyLimit($data['message']);
+					if ($morpher_code==3) throw new IpBlocked($data['message']);
+					if ($morpher_code==9) throw new TokenNotFound($data['message']);
+					if ($morpher_code==10) throw new TokenIncorrectFormat($data['message']);
+					if ($morpher_code==25) throw new TokenRequired($data['message']);
 
-					throw new MorpherError($message, $morpher_code);
+					throw new MorpherError($msg,$morpher_code);
 				}
 			}
 
