@@ -6,76 +6,11 @@ require_once __DIR__."/../MorpherTestHelper.php";
 
 use PHPUnit\Framework\TestCase;
 
-//use Morpher\Ws3Client\Morpher;
-
-
-
-use Morpher\Ws3Client\WebClient;
 
 use Morpher\Ws3Client\Qazaq as Qazaq;
 
 final class QazaqDeclensionTest extends TestCase
 {
-    public function testAuthorization(): void
-    {
-
-        $parseResults=[
-        ]; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-
-        $lemma='тест';
-
-
-        $container = [];
-
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
-        
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
-
-        $transaction=reset($container);//get first element of requests history
-
-        //check request parameters, headers, uri
-        $request=$transaction['request'];        
-        $this->assertEquals("GET", $request->getMethod());   
-        $this->assertTrue($request->hasHeader('Accept'));
-        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
-        $this->assertTrue($request->hasHeader('Authorization'));
-        $this->assertEquals(["Basic ".base64_encode('testtoken')], $request->getHeaders()['Authorization']);
-
-    
-    }
-
-    public function testNoToken(): void
-    {
-
-        $parseResults=[
-        ]; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-
-        $lemma='тест';
-
-
-        $container = [];
-
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,200,'');
-        
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
-
-        $transaction=reset($container);//get first element of requests history
-
-        //check request parameters, headers, uri
-        $request=$transaction['request'];        
-        $this->assertEquals("GET", $request->getMethod());   
-        $this->assertTrue($request->hasHeader('Accept'));
-        $this->assertEquals(["application/json"], $request->getHeaders()['Accept']);
-        $this->assertFalse($request->hasHeader('Authorization'));
-      
-
-    
-    }
-
     public function testQazaqParse_Success(): void
     {
 
