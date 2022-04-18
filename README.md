@@ -1,2 +1,5 @@
-# morpher-ws3-php-client
-PHP-клиент веб-сервиса ws3.morpher.ru
+
+# PHP-клиент веб-сервиса ws3.morpher.ru
+
+[Composer package](https://packagist.org/packages/morpher/ws3-client)
+
