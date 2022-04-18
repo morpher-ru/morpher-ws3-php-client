@@ -11,28 +11,18 @@ use Morpher\Ws3Client\Qazaq as Qazaq;
 
 final class QazaqDeclensionTest extends IntegrationBase
 {
-
-    
     public function testQazaqParse_Success(): void
     {
-
-   
         $lemma='тест';
 
- 
-        
         $declensionResult=self::$testMorpher->qazaq->Parse($lemma);
 
-
-        $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
-        //$this->assertNotNull($declensionResult);
-        $this->assertInstanceOf(Qazaq\SameNumberForms::class,$declensionResult->Plural);
-
+        $this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
+        $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
 
         $this->assertEquals("тест", $declensionResult->Nominative);
 
-        
-   
+
         $this->assertEquals("тестің", $declensionResult->Genitive); //+'тестің'
         $this->assertEquals("теске", $declensionResult->Dative);//+'теске'
         $this->assertEquals("тесті", $declensionResult->Accusative);//+'тесті'
@@ -50,24 +40,17 @@ final class QazaqDeclensionTest extends IntegrationBase
 
 
     }
-    
+
 
 
     public function testQazaqParse_Personal_Success():void
     {
-
-    
         $lemma='бала';
 
-
-        
         $declensionResult=self::$testMorpher->qazaq->Parse($lemma);
 
-
         $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
-        //$this->assertNotNull($declensionResult);
-        $this->assertInstanceOf(Qazaq\SameNumberForms::class,$declensionResult->Plural);        
-
+        $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
 
         $this->assertNotNull($declensionResult);
         $this->assertEquals("бала", $declensionResult->Nominative);
@@ -235,30 +218,21 @@ final class QazaqDeclensionTest extends IntegrationBase
     public function testParse_ExceptionNoWords(): void
     {
         $this->expectException(Qazaq\QazaqWordsNotFound::class);
-        //$this->expectExceptionCode(5);
         $this->expectExceptionMessage('Не найдено казахских слов.');
 
- 
         $lemma='test';
     
-        $declensionResult=self::$testMorpher->qazaq->Parse($lemma);
-
+        self::$testMorpher->qazaq->Parse($lemma);
     }
-
 
     public function testParse_ExceptionNoS(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        //$this->expectExceptionCode(6);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-    
         $lemma='';
     
-        $declensionResult=self::$testMorpher->qazaq->Parse($lemma);
-
+        self::$testMorpher->qazaq->Parse($lemma);
     }
-
-
 
 }

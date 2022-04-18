@@ -25,8 +25,6 @@ class Client
 		{
 
 			$result_raw=$this->webClient->send("/qazaq/declension",$query,'GET');
-
-
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{

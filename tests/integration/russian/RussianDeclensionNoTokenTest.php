@@ -24,7 +24,7 @@ final class RussianDeclensionNoTokenTest extends TestCase
     {
         $token=self::getToken();
 
-        self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);        
+        self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);
     }
 
     public function testParse_SuccessNoToken(): void
