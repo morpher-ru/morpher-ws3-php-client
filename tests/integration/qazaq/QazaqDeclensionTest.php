@@ -21,7 +21,6 @@ final class QazaqDeclensionTest extends IntegrationBase
 
         $this->assertEquals("тест", $declensionResult->Nominative);
 
-
         $this->assertEquals("тестің", $declensionResult->Genitive);
         $this->assertEquals("теске", $declensionResult->Dative);
         $this->assertEquals("тесті", $declensionResult->Accusative);
