@@ -6,7 +6,7 @@ use GuzzleHttp\Exception\ClientException;
 
 class WebClient
 {
-	private string $_token='';	
+	private string $_token='';
 	private string $_tokenBase64='';	
 	private \GuzzleHttp\Client $client;
 
@@ -96,6 +96,4 @@ class WebClient
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$text);
 		}
 	}
-
-
 }
