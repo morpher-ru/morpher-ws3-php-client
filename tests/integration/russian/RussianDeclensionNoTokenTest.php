@@ -13,13 +13,13 @@ use Morpher\Ws3Client\Russian as Russian;
 
 final class RussianDeclensionNoTokenTest extends TestCase
 {
-    protected static function getToken(): string
+    static function getToken(): string
     {
         return '';//NO TOKEN
     }
 
-    protected static $webClient;
-    protected static $testMorpher;
+    static WebClient $webClient;
+    static Morpher $testMorpher;
 
     public static function setUpBeforeClass(): void
     {

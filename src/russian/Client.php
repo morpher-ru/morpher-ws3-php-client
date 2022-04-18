@@ -20,11 +20,12 @@ class Client
 	{
 		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
 		
-		$query="s=".rawurlencode($lemma);
+		$query=["s"=>$lemma];
 		if (!empty($flags))
 		{
-			$query.="&flags=".implode(',',$flags);
+			$query['flags']=implode(',',$flags);
 		}
+
 		$result_raw="";
 		try{
 			$headers=['Accept'=> 'application/json'];

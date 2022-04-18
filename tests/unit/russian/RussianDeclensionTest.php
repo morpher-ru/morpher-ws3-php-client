@@ -37,7 +37,7 @@ final class RussianDeclensionTest extends TestCase
         $uri=$request->getUri();
         $this->assertEquals('/russian/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
-        $this->assertEquals('s='.rawurlencode($lemma).'&flags=flagA,flagB,flagC',$uri->getQuery());
+        $this->assertEquals('s='.rawurlencode($lemma).'&flags='.rawurlencode('flagA,flagB,flagC'),$uri->getQuery());
     
     }
 
