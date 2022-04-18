@@ -3,12 +3,11 @@ namespace Morpher\Ws3Client\Qazaq;
 
 require_once __DIR__."/../../vendor/autoload.php";
 
-
 use Morpher\Ws3Client\WebClient;
-use Morpher\Ws3Client\Qazaq\DeclensionResult;
+
 class Client
 {
-	private $webClient;
+	private WebClient $webClient;
 	
 	public function __construct(WebClient $webClient)
 	{
@@ -23,8 +22,7 @@ class Client
 
 		try
 		{
-
-			$result_raw=$this->webClient->send("/qazaq/declension",$query,'GET');
+			$result_raw=$this->webClient->send("/qazaq/declension", $query);
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
@@ -33,7 +31,6 @@ class Client
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
 		}
 
-		//
 		$result=WebClient::JsonDecode($result_raw);
 
 		$result['A']=$lemma;	

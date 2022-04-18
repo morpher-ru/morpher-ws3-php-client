@@ -4,19 +4,16 @@ namespace Morpher\Ws3Client\Russian;
 require_once __DIR__."/../../vendor/autoload.php";
 
 use Morpher\Ws3Client\WebClient;
-use Morpher\Ws3Client\Russian\DeclensionResult;
-
 
 class Client
 {
-	private $webClient;
+	private readonly WebClient $webClient;
 	
 	public function __construct(WebClient $webClient)
 	{
 		$this->webClient=$webClient;
 	}
-	
-	
+
 	public function Parse(string $lemma,array $flags=[]): DeclensionResult
 	{
 		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
@@ -27,10 +24,9 @@ class Client
 			$query['flags']=implode(',',$flags);
 		}
 
-		$result_raw="";
-		try{
-
-			$result_raw=$this->webClient->send("/russian/declension",$query,'GET');
+		try
+        {
+			$result_raw=$this->webClient->send("/russian/declension", $query);
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
@@ -44,12 +40,10 @@ class Client
 		}
 
 		$result=WebClient::JsonDecode($result_raw);
-		//
-		//parse result
 
 		$result['И']=$lemma;
-		$declensionResult = new DeclensionResult($result);
 
+		$declensionResult = new DeclensionResult($result);
 
 		return $declensionResult;
 	}
