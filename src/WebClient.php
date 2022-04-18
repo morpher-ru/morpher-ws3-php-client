@@ -12,7 +12,6 @@ class WebClient
 
 	public function __construct($url='https://ws3.morpher.ru',$token='',$timeout=10.0,$handler=null)
 	{
-		$this->_url=$url;
 		$this->_token=$token;
 		$this->_tokenBase64=base64_encode($token);
 
