@@ -32,237 +32,26 @@ final class QazaqDeclensionTest extends IntegrationBase
         $this->assertEquals("тест", $declensionResult->Nominative);
 
         
-   /*
-        $this->assertEquals("тесттің", $declensionResult->Genitive); //+'тестің'
-        $this->assertEquals("тестке", $declensionResult->Dative);//+'теске'
-        $this->assertEquals("тестті", $declensionResult->Accusative);//+'тесті'
-        $this->assertEquals("тесттен", $declensionResult->Ablative);//тестен
-        $this->assertEquals("тестте", $declensionResult->Locative);//тесте
-        $this->assertEquals("тестпен", $declensionResult->Instrumental);//теспен
+   
+        $this->assertEquals("тестің", $declensionResult->Genitive); //+'тестің'
+        $this->assertEquals("теске", $declensionResult->Dative);//+'теске'
+        $this->assertEquals("тесті", $declensionResult->Accusative);//+'тесті'
+        $this->assertEquals("тестен", $declensionResult->Ablative);//тестен
+        $this->assertEquals("тесте", $declensionResult->Locative);//тесте
+        $this->assertEquals("теспен", $declensionResult->Instrumental);//теспен
 
-        $this->assertEquals("тесттер", $declensionResult->Plural->Nominative);//тестер
-        $this->assertEquals("тесттертің", $declensionResult->Plural->Genitive);//тестердің
-        $this->assertEquals("тесттерке", $declensionResult->Plural->Dative);//тестерге
-        $this->assertEquals("тесттерті", $declensionResult->Plural->Accusative);//тестерді
-        $this->assertEquals("тесттертен", $declensionResult->Plural->Ablative);//тестерден
-        $this->assertEquals("тесттерте", $declensionResult->Plural->Locative);//тестерде
-        $this->assertEquals("тесттерпен", $declensionResult->Plural->Instrumental);//тестермен
+        $this->assertEquals("тестер", $declensionResult->Plural->Nominative);//тестер
+        $this->assertEquals("тестердің", $declensionResult->Plural->Genitive);//тестердің
+        $this->assertEquals("тестерге", $declensionResult->Plural->Dative);//тестерге
+        $this->assertEquals("тестерді", $declensionResult->Plural->Accusative);//тестерді
+        $this->assertEquals("тестерден", $declensionResult->Plural->Ablative);//тестерден
+        $this->assertEquals("тестерде", $declensionResult->Plural->Locative);//тестерде
+        $this->assertEquals("тестермен", $declensionResult->Plural->Instrumental);//тестермен
 
-*/
+
     }
     
 
-
-/*
-        plural
-            [Nominative] => тестер
-            [Genitive] => тестердің
-            [Dative] => тестерге
-            [Accusative] => тестерді
-            [Ablative] => тестерден
-            [Locative] => тестерде
-            [Instrumental] => тестермен
-
-
-
-    [Nominative] => тест
-    [Genitive] => тестің
-    [Dative] => теске
-    [Accusative] => тесті
-    [Ablative] => тестен
-    [Locative] => тесте
-    [Instrumental] => теспен
-    [FirstPerson] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-        (
-            [Nominative] => тесім
-            [Genitive] => тесімнің
-            [Dative] => тесіме
-            [Accusative] => тесімді
-            [Ablative] => тесімнен
-            [Locative] => тесімде
-            [Instrumental] => тесіммен
-        )
-
-    [SecondPerson] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-        (
-            [Nominative] => тесің
-            [Genitive] => тесіңнің
-            [Dative] => тесіңе
-            [Accusative] => тесіңді
-            [Ablative] => тесіңнен
-            [Locative] => тесіңде
-            [Instrumental] => тесіңмен
-        )
-
-    [SecondPersonRespectful] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-        (
-            [Nominative] => тесіңіз
-            [Genitive] => тесіңіздің
-            [Dative] => тесіңізге
-            [Accusative] => тесіңізді
-            [Ablative] => тесіңізден
-            [Locative] => тесіңізде
-            [Instrumental] => тесіңізбен
-        )
-
-    [ThirdPerson] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-        (
-            [Nominative] => тесі
-            [Genitive] => тесінің
-            [Dative] => тесіне
-            [Accusative] => тесін
-            [Ablative] => тесінен
-            [Locative] => тесінде
-            [Instrumental] => тесімен
-        )
-
-    [FirstPersonPlural] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-        (
-            [Nominative] => тесіміз
-            [Genitive] => тесіміздің
-            [Dative] => тесімізге
-            [Accusative] => тесімізді
-            [Ablative] => тесімізден
-            [Locative] => тесімізде
-            [Instrumental] => тесімізбен
-        )
-
-    [SecondPersonPlural] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-        (
-            [Nominative] => тестерің
-            [Genitive] => тестеріңнің
-            [Dative] => тестеріңе
-            [Accusative] => тестеріңді
-            [Ablative] => тестеріңнен
-            [Locative] => тестеріңде
-            [Instrumental] => тестеріңмен
-        )
-
-    [SecondPersonRespectfulPlural] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-        (
-            [Nominative] => тестеріңіз
-            [Genitive] => тестеріңіздің
-            [Dative] => тестеріңізге
-            [Accusative] => тестеріңізді
-            [Ablative] => тестеріңізден
-            [Locative] => тестеріңізде
-            [Instrumental] => тестеріңізбен
-        )
-
-    [ThirdPersonPlural] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-        (
-            [Nominative] => тестері
-            [Genitive] => тестерінің
-            [Dative] => тестеріне
-            [Accusative] => тестерін
-            [Ablative] => тестерінен
-            [Locative] => тестерінде
-            [Instrumental] => тестерімен
-        )
-
-    [Plural] => Morpher\Ws3Client\Qazaq\SameNumberForms Object
-        (
-            [Nominative] => тестер
-            [Genitive] => тестердің
-            [Dative] => тестерге
-            [Accusative] => тестерді
-            [Ablative] => тестерден
-            [Locative] => тестерде
-            [Instrumental] => тестермен
-            [FirstPerson] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-                (
-                    [Nominative] => тестерім
-                    [Genitive] => тестерімнің
-                    [Dative] => тестеріме
-                    [Accusative] => тестерімді
-                    [Ablative] => тестерімнен
-                    [Locative] => тестерімде
-                    [Instrumental] => тестеріммен
-                )
-
-            [SecondPerson] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-                (
-                    [Nominative] => тестерің
-                    [Genitive] => тестеріңнің
-                    [Dative] => тестеріңе
-                    [Accusative] => тестеріңді
-                    [Ablative] => тестеріңнен
-                    [Locative] => тестеріңде
-                    [Instrumental] => тестеріңмен
-                )
-
-            [SecondPersonRespectful] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-                (
-                    [Nominative] => тестеріңіз
-                    [Genitive] => тестеріңіздің
-                    [Dative] => тестеріңізге
-                    [Accusative] => тестеріңізді
-                    [Ablative] => тестеріңізден
-                    [Locative] => тестеріңізде
-                    [Instrumental] => тестеріңізбен
-                )
-
-            [ThirdPerson] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-                (
-                    [Nominative] => тестері
-                    [Genitive] => тестерінің
-                    [Dative] => тестеріне
-                    [Accusative] => тестерін
-                    [Ablative] => тестерінен
-                    [Locative] => тестерінде
-                    [Instrumental] => тестерімен
-                )
-
-            [FirstPersonPlural] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-                (
-                    [Nominative] => тестеріміз
-                    [Genitive] => тестеріміздің
-                    [Dative] => тестерімізге
-                    [Accusative] => тестерімізді
-                    [Ablative] => тестерімізден
-                    [Locative] => тестерімізде
-                    [Instrumental] => тестерімізбен
-                )
-
-            [SecondPersonPlural] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-                (
-                    [Nominative] => тестерің
-                    [Genitive] => тестеріңнің
-                    [Dative] => тестеріңе
-                    [Accusative] => тестеріңді
-                    [Ablative] => тестеріңнен
-                    [Locative] => тестеріңде
-                    [Instrumental] => тестеріңмен
-                )
-
-            [SecondPersonRespectfulPlural] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-                (
-                    [Nominative] => тестеріңіз
-                    [Genitive] => тестеріңіздің
-                    [Dative] => тестеріңізге
-                    [Accusative] => тестеріңізді
-                    [Ablative] => тестеріңізден
-                    [Locative] => тестеріңізде
-                    [Instrumental] => тестеріңізбен
-                )
-
-            [ThirdPersonPlural] => Morpher\Ws3Client\Qazaq\DeclensionForms Object
-                (
-                    [Nominative] => тестері
-                    [Genitive] => тестерінің
-                    [Dative] => тестеріне
-                    [Accusative] => тестерін
-                    [Ablative] => тестерінен
-                    [Locative] => тестерінде
-                    [Instrumental] => тестерімен
-                )
-
-        )
-
-)
-
-
-*/
 
     public function testQazaqParse_Personal_Success():void
     {
