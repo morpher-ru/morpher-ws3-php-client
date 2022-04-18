@@ -13,8 +13,8 @@ final class ServiceLevelErrorsTest extends TestCase
     public function CallbacksProvider():array
     {
         return [  //список функций для прогонки через тесты
-            [function ($testMorpher)    {     $testMorpher->russian->Parse('тест');     }],//dataset #0
-            [function ($testMorpher)    {     $testMorpher->qazaq->Parse('тест');       }],//dataset #1
+            [function ($testMorpher) { $testMorpher->russian->Parse('тест');     }],
+            [function ($testMorpher) { $testMorpher->qazaq->Parse('тест');       }],
         ];
     }
 
