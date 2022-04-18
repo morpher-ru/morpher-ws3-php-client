@@ -5,7 +5,6 @@ require_once __DIR__."/../../vendor/autoload.php";
 
 use PHPUnit\Framework\TestCase;
 
-use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;
 
 use Morpher\Ws3Client\Russian as Russian;

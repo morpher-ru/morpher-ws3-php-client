@@ -9,8 +9,6 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Middleware;
 
-use Morpher\Ws3Client\WebClient;
-
 class MorpherTestHelper
 {
     public static function createMockMorpher(Array &$container,string $return_text='',int $code=200,$token='testtoken'): \Morpher\Ws3Client\Morpher
