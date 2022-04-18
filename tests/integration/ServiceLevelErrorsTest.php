@@ -31,8 +31,7 @@ final class ServiceLevelErrorsTest extends TestCase
     {
         $token='23525555555555555555555555555555555555555555555555';// incorrect format token
 
-        $webClient=new WebClient(IntegrationBase::BASE_URL,$token);
-        $testMorpher=new Morpher($webClient);     
+        $testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);     
 
         $this->expectException(\Morpher\Ws3Client\TokenIncorrectFormat::class);
 
@@ -47,8 +46,7 @@ final class ServiceLevelErrorsTest extends TestCase
     {
         $token='41e2111a-767b-4a07-79A3-d52c02cb5a0d';// not existing token, valid length
  
-        $webClient=new WebClient(IntegrationBase::BASE_URL,$token);
-        $testMorpher=new Morpher($webClient);     
+        $testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);     
 
         $this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
 
@@ -60,10 +58,9 @@ final class ServiceLevelErrorsTest extends TestCase
      */ 
     public function testTimeoutError(callable $callback): void
     {
-        $token='41e2111a-767b-4a07-79A3-d52c02cb5a0d';// not existing token, valid length
  
-        $webClient=new WebClient('http://10.200.200.200',$token,0.1);//not existing ip, timeout in 0.1 sec
-        $testMorpher=new Morpher($webClient);     
+        //not existing ip, timeout in 0.1 sec
+        $testMorpher=new Morpher('http://10.200.200.200','',0.1);     
 
         $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
 

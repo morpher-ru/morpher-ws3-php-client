@@ -18,17 +18,13 @@ final class RussianDeclensionNoTokenTest extends TestCase
         return '';//NO TOKEN
     }
 
-    static WebClient $webClient;
     static Morpher $testMorpher;
 
     public static function setUpBeforeClass(): void
     {
         $token=self::getToken();
 
-
-
-        self::$webClient=new WebClient(IntegrationBase::BASE_URL,$token);
-        self::$testMorpher=new Morpher(self::$webClient);        
+        self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);        
     }
 
     public function testParse_SuccessNoToken(): void

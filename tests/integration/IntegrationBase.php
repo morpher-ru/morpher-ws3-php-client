@@ -14,8 +14,8 @@ use Morpher\Ws3Client\Russian as Russian;
 class IntegrationBase extends TestCase
 {
     const BASE_URL='https://ws3.morpher.ru';
-    protected static $webClient;
-    protected static $testMorpher;
+
+    protected static Morpher $testMorpher;
 
     protected static function getToken(): string
     {
@@ -39,7 +39,7 @@ class IntegrationBase extends TestCase
     public static function setUpBeforeClass(): void
     {
         $token=self::getToken();
-        self::$webClient=new WebClient(self::BASE_URL,$token);
-        self::$testMorpher=new Morpher(self::$webClient);        
+
+        self::$testMorpher=new Morpher(self::BASE_URL,$token);        
     }
 }

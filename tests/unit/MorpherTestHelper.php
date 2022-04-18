@@ -27,9 +27,7 @@ class MorpherTestHelper
         // Add the history middleware to the handler stack.
         $handlerStack->push($history);
                 
-        $webClientMock=new WebClient('https://test.uu',$token,10,$handlerStack);
-  
-        $testMorpher=new \Morpher\Ws3Client\Morpher($webClientMock);
+        $testMorpher=new \Morpher\Ws3Client\Morpher('https://test.uu',$token,10,$handlerStack);
 
         return $testMorpher;
     }    
@@ -43,9 +41,7 @@ class MorpherTestHelper
         
         $handlerStack = HandlerStack::create($mock);      
                 
-        $webClientMock=new WebClient('https://test.uu','testtoken',10,$handlerStack);
-  
-        $testMorpher=new \Morpher\Ws3Client\Morpher($webClientMock);
+        $testMorpher=new \Morpher\Ws3Client\Morpher('https://test.uu','testtoken',10,$handlerStack);
 
         return $testMorpher;
     }    
