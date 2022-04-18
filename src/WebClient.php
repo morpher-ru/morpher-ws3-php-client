@@ -10,16 +10,6 @@ class WebClient
 	private string $_tokenBase64='';	
 	private \GuzzleHttp\Client $client;
 
-	public function getToken(): string
-	{
-		return $this->_token;
-	}
-
-	public function getTokenBase64(): string
-	{
-		return $this->_tokenBase64;
-	}
-
 	public function __construct($url='https://ws3.morpher.ru',$token='',$timeout=10.0,$handler=null)
 	{
 		$this->_url=$url;
