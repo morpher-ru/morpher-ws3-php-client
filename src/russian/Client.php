@@ -221,7 +221,7 @@ class Client
 		return $result;
 	}
 
-	public function AddStressmarks(string $text)
+	public function AddStressmarks(string $text):string
 	{
 		if (trim($text)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
 		

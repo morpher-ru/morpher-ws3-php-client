@@ -14,7 +14,7 @@ class Client
 		$this->webClient=$webClient;
 	}
 	
-	public function Parse(string $lemma)
+	public function Parse(string $lemma): DeclensionResult
 	{
 		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
 
