@@ -19,4 +19,25 @@ class Morpher
 		$this->qazaq=new Qazaq\Client($this->_webClient);
 		$this->ukrainian=new Ukrainian\Client($this->_webClient);
 	}
+
+	public function QueriesLeftForToday():int
+	{
+
+		$result_raw="";
+		try{
+
+			$result_raw=$this->_webClient->send("/get_queries_left_for_today",[],'GET');
+		}
+		catch (\Morpher\Ws3Client\MorpherError $ex)
+		{
+	
+			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+		}
+
+		$result=WebClient::JsonDecode($result_raw);
+		//
+		//parse result
+
+		return (int)$result;		
+	}
 }
