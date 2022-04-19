@@ -8,7 +8,7 @@ use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Russian\DeclensionResult;
 use TypeError;
 
-class UserDictBase
+abstract class UserDictBase
 {
 	protected readonly WebClient $webClient;
 
