@@ -71,7 +71,7 @@ final class UkrainianUserDictTest extends TestCase
         $this->assertEquals("Пантеру",$entry->Singular->Accusative);
         $this->assertEquals("Пантерой",$entry->Singular->Instrumental);
         $this->assertEquals("о Пантере",$entry->Singular->Prepositional);
-        $this->assertEquals("в Пантере",$entry->Singular->Locative);
+        $this->assertEquals("в Пантере",$entry->Singular->Vocative);
 
 
 
@@ -147,7 +147,7 @@ final class UkrainianUserDictTest extends TestCase
         
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative='чебуратор';
-        $correction->Singular->Locative='в чебураторе';
+        $correction->Singular->Vocative='в чебураторе';
 
 
  
@@ -187,8 +187,8 @@ final class UkrainianUserDictTest extends TestCase
         
         $correction=new CorrectionEntry();
         //$correction->Singular->Nominative='чебуратор';
-        $correction->Singular->Locative='в чебураторе';
-        //$correction->Plural->Locative='в чебураторах';
+        $correction->Singular->Vocative='в чебураторе';
+        //$correction->Plural->Vocative='в чебураторах';
  
         $lresult=$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
     
@@ -211,8 +211,8 @@ final class UkrainianUserDictTest extends TestCase
         
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative='чебуратор';
-        //$correction->Singular->Locative='в чебураторе';
-        //$correction->Plural->Locative='в чебураторах';
+        //$correction->Singular->Vocative='в чебураторе';
+        //$correction->Plural->Vocative='в чебураторах';
  
         $lresult=$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
     

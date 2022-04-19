@@ -31,7 +31,7 @@ final class UkrainianSpellTest extends IntegrationBase
         $this->assertEquals("десять", $spellingResult->NumberDeclension->Accusative);
         $this->assertEquals("десятьма", $spellingResult->NumberDeclension->Instrumental);
         $this->assertEquals("десяти", $spellingResult->NumberDeclension->Prepositional);
-        $this->assertEquals("десять", $spellingResult->NumberDeclension->Locative);
+        $this->assertEquals("десять", $spellingResult->NumberDeclension->Vocative);
 
         // unit
         $this->assertEquals("рублів", $spellingResult->UnitDeclension->Nominative);
@@ -40,7 +40,7 @@ final class UkrainianSpellTest extends IntegrationBase
         $this->assertEquals("рублів", $spellingResult->UnitDeclension->Accusative);
         $this->assertEquals("рублями", $spellingResult->UnitDeclension->Instrumental);
         $this->assertEquals("рублях", $spellingResult->UnitDeclension->Prepositional);
-        $this->assertEquals("рублів", $spellingResult->UnitDeclension->Locative);
+        $this->assertEquals("рублів", $spellingResult->UnitDeclension->Vocative);
     }
 
     public function testSpell_Empty(): void

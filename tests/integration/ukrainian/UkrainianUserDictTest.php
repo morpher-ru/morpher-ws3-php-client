@@ -32,8 +32,8 @@ final class UkrainianUserDictTest extends IntegrationBase
         
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебураторке';
-        //$correction->Plural->Locative='в чебураториях';
+        $correction->Singular->Vocative='в чебураторке';
+        //$correction->Plural->Vocative='в чебураториях';
 
         self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
 
@@ -50,7 +50,7 @@ final class UkrainianUserDictTest extends IntegrationBase
                 $this->assertNull($item->Singular->Accusative); 
                 $this->assertNull($item->Singular->Instrumental); 
                 $this->assertNull($item->Singular->Prepositional); 
-                $this->assertEquals('в чебураторке', $item->Singular->Locative,"Не удалось добавление косвенной формы в словаре");
+                $this->assertEquals('в чебураторке', $item->Singular->Vocative,"Не удалось добавление косвенной формы в словаре");
      
 
 
@@ -62,7 +62,7 @@ final class UkrainianUserDictTest extends IntegrationBase
 
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебурелии';
+        $correction->Singular->Vocative='в чебурелии';
 
 
         self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
@@ -80,7 +80,7 @@ final class UkrainianUserDictTest extends IntegrationBase
                 $this->assertNull($item->Singular->Accusative); 
                 $this->assertNull($item->Singular->Instrumental); 
                 $this->assertNull($item->Singular->Prepositional); 
-                $this->assertEquals('в чебурелии', $item->Singular->Locative,"Не удалось обновление косвенной формы в словаре");
+                $this->assertEquals('в чебурелии', $item->Singular->Vocative,"Не удалось обновление косвенной формы в словаре");
      
  
             }
@@ -118,7 +118,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебураторке';
+        $correction->Singular->Vocative='в чебураторке';
 
         $correction->Gender=Gender::Feminine;
 
@@ -137,7 +137,7 @@ final class UkrainianUserDictTest extends IntegrationBase
                 $this->assertNull($item->Singular->Accusative); 
                 $this->assertNull($item->Singular->Instrumental); 
                 $this->assertNull($item->Singular->Prepositional); 
-                $this->assertEquals('в чебураторке', $item->Singular->Locative,"Не удалось добавление косвенной формы в словаре");
+                $this->assertEquals('в чебураторке', $item->Singular->Vocative,"Не удалось добавление косвенной формы в словаре");
      
                  $this->assertEquals(Gender::Feminine,$item->Gender); 
             }
@@ -148,7 +148,7 @@ final class UkrainianUserDictTest extends IntegrationBase
 
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебурелии';
+        $correction->Singular->Vocative='в чебурелии';
          $correction->Gender=Gender::Masculine;
 
         self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
@@ -166,7 +166,7 @@ final class UkrainianUserDictTest extends IntegrationBase
                 $this->assertNull($item->Singular->Accusative); 
                 $this->assertNull($item->Singular->Instrumental); 
                 $this->assertNull($item->Singular->Prepositional); 
-                $this->assertEquals('в чебурелии', $item->Singular->Locative,"Не удалось обновление косвенной формы в словаре");
+                $this->assertEquals('в чебурелии', $item->Singular->Vocative,"Не удалось обновление косвенной формы в словаре");
      
 
                 $this->assertEquals(Gender::Masculine,$item->Gender); 
@@ -198,7 +198,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         $correction->Singular->Accusative="чебурень";
         $correction->Singular->Instrumental="чебурылом";
         $correction->Singular->Prepositional="чебурени";
-        $correction->Singular->Locative='в чебураторке';
+        $correction->Singular->Vocative='в чебураторке';
 
 
 
@@ -224,7 +224,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         $this->assertNotEquals($correction->Singular->Accusative,$declension1->Accusative); 
         $this->assertNotEquals($correction->Singular->Instrumental,$declension1->Instrumental); 
         $this->assertNotEquals($correction->Singular->Prepositional,$declension1->Prepositional); 
-        $this->assertNotEquals($correction->Singular->Locative, $declension1->Locative);
+        $this->assertNotEquals($correction->Singular->Vocative, $declension1->Vocative);
 
          unset($declension1);
         
@@ -245,7 +245,7 @@ final class UkrainianUserDictTest extends IntegrationBase
                 $this->assertEquals($correction->Singular->Accusative,$item->Singular->Accusative); 
                 $this->assertEquals($correction->Singular->Instrumental,$item->Singular->Instrumental); 
                 $this->assertEquals($correction->Singular->Prepositional,$item->Singular->Prepositional); 
-                $this->assertEquals($correction->Singular->Locative, $item->Singular->Locative);
+                $this->assertEquals($correction->Singular->Vocative, $item->Singular->Vocative);
      
  
             }
@@ -261,7 +261,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         $this->assertEquals($correction->Singular->Accusative,$declension2->Accusative); 
         $this->assertEquals($correction->Singular->Instrumental,$declension2->Instrumental); 
         $this->assertEquals($correction->Singular->Prepositional,$declension2->Prepositional); 
-        $this->assertEquals($correction->Singular->Locative, $declension2->Locative);
+        $this->assertEquals($correction->Singular->Vocative, $declension2->Vocative);
 
 
         unset($declension2);
@@ -287,7 +287,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         $this->assertNotEquals($correction->Singular->Accusative,$declension3->Accusative); 
         $this->assertNotEquals($correction->Singular->Instrumental,$declension3->Instrumental); 
         $this->assertNotEquals($correction->Singular->Prepositional,$declension3->Prepositional); 
-        $this->assertNotEquals($correction->Singular->Locative, $declension3->Locative);
+        $this->assertNotEquals($correction->Singular->Vocative, $declension3->Vocative);
 
 
     }

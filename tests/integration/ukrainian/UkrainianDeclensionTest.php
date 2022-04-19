@@ -27,7 +27,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->assertEquals("тест", $declensionResult->Accusative);
         $this->assertEquals("тестом", $declensionResult->Instrumental);
         $this->assertEquals("тесті", $declensionResult->Prepositional);
-        $this->assertEquals("тесте", $declensionResult->Locative);
+        $this->assertEquals("тесте", $declensionResult->Vocative);
 
          $this->assertEquals(Ukrainian\Gender::Masculine, $declensionResult->Gender);
     }

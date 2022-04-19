@@ -85,7 +85,7 @@ final class UkrainianDeclensionTest extends TestCase
         $this->assertEquals("теста", $declensionResult->Accusative);
         $this->assertEquals("тестом", $declensionResult->Instrumental);
         $this->assertEquals("тесті", $declensionResult->Prepositional);
-        $this->assertEquals("тесте", $declensionResult->Locative);        
+        $this->assertEquals("тесте", $declensionResult->Vocative);        
  
 
         $this->assertEquals(Ukrainian\Gender::Masculine, $declensionResult->Gender);

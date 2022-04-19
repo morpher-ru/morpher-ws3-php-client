@@ -12,7 +12,7 @@ class DeclensionForms
     public readonly ?string $Accusative;
     public readonly ?string $Instrumental;
     public readonly ?string $Prepositional;
-    public readonly ?string $Locative;    
+    public readonly ?string $Vocative;    
 
     public readonly array $data; 
     function __construct($data)
@@ -25,7 +25,7 @@ class DeclensionForms
         $this->Accusative=$data['З'] ?? null; 
         $this->Instrumental=$data['О'] ?? null; 
         $this->Prepositional=$data['М'] ?? null; 
-        $this->Locative=$data['К'] ?? null; 
+        $this->Vocative=$data['К'] ?? null; 
 
 
     }

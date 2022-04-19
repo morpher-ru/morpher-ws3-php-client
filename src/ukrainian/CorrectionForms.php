@@ -12,7 +12,7 @@ class CorrectionForms
     public  ?string $Accusative;
     public  ?string $Instrumental;
     public  ?string $Prepositional;
-    public  ?string $Locative;    
+    public  ?string $Vocative;    
 
     //public readonly array $data; 
     function __construct($data)
@@ -25,7 +25,7 @@ class CorrectionForms
         $this->Accusative=$data['З'] ?? null; 
         $this->Instrumental=$data['О'] ?? null; 
         $this->Prepositional=$data['М'] ?? null; 
-        $this->Locative=$data['К'] ?? null; 
+        $this->Vocative=$data['К'] ?? null; 
 
 
     }
@@ -42,7 +42,7 @@ class CorrectionForms
         $data['З']=$this->Accusative; 
         $data['О']=$this->Instrumental; 
         $data['М']=$this->Prepositional; 
-        $data['К']=$this->Locative;        
+        $data['К']=$this->Vocative;        
 
         $data=array_filter($data,function($var){ return !($var===null); } );
         return $data;
