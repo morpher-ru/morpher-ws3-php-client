@@ -20,7 +20,7 @@ class Morpher
 		$this->ukrainian=new Ukrainian\Client($this->_webClient);
 	}
 
-	public function QueriesLeftForToday():int
+	public function getQueriesLeftForToday():int
 	{
 
 		$result_raw="";

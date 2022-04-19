@@ -21,7 +21,7 @@ final class QueriesLeftTest extends TestCase
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $result=$testMorpher->QueriesLeftForToday();
+        $result=$testMorpher->getQueriesLeftForToday();
 
 
         $transaction=reset($container);//get first element of requests history

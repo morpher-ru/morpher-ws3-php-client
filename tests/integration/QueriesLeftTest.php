@@ -15,7 +15,7 @@ final class QueriesLeftTest extends IntegrationBase
     public  function testQueriesLeft(): void
     {
 
-        $c=self::$testMorpher->QueriesLeftForToday();
+        $c=self::$testMorpher->getQueriesLeftForToday();
         print "\r\n";
         print($c." queries left for today\r\n");
         $this->assertTrue($c>0,"daily queries limit exceed, or incorrect response");
