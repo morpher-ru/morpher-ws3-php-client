@@ -60,7 +60,7 @@
     $declensionResult  = $morpher->russian->Parse('трамвай');
     print_r($declensionResult);
   
-Где  $token   укажите токен, который получили при регистрации на сайте morhper.ru(https://morpher.ru)  
+Где  $token=...   укажите токен, который получили при регистрации на сайте morhper.ru(https://morpher.ru)  
 Если токен пустой, сервис будет работать с ограничениями бесплатной версии.  
 Можно вызвать конструктор без аргументов, в этом случае будут использоваться параметры по умолчанию.  
   
@@ -69,10 +69,10 @@
   
 Входные параметры  
 1.	Строка – слово или фраза на русском языке.  
-2.	Массив флагов (необязательный параметр). Флаги принимают значения констант из класса Morpher\Ws3Client\Russian\Flags.  
+2.	Массив флагов (необязательный параметр). Флаги принимают значения констант из класса ``Morpher\Ws3Client\Russian\Flags``.  
   
     $declensionResult    =   $morpher->russian->Parse($lemma);  
-  
+Метод возвращает:   
 $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`` со следующими свойствами:  
 •	$declensionResult->Nominative — текст в именительном падеже;  
 •	$declensionResult->Genitive — текст в родительном падеже;  
@@ -80,11 +80,11 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 •	$declensionResult->Accusative — текст в винительном падеже;  
 •	$declensionResult->Instrumental — текст в творительном падеже;  
 •	$declensionResult->Prepositional — текст в предложном падеже;  
-•	$declensionResult->Plural — объект со свойствами-падежами для текста во множественном числе, например $declensionResult->Plural->Nominative  .  
+•	$declensionResult->Plural — объект со свойствами-падежами для текста во множественном числе, например ``$declensionResult->Plural->Nominative``  .  
   
 # При использовании платного аккаунта на сервисе определяются дополнительные свойства:  
 •	$declensionResult->PrepositionalWithO — предложный падеж с предлогом О/ОБ/ОБО, предлог выбирается автоматически;  
-•	$declensionResult->Gender — род. Тип – строка. Принимает значения констант из класса ``Morpher\Ws3Client\Russian\Gender`` , всего 4 варианта - Gender::Masculine, Gender::Feminine, Gender::Neuter, Gender::Plural, соответственно мужской, женский, средний и множественное число.  
+•	$declensionResult->Gender — род. Тип – строка. Принимает значения констант из класса ``Morpher\Ws3Client\Russian\Gender`` , всего 4 варианта - ``Gender::Masculine``, ``Gender::Feminine``, ``Gender::Neuter``, ``Gender::Plural``, соответственно мужской, женский, средний и множественное число.  
 •	$declensionResult->Where — в местном падеже (локатив) с предлогом;  
 •	$declensionResult->To – куда — в направительном падеже (аллатив) с предлогом;  
 •	$declensionResult->From –откуда — в исходном падеже (аблатив) с предлогом.  
@@ -117,8 +117,8 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 ## Пропись чисел и согласование с числом  
 Метод ``$morpher->russian->Spell($number, $unit)`` решает задачу получения прописи числа (тысяча сто двадцать пять) и согласование единицы измерения с предшествующем числом (1 попугай, 2 попугая, 5 попугаев).   
 Входные параметры:   
-$number – целое число;   
-$unit – строка. 
+- $number – целое число;   
+- $unit – строка. 
 Метод возвращает объект ``Morpher\Ws3Client\Russian\NumberSpellingResult``,  
 содержащий свойства NumberDeclension и UnitDeclension. Оба свойства содержат склонения по всем падежам.  
     $numberSpellingResult=$morpher->russian->Spell(235, 'рубль');  
@@ -126,10 +126,10 @@ $unit – строка.
     print $numberSpellingResult->UnitDeclension->Dative; //рублям  
   
 ## Пропись чисел в виде порядковых числительных  
-Метод $morpher->russian->SpellOrdinal($number, $unit) решает задачу прописи числа в форме порядкового числительного.  
+Метод ``$morpher->russian->SpellOrdinal($number, $unit)`` решает задачу прописи числа в форме порядкового числительного.  
 Входные параметры:  
-$number – целое число;   
-$unit – строка.   
+- $number – целое число;   
+- $unit – строка.   
 
 Метод возвращает объект ``Morpher\Ws3Client\Russian\NumberSpellingResult``.  
 Пример:  
@@ -187,7 +187,7 @@ $unit – строка.
 Украинский вариант склонения — метод ``$morpher->ukrainian->Parse($lemma,$flags)``.  
 Входные параметры:  
 1.  Строка, содержащая слово или фразу на украинском языке.   
-2. Массив флагов (необязательный), принимающих значения констант из класса Morpher\Ws3Client\Ukrainian\Flag.   
+2. Массив флагов (необязательный), принимающих значения констант из класса ``Morpher\Ws3Client\Ukrainian\Flag``.   
 Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\DeclensionResult``.  
     $declensionResult=$morpher->ukrainian->Parse('Крутько Катерина Володимирiвна');  
   
@@ -219,7 +219,12 @@ $unit – строка.
 •	Flag::Plural — Множественное число.  
   
 ## Пропись чисел и согласование с числом на украинском языке  
-Метод ``$morpher->ukrainian->Spell($number, $unit)`` решает задачу получения прописи числа (одна тисяча сто двадцять п'ять) и согласование единицы измерения с предшествующем числом (один рубль, два рубля, п'ять рублів). Входные параметры: $number – целое число; $unit – строка. Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\NumberSpellingResult``,  
+Метод ``$morpher->ukrainian->Spell($number, $unit)`` решает задачу получения прописи числа (одна тисяча сто двадцять п'ять) и согласование единицы измерения с предшествующем числом (один рубль, два рубля, п'ять рублів).  
+Входные параметры:  
+- $number – целое число;  
+- $unit – строка.  
+  
+Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\NumberSpellingResult``,  
 содержащий свойства ``NumberDeclension`` и ``UnitDeclension``. Оба свойства содержат склонения по всем падежам.  
     $spellingResult=$morpher->ukrainian->Spell(235, 'рубль');  
     print $spellingResult->NumberDeclension->Genitive;    // двохсот тридцяти п'яти  
@@ -237,7 +242,7 @@ $unit – строка.
     …  
     $declensionResult->ThirdPersonPlura->Dative;  
 
-А также содержит объект Plural, в котором 7 падежей множественного числа, и ещё 8 лицевых форм склонений множественного числа, каждая себе содержит 7 падежей:  
+А также содержит объект ``Plural``, в котором 7 падежей множественного числа, и ещё 8 лицевых форм склонений множественного числа, каждая себе содержит 7 падежей:  
     $declensionResult->Plural->Locative  
     $declensionResult->Plural->FirstPerson->Locative;  
     $declensionResult->Plural->SecondPerson->Nominative;  
@@ -288,8 +293,8 @@ $unit – строка.
   
 # Для русского языка:  
 Объект ``Morpher\Ws3Client\Russian\СorrectionEntry`` со следующими свойствами:  
-•	singular — объект Morpher\Ws3Client\Russian\CorrectionForms с формами в единственном числе;  
-•	plural — объект Morpher\Ws3Client\Russian\CorrectionForms с формами во множественном числе;  
+•	Singular — объект ``Morpher\Ws3Client\Russian\CorrectionForms`` с формами в единственном числе;  
+•	Plural — объект ``Morpher\Ws3Client\Russian\CorrectionForms`` с формами во множественном числе;  
 Указание рода не поддерживается.  
   
 Объект ``Morpher\Ws3Client\Russian\CorrectionForms`` со следующими свойствами:  
@@ -303,7 +308,7 @@ $unit – строка.
   
 # Для украинского языка:  
 Объект ``Morpher\Ws3Client\Ukrainian\СorrectionEntry`` со следующими свойствами:  
-•	singular — объект Morpher\Ws3Client\Ukrainian\CorrectionForms с формами в единственном числе;  
+•	Singular — объект ``Morpher\Ws3Client\Ukrainian\CorrectionForms`` с формами в единственном числе;  
 Указание рода не поддерживается.  
   
 Объект ``Morpher\Ws3Client\Ukrainian\CorrectionForms`` со следующими свойствами:  
