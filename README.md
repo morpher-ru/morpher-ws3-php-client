@@ -126,8 +126,13 @@ $unit – строка.
     print $numberSpellingResult->UnitDeclension->Dative; //рублям  
   
 ## Пропись чисел в виде порядковых числительных  
-Метод $morpher->russian->SpellOrdinal($number, $unit) решает задачу прописи числа в форме порядкового числительного. Входные параметры: $number – целое число; $unit – строка.  
-Метод возвращает объект Morpher\Ws3Client\Russian\NumberSpellingResult.  
+Метод $morpher->russian->SpellOrdinal($number, $unit) решает задачу прописи числа в форме порядкового числительного.  
+Входные параметры:  
+$number – целое число;   
+$unit – строка.   
+
+Метод возвращает объект ``Morpher\Ws3Client\Russian\NumberSpellingResult``.  
+Пример:  
     $numberSpellingResult =$morpher->russian->SpellOrdinal(5, 'колесо');  
     print $numberSpellingResult->NumberDeclension->Dative; //пятому  
     print $numberSpellingResult->UnitDeclension->Dative; //колесу  
@@ -138,14 +143,21 @@ $unit – строка.
 - как объект реализующий DateTimeInterface (например класс DateTime)  
 - как timestamp (целое число).  
 Метод возвращает объект ``Morpher\Ws3Client\Russian\DateSpellingResult``.  
-  
+Пример:  
     $dateSpellingResult = $morpher->russian->SpellDate('2019-06-29');  
     print  $dateSpellingResult->Genitive;  // двадцать девятого июня две тысячи девятнадцатого года  
     print  $dateSpellingResult->Dative; // двадцать девятому июня две тысячи девятнадцатого года  
     print  $dateSpellingResult->Instrumental;    // двадцать девятым июня две тысячи девятнадцатым годом  
   
 ## Склонение прилагательных по родам  
-Метод ``$morpher->russian->AdjectiveGenders($adjective)`` склоняет данное ему прилагательное, преобразуя его из мужского рода в женский, средний и во множественное число. Входной параметр – строка. Метод возвращает объект ``Morpher\Ws3Client\Russian\AdjectiveGenders``.  
+Метод ``$morpher->russian->AdjectiveGenders($adjective)`` склоняет данное ему прилагательное, преобразуя его из мужского рода в женский, средний и во множественное число.  
+Входной параметр – строка, прилагательное.  
+Требования к входному прилагательному:  
+•	Оно должно быть в мужском роде, в единственном числе.  
+•	Оно должно быть полным, т.е. "полный", а не "полон".  
+•	Оно должно быть одним словом. Внутри слова допустимы дефис и апостроф: рабоче-крестьянский, Кот-д'Ивуарский. Вокруг слова допустимы пробелы, кавычки и другие знаки.  
+
+Метод возвращает объект ``Morpher\Ws3Client\Russian\AdjectiveGenders``.  
   
     $adjectiveGenders =$morpher->russian->AdjectiveGenders('уважаемый');  
   
@@ -153,10 +165,7 @@ $unit – строка.
     print $adjectiveGenders->Neuter;        // уважаемое  
     print $adjectiveGenders->Plural;        // уважаемые  
   
-# Требования к входному прилагательному:  
-•	Оно должно быть в мужском роде, в единственном числе.  
-•	Оно должно быть полным, т.е. "полный", а не "полон".  
-•	Оно должно быть одним словом. Внутри слова допустимы дефис и апостроф: рабоче-крестьянский, Кот-д'Ивуарский. Вокруг слова допустимы пробелы, кавычки и другие знаки.  
+
   
 ## Образование прилагательных  
 Метод ``$morpher->russian->Adjectivize($lemma)`` образует прилагательные от названий городов и стран: Москва – московский, Ростов – ростовский, Швеция – шведский, Греция – греческий. Входной параметр – строка. Метод возвращает массив строк. Что они означают, описано здесь(https://morpher.ru/adjectivizer/).  
@@ -169,7 +178,7 @@ $unit – строка.
     $result=$morpher->russian->addStressMarks('Три девицы под окном');  
     print $result;// Три деви́цы под окно́м  
   
-Ударение отмечается символом с кодом U+0301, который вставляется сразу после ударной гласной. Односложные слова не получают знака ударения, за исключением случаев, когда предлог или частица несет на себе ударение: за́ руку, не́ за что. Варианты прочтения разделяются вертикальной чертой, например:  
+Ударение отмечается символом с кодом ``U+0301``, который вставляется сразу после ударной гласной. Односложные слова не получают знака ударения, за исключением случаев, когда предлог или частица несет на себе ударение: за́ руку, не́ за что. Варианты прочтения разделяются вертикальной чертой, например:  
     $result=$morpher->russian->addStressMarks('Белки питаются белками');  
     print $result; // Бе́лки|Белки́ пита́ются бе́лками|белка́ми  
   
@@ -196,7 +205,7 @@ $unit – строка.
 •	Vocative — текст в звательном падеже.  
   
 # При использовании платного аккаунта на сервисе, определяются дополнительные свойства:  
-•	Gender — род, тип – строка, принимает значения констант из класса Morpher\Ws3Client\Ukrainian\Gender, варианты – Gender::Masculine (Чоловічий), Gender::Feminine (Жіночий), Gender::Neuter (Середній), Gender::Plural (Множина).  
+•	Gender — род, тип – строка, принимает значения констант из класса ``Morpher\Ws3Client\Ukrainian\Gender``, варианты – ``Gender::Masculine`` (Чоловічий), ``Gender::Feminine`` (Жіночий), ``Gender::Neuter`` (Середній), ``Gender::Plural`` (Множина).  
   
 # Флаги для разрешения неоднозначностей  
 Пример:
@@ -227,6 +236,7 @@ $unit – строка.
     $declensionResult->SecondPerson->Accusative;  
     …  
     $declensionResult->ThirdPersonPlura->Dative;  
+
 А также содержит объект Plural, в котором 7 падежей множественного числа, и ещё 8 лицевых форм склонений множественного числа, каждая себе содержит 7 падежей:  
     $declensionResult->Plural->Locative  
     $declensionResult->Plural->FirstPerson->Locative;  
@@ -251,21 +261,23 @@ $unit – строка.
 •	Locative - жатыс — текст в местном падеже;  
 •	Instrumental - көмектес — текст в творительном падеже;  
 Свойства – лицевые формы ед. числа (в каждой свои падежи):  
-FirstPerson - "менің"  
-SecondPerson -  "сенің"  
-SecondPersonRespectful - "сіздің"  
-ThirdPerson - "оның"  
-FirstPersonPlural - "біздің"  
-SecondPersonPlural - "сендердің"  
-SecondPersonRespectfulPlural - "сіздердің"  
-ThirdPersonPlural - "олардың"  
+- FirstPerson - "менің"  
+- SecondPerson -  "сенің"  
+- SecondPersonRespectful - "сіздің"  
+- ThirdPerson - "оның"  
+- FirstPersonPlural - "біздің"  
+- SecondPersonPlural - "сендердің"  
+- SecondPersonRespectfulPlural - "сіздердің"  
+- ThirdPersonPlural - "олардың"  
   
 Свойство множественного числа:  
 •	Plural - көпше — возвращает аналогичный объект со свойствами-падежами и свойствами-лицевыми формами для текста во множественном числе.  
   
 ## Остаток запросов  
 Метод ``$morpher->getQueriesLeftForToday()`` возвращает остаток запросов на данный момент. Лимит на запросы восстанавливается в 00:00 UTC.  
-    print  $morpher->getQueriesLeftForToday(); // 939  
+         
+    print  $morpher->getQueriesLeftForToday(); // 939    
+
   
 ## Получить список исправлений  
 Для того чтобы получить список всех исправлений, нужно использовать метод   
@@ -317,18 +329,22 @@ ThirdPersonPlural - "олардың"
   
 ## Удаление исправления  
 Для того чтобы удалить исправление, достаточно передать строку в именительном падеже в метод   
-    $morpher->russian->UserDict->Remove($nominativeForm);   
+      
+    $morpher->russian->UserDict->Remove($nominativeForm);     
+
 или аналогично   
+      
     $morpher->ukrainian->UserDict->Remove($nominativeForm);  
   
 Пример:  
+      
     $morpher->russian->UserDict->Remove(“чебуратор");  
   
 ## Разработка  
 Должны быть установлены PHP 7.0 или выше; Composer.  
   
 # Установка  
-Сделайте форк репозитория morpher-ws3-js-client.  
+Сделайте форк репозитория ``morpher-ws3-js-client`.  
 Затем выполните:  
     $ git clone https://github.com/<your-github-username>/morpher-ws3-js-client  
     $ cd morpher-ws3-js-client  
@@ -344,18 +360,22 @@ Integration:
 Для запуска интеграционных тестов задать секретный токен, иначе тесты частично будут выполнены с ошибкой.  
 Есть два способа задать токен:  
 1)	Подходит для локального запуска. Создать файл ``secret.php`` , в котором объявить константу:  
+  
     <?php  
     DEFINE("MORPHER_RU_TOKEN" ,"xxxxx-xxxxxx-xxxxxxx");  
   
 2)	Подходит для запуска в контейнере GitHub Actions. В GitHub Actions, в разделе Secrets, создать переменную окружения MORPHER_RU_TOKEN, и сохранить токен в неё.  
   
 Запуск интеграционного теста:  
+  
     $ vendor\bin\phpunit  tests\integration  
   
 # Обновление зависимостей:  
+  
     $ composer update  
   
 # Обновление автозагрузки классов composer autoload (после каждого создания нового php файла в проекте):  
+  
     $ composer dump-autoload -o  
   
 # Выпуск нового релиза  
