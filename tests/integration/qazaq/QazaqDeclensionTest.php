@@ -4,6 +4,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 require_once __DIR__."/../IntegrationBase.php";
 use PHPUnit\Framework\TestCase;
 
+use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;
 
 use Morpher\Ws3Client\Qazaq as Qazaq;
@@ -21,21 +22,26 @@ final class QazaqDeclensionTest extends IntegrationBase
 
         $this->assertEquals("тест", $declensionResult->Nominative);
 
-        $this->assertEquals("тестің", $declensionResult->Genitive);
-        $this->assertEquals("теске", $declensionResult->Dative);
-        $this->assertEquals("тесті", $declensionResult->Accusative);
-        $this->assertEquals("тестен", $declensionResult->Ablative);
-        $this->assertEquals("тесте", $declensionResult->Locative);
-        $this->assertEquals("теспен", $declensionResult->Instrumental);
 
-        $this->assertEquals("тестер", $declensionResult->Plural->Nominative);
-        $this->assertEquals("тестердің", $declensionResult->Plural->Genitive);
-        $this->assertEquals("тестерге", $declensionResult->Plural->Dative);
-        $this->assertEquals("тестерді", $declensionResult->Plural->Accusative);
-        $this->assertEquals("тестерден", $declensionResult->Plural->Ablative);
-        $this->assertEquals("тестерде", $declensionResult->Plural->Locative);
-        $this->assertEquals("тестермен", $declensionResult->Plural->Instrumental);
+        $this->assertEquals("тестің", $declensionResult->Genitive); //+'тестің'
+        $this->assertEquals("теске", $declensionResult->Dative);//+'теске'
+        $this->assertEquals("тесті", $declensionResult->Accusative);//+'тесті'
+        $this->assertEquals("тестен", $declensionResult->Ablative);//тестен
+        $this->assertEquals("тесте", $declensionResult->Locative);//тесте
+        $this->assertEquals("теспен", $declensionResult->Instrumental);//теспен
+
+        $this->assertEquals("тестер", $declensionResult->Plural->Nominative);//тестер
+        $this->assertEquals("тестердің", $declensionResult->Plural->Genitive);//тестердің
+        $this->assertEquals("тестерге", $declensionResult->Plural->Dative);//тестерге
+        $this->assertEquals("тестерді", $declensionResult->Plural->Accusative);//тестерді
+        $this->assertEquals("тестерден", $declensionResult->Plural->Ablative);//тестерден
+        $this->assertEquals("тестерде", $declensionResult->Plural->Locative);//тестерде
+        $this->assertEquals("тестермен", $declensionResult->Plural->Instrumental);//тестермен
+
+
     }
+
+
 
     public function testQazaqParse_Personal_Success():void
     {

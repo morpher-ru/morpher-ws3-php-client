@@ -8,7 +8,8 @@ class Morpher
 {
 	public readonly Russian\Client $russian;
 	public readonly Qazaq\Client $qazaq;
-	
+	public readonly Ukrainian\Client $ukrainian;
+
 	private readonly WebClient $_webClient;
 	
 	public function __construct(string $url='https://ws3.morpher.ru',string $token='',float$timeout=10.0,$handler=null)
@@ -16,5 +17,6 @@ class Morpher
 		$this->_webClient=new WebClient($url,$token,$timeout,$handler);
 		$this->russian=new Russian\Client($this->_webClient);
 		$this->qazaq=new Qazaq\Client($this->_webClient);
+		$this->ukrainian=new Ukrainian\Client($this->_webClient);
 	}
 }

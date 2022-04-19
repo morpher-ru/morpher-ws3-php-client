@@ -4,6 +4,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 require_once __DIR__."/../IntegrationBase.php";
 use PHPUnit\Framework\TestCase;
 
+use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;
 
 use Morpher\Ws3Client\Russian as Russian;
@@ -23,7 +24,7 @@ final class RussianDeclensionNoTokenTest extends TestCase
     {
         $token=self::getToken();
 
-        self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);
+        self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);        
     }
 
     public function testParse_SuccessNoToken(): void

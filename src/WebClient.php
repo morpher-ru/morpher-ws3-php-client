@@ -6,11 +6,11 @@ use GuzzleHttp\Exception\ClientException;
 
 class WebClient
 {
-	private string $_token='';
+	private string $_token='';	
 	private string $_tokenBase64='';	
 	private \GuzzleHttp\Client $client;
 
-	public function __construct($url='https://ws3.morpher.ru',$token='',$timeout=10.0,$handler=null)
+	function __construct(string $url='https://ws3.morpher.ru',string $token='',float $timeout=10.0,$handler=null)
 	{
 		$this->_token=$token;
 		$this->_tokenBase64=base64_encode($token);
@@ -61,21 +61,22 @@ class WebClient
 				if ($code>=400)
 				{
 					$data=json_decode($response->getBody(),true);
-                    $error_code = $data['code'];
-                    $message = $data['message'];
-                    if (empty($message) || empty($error_code))
+					if ( empty($data['message']))
 						throw new InvalidServerResponse();
-
-					$morpher_code=(int)($error_code);
+					if (empty($data['code']))
+						throw new InvalidServerResponse();
+					
+					$msg=(string)($data['message'] ?? "Неизвестная ошибка");
+					$morpher_code=(int)($data['code'] ?? $code);
 
 					if ($morpher_code==6) throw new InvalidArgumentEmptyString();
-					if ($morpher_code==1) throw new RequestsDailyLimit($message);
-					if ($morpher_code==3) throw new IpBlocked($message);
-					if ($morpher_code==9) throw new TokenNotFound($message);
-					if ($morpher_code==10) throw new TokenIncorrectFormat($message);
-					if ($morpher_code==25) throw new TokenRequired($message);
+					if ($morpher_code==1) throw new RequestsDailyLimit($data['message']);
+					if ($morpher_code==3) throw new IpBlocked($data['message']);
+					if ($morpher_code==9) throw new TokenNotFound($data['message']);
+					if ($morpher_code==10) throw new TokenIncorrectFormat($data['message']);
+					if ($morpher_code==25) throw new TokenRequired($data['message']);
 
-					throw new MorpherError($message, $morpher_code);
+					throw new MorpherError($msg,$morpher_code);
 				}
 			}
 
@@ -96,4 +97,6 @@ class WebClient
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$text);
 		}
 	}
+
+
 }

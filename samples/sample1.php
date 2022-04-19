@@ -10,8 +10,8 @@ $base_url = 'https://ws3.morpher.ru';
 
 
 $token=MORPHER_RU_TOKEN;
-$webClient=new WebClient($base_url,$token);
-$morpher=new Morpher($webClient);
+
+$morpher=new Morpher($base_url,$token);
 
 //$rus_dec=$morpher->russian->Parse('Соединенное королевство');
 $rus_dec=$morpher->qazaq->Parse('тест');

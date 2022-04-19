@@ -5,6 +5,8 @@ require_once __DIR__."/MorpherTestHelper.php";
 
 
 use PHPUnit\Framework\TestCase;
+use Morpher\Ws3Client\Russian as Russian;
+use Morpher\Ws3Client\Ukrainian as Ukrainian;
 
 class AuthorizationTest extends TestCase
 {
@@ -14,6 +16,20 @@ class AuthorizationTest extends TestCase
         return [  //список функций для прогонки через тесты [текст ответа (json), функция вызова запроса]
             ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->Parse('тест');     }],//dataset #0
             ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->qazaq->Parse('тест');       }],//dataset #1
+            ['GET','{"n":[],"unit":[]}'   ,function ($testMorpher)    {     $testMorpher->russian->Spell(10,'тест');  }],//dataset #2
+            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->SpellDate('1988-07-01');  }],//dataset #3
+            ['GET','{"n":[],"unit":[]}'   ,function ($testMorpher)    {     $testMorpher->russian->SpellOrdinal(10,'тест');  }],//dataset #4
+            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->AdjectiveGenders("уважаемый");  }],//dataset #5
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->Adjectivize("мытыщи");  }],//dataset #6
+            ['POST','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->AddStressmarks("тест");  }],//dataset #7
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->userDict->GetAll();     }],//dataset #8
+            ['POST','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->userDict->AddOrUpdate(new Russian\CorrectionEntry(['singular'=>['И'=>'чебуратор','Р'=>'чебурыла']]));     }],//dataset #9
+            ['DELETE','[]'                ,function ($testMorpher)    {     $testMorpher->russian->userDict->Remove('чебуратор');     }],//dataset #10
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->ukrainian->Parse('тест');     }],//dataset #11       
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->GetAll();     }],//dataset #12
+            ['POST','[]'                   ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->AddOrUpdate(new Ukrainian\CorrectionEntry(['singular'=>['Н'=>'чебуратор','Р'=>'чебурыла']]));     }],//dataset #13
+            ['DELETE','[]'                ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->Remove('чебуратор');     }],//dataset #14
+
         ];
     }
 
@@ -111,6 +127,8 @@ class AuthorizationTest extends TestCase
         $callback($testMorpher);
     }
 
+
+
     /**
      * @dataProvider  CallbacksProvider
      */ 
@@ -138,7 +156,6 @@ class AuthorizationTest extends TestCase
     public function testParse_InvalidServerResponse(string $method,string $requestResult,callable $callback): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
-
 
         $parseResults=[]; //если пустое тело сообщения об ошибке
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
