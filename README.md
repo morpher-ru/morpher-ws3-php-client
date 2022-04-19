@@ -38,7 +38,7 @@
 •	Добавить или изменить исправление;  
 •	Удалить исправление.  
   
-Веб-сервис "Морфер 3.0" предусматривает бесплатное (с ограничениями) и платное использование. Подробнее смотрите на сайте проекта.  
+Веб-сервис "Морфер 3.0" предусматривает бесплатное (с ограничениями) и платное использование. Подробнее смотрите на [сайте проекта](https://morpher.ru/ws3/#limitations).  
   
 ## Требования к системе  
 •	PHP 7.0 и выше  
@@ -47,22 +47,25 @@
 ## Установка  
 Выполните команду  
 
-    $  composer require morpher/ws3-client  
-  
+   $  composer require morpher/ws3-client  
+   
+    
 ## Использование  
     <?php  
     require_once __DIR__."/vendor/autoload.php";  
     use Morpher\Ws3Client\Morpher;  
     $base_url = 'https://ws3.morpher.ru';  
-    $token=”XXXXXXXXXXXXXXXXXXXXXXXXX”;  
+    $token="XXXXXXXXXXXXXXXXXXXXXXXXX";  
     $morpher=new Morpher($base_url,$token);  
+    $declensionResult  = $morpher->russian->Parse('трамвай');
+    print_r($declensionResult);
   
 Где  $token   укажите токен, который получили при регистрации на сайте morhper.ru(https://morpher.ru)  
 Если токен пустой, сервис будет работать с ограничениями бесплатной версии.  
 Можно вызвать конструктор без аргументов, в этом случае будут использоваться параметры по умолчанию.  
   
 ## Склонение по падежам на русском языке  
-Метод $morpher->russian->Parse($lemma,$flags) решает задачу склонения слова или словосочетания по падежам;   
+Метод ``$morpher->russian->Parse($lemma,$flags)`` решает задачу склонения слова или словосочетания по падежам;   
   
 Входные параметры  
 1.	Строка – слово или фраза на русском языке.  
@@ -70,7 +73,7 @@
   
     $declensionResult    =   $morpher->russian->Parse($lemma);  
   
-$declensionResult — объект Morpher\Ws3Client\Russian\DeclensionResult со следующими свойствами:  
+$declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`` со следующими свойствами:  
 •	$declensionResult->Nominative — текст в именительном падеже;  
 •	$declensionResult->Genitive — текст в родительном падеже;  
 •	$declensionResult->Dative — текст в дательном падеже;  
@@ -81,7 +84,7 @@ $declensionResult — объект Morpher\Ws3Client\Russian\DeclensionResult с
   
 # При использовании платного аккаунта на сервисе определяются дополнительные свойства:  
 •	$declensionResult->PrepositionalWithO — предложный падеж с предлогом О/ОБ/ОБО, предлог выбирается автоматически;  
-•	$declensionResult->Gender — род. Тип – строка. Принимает значения констант из класса Morpher\Ws3Client\Russian\Gender , всего 4 варианта - Gender::Masculine, Gender::Feminine, Gender::Neuter, Gender::Plural, соответственно мужской, женский, средний и множественное число.  
+•	$declensionResult->Gender — род. Тип – строка. Принимает значения констант из класса ``Morpher\Ws3Client\Russian\Gender`` , всего 4 варианта - Gender::Masculine, Gender::Feminine, Gender::Neuter, Gender::Plural, соответственно мужской, женский, средний и множественное число.  
 •	$declensionResult->Where — в местном падеже (локатив) с предлогом;  
 •	$declensionResult->To – куда — в направительном падеже (аллатив) с предлогом;  
 •	$declensionResult->From –откуда — в исходном падеже (аблатив) с предлогом.  
@@ -92,7 +95,7 @@ $declensionResult — объект Morpher\Ws3Client\Russian\DeclensionResult с
 •	Ростов в творительном падеже будет Ростовым, если это фамилия, и Ростовом, если это город;  
 •	тестер в винительном падеже будет тестера, если это человек, и тестер, если имеется в виду прибор.  
   
-Для повышения качества склонения вы можете сообщить веб-сервису дополнительную информацию через флаги. Флаги принимают значения констант из класса Morpher\Ws3Client\Russian\Flags . Флаги нужно передавать в массиве:  
+Для повышения качества склонения вы можете сообщить веб-сервису дополнительную информацию через флаги. Флаги принимают значения констант из класса ``Morpher\Ws3Client\Russian\Flags`` . Флаги нужно передавать в массиве:  
   
     use Morpher\Ws3Client\Russian\Flags;  
     $morpher->russian->Parse( 'Слепов Сергей Николаевич', [Flags::Name, Flags::Masculine]);  
@@ -106,13 +109,17 @@ $declensionResult — объект Morpher\Ws3Client\Russian\DeclensionResult с
 •	Flags::Name — ФИО.  
   
 ## Выделение в строке фамилии, имени и отчества  
-Если входная строка распознана как ФИО, то объект $declensionResult->FullName будет содержать разбивку строки на фамилию, имя и отчество:  
+Если входная строка распознана как ФИО, то объект ``$declensionResult->FullName`` будет содержать разбивку строки на фамилию, имя и отчество:  
 •	$declensionResult->FullName->Name - имя;  
 •	$declensionResult->FullName->Surname - фамилия;  
 •	$declensionResult->FullName->Pantronymic – отчество.  
   
 ## Пропись чисел и согласование с числом  
-Метод $morpher->russian->Spell($number, $unit) решает задачу получения прописи числа (тысяча сто двадцать пять) и согласование единицы измерения с предшествующем числом (1 попугай, 2 попугая, 5 попугаев). Входные параметры: $number – целое число; $unit – строка. Метод возвращает объект Morpher\Ws3Client\Russian\NumberSpellingResult,  
+Метод ``$morpher->russian->Spell($number, $unit)`` решает задачу получения прописи числа (тысяча сто двадцать пять) и согласование единицы измерения с предшествующем числом (1 попугай, 2 попугая, 5 попугаев).   
+Входные параметры:   
+$number – целое число;   
+$unit – строка. 
+Метод возвращает объект ``Morpher\Ws3Client\Russian\NumberSpellingResult``,  
 содержащий свойства NumberDeclension и UnitDeclension. Оба свойства содержат склонения по всем падежам.  
     $numberSpellingResult=$morpher->russian->Spell(235, 'рубль');  
     print $numberSpellingResult->NumberDeclension->Dative; //двумстам тридцати пяти  
@@ -301,7 +308,7 @@ $morpher->russian->UserDict->AddOrUpdate($entry),
 или аналогично $morpher->ukrainian->UserDict->AddOrUpdate($entry):  
   
     $correction=new \Morpher\Ws3Client\Russian\CorrectionEntry();  
-    $correction->Singular->Nominative=”чебуратор”;  
+    $correction->Singular->Nominative="чебуратор";  
     $correction->Singular->Locative='в чебураторке';  
     $correction->Plural->Locative='в чебураториях';  
     $morpher->russian->UserDict->AddOrUpdate($entry);  
@@ -313,7 +320,7 @@ $morpher->russian->UserDict->AddOrUpdate($entry),
     $morpher->ukrainian->UserDict->Remove($nominativeForm);  
   
 Пример:  
-    $morpher->russian->UserDict->Remove(“чебуратор”);  
+    $morpher->russian->UserDict->Remove(“чебуратор");  
   
 ## Разработка  
 Должны быть установлены PHP 7.0 или выше; Composer.  
