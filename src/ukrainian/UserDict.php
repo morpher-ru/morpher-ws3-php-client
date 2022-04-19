@@ -13,6 +13,4 @@ class UserDict extends UserDictBase
 	{
 		parent::__construct($webClient,'/ukrainian/userdict', CorrectionEntry::class);
 	}
-
-
 }
