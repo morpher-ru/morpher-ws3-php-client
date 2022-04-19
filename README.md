@@ -46,7 +46,8 @@
   
 ## Установка  
 Выполните команду  
-    composer require morpher/ws3-client  
+
+    $  composer require morpher/ws3-client  
   
 ## Использование  
     <?php  
