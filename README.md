@@ -70,6 +70,7 @@
 1.	Строка – слово или фраза на русском языке.  
 2.	Массив флагов (необязательный параметр). Флаги принимают значения констант из класса Morpher\Ws3Client\Russian\Flags.  
   
+    $lemma='фраза на русском';
     $declensionResult    =   $morpher->russian->Parse($lemma);  
   
 $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`` со следующими свойствами:  
