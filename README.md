@@ -57,7 +57,7 @@
    
     
 ## Использование  
-  
+
     <?php  
     require_once __DIR__."/vendor/autoload.php";  
     use Morpher\Ws3Client\Morpher;  
@@ -67,7 +67,7 @@
     $declensionResult  = $morpher->russian->Parse('трамвай');
     print_r($declensionResult);
   
-Где  $token   укажите токен, который получили при регистрации на сайте morhper.ru(https://morpher.ru)  
+Где  ``$token="";``   в кавычках укажите токен, который получили при регистрации на сайте morhper.ru(https://morpher.ru)  
 Если токен пустой, сервис будет работать с ограничениями бесплатной версии.  
 Можно вызвать конструктор без аргументов, в этом случае будут использоваться параметры по умолчанию.  
   
@@ -78,6 +78,8 @@
 Входные параметры  
 1.	Строка – слово или фраза на русском языке.  
 2.	Массив флагов (необязательный параметр). Флаги принимают значения констант из класса ``Morpher\Ws3Client\Russian\Flags``.  
+
+Пример:  
   
     $lemma='фраза на русском';  
     $declensionResult    =   $morpher->russian->Parse($lemma);  
@@ -94,7 +96,11 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 При использовании платного аккаунта на сервисе определяются дополнительные свойства:
 
   * $declensionResult->PrepositionalWithO — предложный падеж с предлогом О/ОБ/ОБО, предлог выбирается автоматически;  
-  * $declensionResult->Gender — род. Тип – строка. Принимает значения констант из класса ``Morpher\Ws3Client\Russian\Gender`` , всего 4 варианта - Gender::Masculine, Gender::Feminine, Gender::Neuter, Gender::Plural, соответственно мужской, женский, средний и множественное число.  
+  * $declensionResult->Gender — род. Тип – строка. Принимает значения констант из класса ``Morpher\Ws3Client\Russian\Gender`` , всего 4 варианта -  
+    * ``Gender::Masculine``  мужской  
+    * ``Gender::Feminine``  женский  
+    * ``Gender::Neuter``  средний  
+    * ``Gender::Plural``  множественное число  
   * $declensionResult->Where — в местном падеже (локатив) с предлогом;  
   * $declensionResult->To – куда — в направительном падеже (аллатив) с предлогом;  
   * $declensionResult->From –откуда — в исходном падеже (аблатив) с предлогом.  
