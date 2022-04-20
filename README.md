@@ -57,6 +57,7 @@
    
     
 ## Использование  
+  
     <?php  
     require_once __DIR__."/vendor/autoload.php";  
     use Morpher\Ws3Client\Morpher;  
@@ -76,9 +77,9 @@
   
 Входные параметры  
 1.	Строка – слово или фраза на русском языке.  
-2.	Массив флагов (необязательный параметр). Флаги принимают значения констант из класса Morpher\Ws3Client\Russian\Flags.  
+2.	Массив флагов (необязательный параметр). Флаги принимают значения констант из класса ``Morpher\Ws3Client\Russian\Flags``.  
   
-    $lemma='фраза на русском';
+    $lemma='фраза на русском';  
     $declensionResult    =   $morpher->russian->Parse($lemma);  
   
 $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`` со следующими свойствами:  
@@ -205,6 +206,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
     print $result; // Три деви́цы под окно́м  
   
 Ударение отмечается символом с кодом ``U+0301``, который вставляется сразу после ударной гласной. Односложные слова не получают знака ударения, за исключением случаев, когда предлог или частица несет на себе ударение: за́ руку, не́ за что. Варианты прочтения разделяются вертикальной чертой, например:  
+
     $result=$morpher->russian->addStressMarks('Белки питаются белками');  
     print $result; // Бе́лки|Белки́ пита́ются бе́лками|белка́ми  
   
@@ -215,7 +217,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 Входные параметры:
 
 1. Строка, содержащая слово или фразу на украинском языке.   
-2. Массив флагов (необязательный), принимающих значения констант из класса Morpher\Ws3Client\Ukrainian\Flag.   
+2. Массив флагов (необязательный), принимающих значения констант из класса ``Morpher\Ws3Client\Ukrainian\Flag``.   
 
 Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\DeclensionResult``:
 
@@ -256,7 +258,11 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 ## <a name="ukrspell"></a>Пропись чисел и согласование с числом на украинском языке
 
-Метод ``$morpher->ukrainian->Spell($number, $unit)`` решает задачу получения прописи числа (одна тисяча сто двадцять п'ять) и согласование единицы измерения с предшествующем числом (один рубль, два рубля, п'ять рублів). Входные параметры: $number – целое число; $unit – строка. Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\NumberSpellingResult``,  
+Метод ``$morpher->ukrainian->Spell($number, $unit)`` решает задачу получения прописи числа (одна тисяча сто двадцять п'ять) и согласование единицы измерения с предшествующем числом (один рубль, два рубля, п'ять рублів).  
+Входные параметры:  
+* $number – целое число;  
+* $unit – строка.  
+Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\NumberSpellingResult``,  
 содержащий свойства ``NumberDeclension`` и ``UnitDeclension``. Оба свойства содержат склонения по всем падежам:
 
     $spellingResult=$morpher->ukrainian->Spell(235, 'рубль');  
@@ -270,6 +276,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 ``Morpher\Ws3Client\Qazaq\DeclensionResult``.
 
 Пример:  
+
     $declensionResult=$morpher->qazaq->Parse('бала');
     print_r($declensionResult);
 
@@ -428,10 +435,11 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 Сделайте форк репозитория [morpher-ws3-php-client](https://github.com/morpher-ru/morpher-ws3-php-client).  
 Затем выполните:  
-    $ git clone https://github.com/<your-github-username>/morpher-ws3-php-client 
+
+    $ git clone https://github.com/<your-github-username>/morpher-ws3-php-client  
     $ cd morpher-ws3-php-client  
     $ composer install  
-Должна появиться папка vendor  
+Должна появиться папка vendor.
   
 ## Запуск тестов  
   
