@@ -1,6 +1,5 @@
 <?php
 namespace Morpher\Ws3Client;
-require_once __DIR__."/../vendor/autoload.php";
 
 
 interface CorrectionEntryInterface

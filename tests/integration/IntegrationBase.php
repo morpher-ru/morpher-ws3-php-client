@@ -1,5 +1,4 @@
 <?php declare(strict_types=1);
-require_once __DIR__."/../../vendor/autoload.php";
 
 @include_once __DIR__."/../../secret.php";//файл секретов есть только локально, на github не выгружаю. отсутствие файла - не ошибка.
 

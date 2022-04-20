@@ -53,7 +53,7 @@
     require_once __DIR__."/vendor/autoload.php";  
     use Morpher\Ws3Client\Morpher;  
     $base_url = 'https://ws3.morpher.ru';  
-    $token="XXXXXXXXXXXXXXXXXXXXXXXXX";  
+    $token="";  
     $morpher=new Morpher($base_url,$token);  
     $declensionResult  = $morpher->russian->Parse('трамвай');
     print_r($declensionResult);
@@ -408,7 +408,16 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 * composer
   
 ## <a name="devinstall"></a>Установка
+  
+Если в вашем проекте отсутствует файл composer.json,
+то необходимо выполнить:
 
+    $ composer init
+  
+И ответить на вопросы программы (название проекта и т.д.). Обратите внимание на параметр ``minimum-stability`` - он должен быть не выше чем указано в той версии пакета morpher которую вы будете устанавливать в свой проект. Если не получилось установить пакет, попробуйте установить в файле composer.json :    ``"minimum-stability": "dev"``.   
+
+Файл composer.json и папка vendor будут созданы.  
+  
 Сделайте форк репозитория [morpher-ws3-php-client](https://github.com/morpher-ru/morpher-ws3-php-client).  
 Затем выполните:  
     $ git clone https://github.com/<your-github-username>/morpher-ws3-php-client 

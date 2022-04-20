@@ -3,7 +3,6 @@ namespace Morpher\Ws3Client\Russian;
 
 use Morpher\Ws3Client\CorrectionEntryInterface;
 
-require_once __DIR__."/../../vendor/autoload.php";
 
 
 class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface

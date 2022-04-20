@@ -1,7 +1,6 @@
 <?php
 namespace Morpher\Ws3Client;
 
-require_once __DIR__."/../vendor/autoload.php";
 
 use InvalidArgumentException;
 use Morpher\Ws3Client\WebClient;
