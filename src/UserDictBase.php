@@ -23,7 +23,7 @@ abstract class UserDictBase
         $this->CorrectionEntryClassName=$CorrectionEntryClassName;
 	}
 	
-	public function AddOrUpdate(CorrectionEntryInterface $entry): void
+	protected function AddOrUpdateBase(CorrectionEntryInterface $entry): void
 	{
         if (!($entry instanceof $this->CorrectionEntryClassName))
         {

@@ -13,4 +13,10 @@ class UserDict extends UserDictBase
 	{
 		parent::__construct($webClient,'/russian/userdict', CorrectionEntry::class);
 	}
+
+	public function AddOrUpdate(CorrectionEntry $entry): void
+	{
+		$this->AddOrUpdateBase($entry);
+
+	}
 }
