@@ -16,20 +16,20 @@ abstract class UserDictBase
 
     protected readonly string $CorrectionEntryClassName;
 	
-	function __construct(WebClient $webClient,string $endpoint='/russian/userdict', string $CorrectionEntryClassName)
+	function __construct(WebClient $webClient, string $endpoint, string $CorrectionEntryClassName)
 	{
 		$this->webClient=$webClient;
         $this->endpoint=$endpoint;
         $this->CorrectionEntryClassName=$CorrectionEntryClassName;
 	}
 	
-
-
-
-	//yyyy-MM-dd
-	public function AddOrUpdate(CorrectionEntryInterface $entry): void //$date - string, timestamp, DateTimeInterface
+	public function AddOrUpdate(CorrectionEntryInterface $entry): void
 	{
-        if (!($entry instanceof $this->CorrectionEntryClassName)) throw new InvalidArgumentException("$entry не является экземпляром подходящего класса.");
+        if (!($entry instanceof $this->CorrectionEntryClassName))
+        {
+            throw new InvalidArgumentException("$entry не является экземпляром подходящего класса.");
+        }
+
  		if (!$entry->SingularNominativeExists())
 		{
 			throw new \InvalidArgumentException("Обязательно должен быть указан именительный падеж единственного числа.");
@@ -42,27 +42,18 @@ abstract class UserDictBase
             throw new \InvalidArgumentException("Нужно указать хотя бы одну косвенную форму.");
         }
 
-		$result_raw="";
-		try{
-
-			$result_raw=$this->webClient->send($this->endpoint,[],'POST',null,null,$formParam);
+		try
+        {
+			$this->webClient->send($this->endpoint,[],'POST',null,null,$formParam);
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
-
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
 		}
-
-
-
 	}
 
-
-	
-	public function Remove(string $NominativeForm): void //$date - string, timestamp, DateTimeInterface
+	public function Remove(string $NominativeForm): void
 	{
-
-
 		if (empty(trim($NominativeForm)))
 		{
 			throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
@@ -70,29 +61,25 @@ abstract class UserDictBase
 
 		$queryParam=["s"=>$NominativeForm];
 
-		$result_raw="";
-		try{
-
-			$result_raw=$this->webClient->send($this->endpoint,$queryParam,'DELETE');
+		try
+        {
+			$this->webClient->send($this->endpoint,$queryParam,'DELETE');
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
-
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
 		}
-
 	}
 
-	public function GetAll(): array //$date - string, timestamp, DateTimeInterface
+	public function GetAll(): array
 	{
 		$result_raw="";
-		try{
-
+		try
+        {
 			$result_raw=$this->webClient->send($this->endpoint,[],'GET');
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
-
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
 		}
 
@@ -102,12 +89,5 @@ abstract class UserDictBase
         $array=array_map(function (array $item) { return new ($this->CorrectionEntryClassName)($item);}, $result );
 
         return $array;
-
-
-
-
-
 	}
-
-	
 }

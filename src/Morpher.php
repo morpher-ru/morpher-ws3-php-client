@@ -22,21 +22,16 @@ class Morpher
 
 	public function getQueriesLeftForToday():int
 	{
-
-		$result_raw="";
-		try{
-
-			$result_raw=$this->_webClient->send("/get_queries_left_for_today",[],'GET');
+		try
+        {
+			$result_raw=$this->_webClient->send("/get_queries_left_for_today");
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
-	
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
 		}
 
 		$result=WebClient::JsonDecode($result_raw);
-		//
-		//parse result
 
 		return (int)$result;		
 	}
