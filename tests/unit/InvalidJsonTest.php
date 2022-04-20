@@ -31,6 +31,7 @@ final class InvalidJsonTest extends TestCase
             [function ($testMorpher)    {     $testMorpher->ukrainian->userDict->GetAll();     }],//dataset #12
             //[function ($testMorpher)    {     $testMorpher->ukrainian->userDict->AddOrUpdate(new Ukrainian\CorrectionEntry(['singular'=>['Н'=>'чебуратор','Р'=>'чебурыла']]));     }],//dataset #13
             //[function ($testMorpher)    {     $testMorpher->ukrainian->userDict->Remove('чебуратор');     }],//dataset #14
+            [function ($testMorpher)    {     $testMorpher->getQueriesLeftForToday();     }],//dataset #15
      
         ];
     }
