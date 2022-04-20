@@ -247,8 +247,10 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 При платном доступе возвращаются дополнительные свойства:
 
   * Gender — род, тип – строка, принимает значения констант из класса ``Morpher\Ws3Client\Ukrainian\Gender``, варианты:
-    * ``Gender::Masculine`` (Чоловічий),
-    * ``Gender::Feminine`` (Жіночий).  
+    * ``Gender::Masculine`` (Чоловічий)
+    * ``Gender::Feminine`` (Жіночий)
+    * ``Gender::Neuter``  (Середній)  
+    * ``Gender::Plural``  (Множина)  
   
 # Флаги для разрешения неоднозначностей  
 
@@ -260,8 +262,10 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 Флаги поддерживаемые для ``$morpher->ukrainian->Parse($lemma,$flags)``:
 
-  * Flags::Feminine — Женский род;  
-  * Flags::Masculine — Мужской род;  
+  * ``Flags::Feminine`` — женский род  
+  * ``Flags::Masculine`` — мужской род  
+  * ``Gender::Neuter``  - средний род  
+  * ``Gender::Plural``  - множественное число  
   
 ## <a name="ukrspell"></a>Пропись чисел и согласование с числом на украинском языке
 
@@ -269,6 +273,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 Входные параметры:  
 * $number – целое число;  
 * $unit – строка.  
+   
 Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\NumberSpellingResult``,  
 содержащий свойства ``NumberDeclension`` и ``UnitDeclension``. Оба свойства содержат склонения по всем падежам:
 
