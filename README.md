@@ -159,7 +159,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
     $dateSpellingResult = $morpher->russian->SpellDate('2019-06-29');  
     print $dateSpellingResult->Genitive;  // двадцать девятого июня две тысячи девятнадцатого года  
     print $dateSpellingResult->Dative; // двадцать девятому июня две тысячи девятнадцатого года  
-    print $dateSpellingResult->Instrumental; // двадцать девятым июня две тысячи девятнадцатым годом  
+    print $dateSpellingResult->Instrumental; // двадцать девятым июня две тысячи девятнадцатого года
   
 ## <a name="rusadjgend"></a>Склонение прилагательных по родам
 
@@ -236,6 +236,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Пример:
 
+    use  Morpher\Ws3Client\Ukrainian\Flags;
     $declensionResult=$morpher->ukrainian->Parse('Карен', [Flags::Feminine]);  
     print $declensionResult->Genitive; // Карен (женское имя не склоняется)  
   
@@ -259,23 +260,27 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 Входной параметр – срока, слово или фраза на казахском языке. Метод возвращает объект   
 ``Morpher\Ws3Client\Qazaq\DeclensionResult``.
 
+Пример:  
+    $declensionResult=$morpher->qazaq->Parse('бала');
+    print_r($declensionResult);
+
 Объект имеет сложную структуру.
 
 Этот объект содержит 7 падежей, а также 8 лицевых форм склонений единственного числа, и каждая в себе содержит 7 падежей.
 
     $declensionResult->Genitive  
-    $declensionResult->FirstPerson->Genitive;  
-    $declensionResult->SecondPerson->Accusative;  
+    $declensionResult->FirstPerson->Genitive  
+    $declensionResult->SecondPerson->Accusative  
     …  
-    $declensionResult->ThirdPersonPlura->Dative;  
+    $declensionResult->ThirdPersonPlural->Dative  
 
 А также содержит объект Plural, в котором 7 падежей множественного числа, и ещё 8 лицевых форм склонений множественного числа, каждая себе содержит 7 падежей:
 
     $declensionResult->Plural->Locative  
-    $declensionResult->Plural->FirstPerson->Locative;  
-    $declensionResult->Plural->SecondPerson->Nominative;  
+    $declensionResult->Plural->FirstPerson->Locative  
+    $declensionResult->Plural->SecondPerson->Nominative  
     …  
-    $declensionResult->Plural->ThirdPersonPlural->Dative;  
+    $declensionResult->Plural->ThirdPersonPlural->Dative  
   
 Пример:  
 
@@ -283,7 +288,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
     print $declensionResult->Genitive;      // менеджердің  
     print $declensionResult->Plural->Genitive;  // менеджерлердің  
-    print $declensionResult->Plural->FirstPerson->Genetive; // менеджерлеріміздің  
+    print $declensionResult->Plural->FirstPerson->Genitive; // менеджерлеріміздің  
   
 # Свойства объекта Morpher\Ws3Client\Qazaq\DeclensionResult:  
 Свойства-Падежи ед. числа:  
@@ -326,8 +331,8 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Для того чтобы получить список всех исправлений, нужно использовать методы:
 
-    $rus=$morpher->russian->UserDict->GetAll();   // Morpher\Ws3Client\Russian\СorrectionEntry  
-    $ukr=$morpher->ukrainian->UserDict->GetAll(); // Morpher\Ws3Client\Ukrainian\СorrectionEntry  
+    $rus=$morpher->russian->userDict->GetAll();   // Morpher\Ws3Client\Russian\СorrectionEntry  
+    $ukr=$morpher->ukrainian->userDict->GetAll(); // Morpher\Ws3Client\Ukrainian\СorrectionEntry  
   
 Метод возвращает массив объектов CorrectionEntry в пространстве имён соответствующего языку (русскому, украинскому).  
   
@@ -335,8 +340,8 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Объект ``Morpher\Ws3Client\Russian\СorrectionEntry`` со следующими свойствами:
 
-  * singular — объект Morpher\Ws3Client\Russian\CorrectionForms с формами в единственном числе;  
-  * plural — объект Morpher\Ws3Client\Russian\CorrectionForms с формами во множественном числе;  
+  * ``singular`` — объект ``Morpher\Ws3Client\Russian\CorrectionForms`` с формами в единственном числе;  
+  * ``plural`` — объект ``Morpher\Ws3Client\Russian\CorrectionForms`` с формами во множественном числе;  
 
 Указание рода не поддерживается.
   
@@ -353,7 +358,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Объект ``Morpher\Ws3Client\Ukrainian\СorrectionEntry`` со следующими свойствами:
 
-  * singular — объект Morpher\Ws3Client\Ukrainian\CorrectionForms с формами в единственном числе;  
+  * ``singular`` — объект ``Morpher\Ws3Client\Ukrainian\CorrectionForms`` с формами в единственном числе;  
 
 Указание рода не поддерживается.  
   
@@ -370,29 +375,29 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 ## Добавить или изменить исправление
 
 Для добавления или изменения исправления использовать метод   
-``$morpher->russian->UserDict->AddOrUpdate($entry)``,  
+``$morpher->russian->userDict->AddOrUpdate($entry)``,  
 или аналогично   
-``$morpher->ukrainian->UserDict->AddOrUpdate($entry)``:  
+``$morpher->ukrainian->userDict->AddOrUpdate($entry)``:  
   
-    $correction=new \Morpher\Ws3Client\Russian\CorrectionEntry();  
-    $correction->Singular->Nominative="чебуратор";  
-    $correction->Singular->Locative='в чебураторке';  
-    $correction->Plural->Locative='в чебураториях';  
-    $morpher->russian->UserDict->AddOrUpdate($entry);  
+    $correctionEntry=new \Morpher\Ws3Client\Russian\CorrectionEntry();  
+    $correctionEntry->Singular->Nominative="чебуратор";  
+    $correctionEntry->Singular->Locative='в чебураторке';  
+    $correctionEntry->Plural->Locative='в чебураториях';  
+    $morpher->russian->userDict->AddOrUpdate($correctionEntry);  
   
 ## Удаление исправления
 
 Для того чтобы удалить исправление, достаточно передать строку в именительном падеже в метод   
       
-    $morpher->russian->UserDict->Remove($nominativeForm);     
+    $morpher->russian->userDict->Remove($nominativeForm);     
 
 или аналогично   
       
-    $morpher->ukrainian->UserDict->Remove($nominativeForm);  
+    $morpher->ukrainian->userDict->Remove($nominativeForm);  
   
 Пример:  
       
-    $morpher->russian->UserDict->Remove(“чебуратор");  
+    $morpher->russian->userDict->Remove('чебуратор');  
   
 # <a name="dev"></a>Разработка
 
@@ -403,10 +408,10 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 ## <a name="devinstall"></a>Установка
 
-Сделайте форк репозитория ``morpher-ws3-js-client`.  
+Сделайте форк репозитория [morpher-ws3-php-client](https://github.com/morpher-ru/morpher-ws3-php-client).  
 Затем выполните:  
-    $ git clone https://github.com/<your-github-username>/morpher-ws3-js-client  
-    $ cd morpher-ws3-js-client  
+    $ git clone https://github.com/<your-github-username>/morpher-ws3-php-client 
+    $ cd morpher-ws3-php-client  
     $ composer install  
 Должна появиться папка vendor  
   
