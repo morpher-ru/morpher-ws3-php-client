@@ -1,4 +1,3 @@
-  
 # PHP-клиент веб-сервиса ws3.morpher.ru  
   
 [Composer package](https://packagist.org/packages/morpher/ws3-client)  
@@ -486,4 +485,3 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   * Увеличить версию в composer.json.  
   * Добавить новый релиз на Гитхабе.
   * В личном кабинете на https://packagist.org опубликовать пакет.  
-  

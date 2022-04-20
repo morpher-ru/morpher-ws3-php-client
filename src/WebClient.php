@@ -60,7 +60,7 @@ class WebClient
 				if ($code>=400)
 				{
 					$data=json_decode($response->getBody(),true);
-					if ( empty($data['message']))
+					if (empty($data['message']))
 						throw new InvalidServerResponse();
 					if (empty($data['code']))
 						throw new InvalidServerResponse();
@@ -96,6 +96,4 @@ class WebClient
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$text);
 		}
 	}
-
-
 }
