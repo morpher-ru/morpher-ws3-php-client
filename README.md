@@ -292,8 +292,8 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
     $declensionResult=$morpher->qazaq->Parse('бала');
     print_r($declensionResult);
 
-Объект имеет сложную структуру.
-
+Объект имеет сложную структуру.  
+  
 Этот объект содержит 7 падежей, а также 8 лицевых форм склонений единственного числа, и каждая в себе содержит 7 падежей.
 
     $declensionResult->Genitive  
