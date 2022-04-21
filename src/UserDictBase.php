@@ -47,6 +47,8 @@ abstract class UserDictBase
 		}
 		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
+            // todo: проверить ошибку 6
+
 			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
 		}
 	}
