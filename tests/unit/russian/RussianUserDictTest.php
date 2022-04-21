@@ -16,11 +16,9 @@ use Morpher\Ws3Client\WebClient;
 
 final class RussianUserDictTest extends TestCase
 {
-
     public function testUserDictGet_Success(): void
     {
         $parseResults=[
-            
                 [
                     "singular"=> [
                         "И"=> "Кошка",
@@ -41,17 +39,12 @@ final class RussianUserDictTest extends TestCase
                         "М"=> "в Пантерах"
                     ]
                 ]
-            
-
         ];
-
-        
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        //$testUserDict=self::createMockUserDict($container,$return_text);
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $list=$testMorpher->russian->userDict->GetAll();
@@ -90,16 +83,11 @@ final class RussianUserDictTest extends TestCase
         $this->assertEquals("Пантерами",$entry->Plural->Instrumental);
         $this->assertEquals("о Пантерах",$entry->Plural->Prepositional);
         $this->assertEquals("в Пантерах",$entry->Plural->Locative);        
-
-
     }
 
     public function testUserDictRemove_Success(): void
     {
-        $parseResults=[
-        ];
-
-    
+        $parseResults=[];
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
@@ -119,9 +107,6 @@ final class RussianUserDictTest extends TestCase
         $this->assertEquals('/russian/userdict',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.  rawurlencode($lemma) ,$uri->getQuery());
-
-    
-
     }
 
 
@@ -133,28 +118,19 @@ final class RussianUserDictTest extends TestCase
         $parseResults=[
         ];
 
-    
-
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
-
         $result=$testMorpher->russian->userDict->Remove('');
-
-
-    
-
     }
 
     public function testUserDicPost_Success(): void
     {
         $parseResults=[
         ];
-
-    
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
@@ -167,7 +143,6 @@ final class RussianUserDictTest extends TestCase
         $correction->Singular->Locative='в чебураторе';
         $correction->Plural->Locative='в чебураторах';
 
- 
         $lresult=$testMorpher->russian->userDict->AddOrUpdate($correction);
 
         $transaction=reset($container);//get first element of requests history
@@ -179,20 +154,13 @@ final class RussianUserDictTest extends TestCase
         $this->assertEquals('/russian/userdict',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEmpty($uri->getQuery());
-
-
         $this->assertEquals(urlencode('И').'='.urlencode('чебуратор').'&'.urlencode('М').'='.urlencode('в чебураторе').'&'.urlencode('М_М').'='.urlencode('в чебураторах') ,(string)$request->getBody());
-
-    
-
     }
 
     public function testUserDicPost_Success2(): void
     {
         $parseResults=[
         ];
-
-    
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
@@ -202,10 +170,8 @@ final class RussianUserDictTest extends TestCase
         
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative='чебуратор';
-//        $correction->Singular->Locative='в чебураторе';
         $correction->Plural->Locative='в чебураторах';
 
- 
         $lresult=$testMorpher->russian->userDict->AddOrUpdate($correction);
 
         $transaction=reset($container);//get first element of requests history
@@ -218,11 +184,7 @@ final class RussianUserDictTest extends TestCase
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEmpty($uri->getQuery());
         $this->assertEquals(  urlencode('И').'='.  urlencode('чебуратор').'&'.  urlencode('М_М').'='.  urlencode('в чебураторах') ,(string)$request->getBody());
-
-    
-
     }
-
 
     public function testUserDicPost_Exception(): void
     {
@@ -244,8 +206,6 @@ final class RussianUserDictTest extends TestCase
         $correction->Plural->Locative='в чебураторах';
  
         $lresult=$testMorpher->russian->userDict->AddOrUpdate($correction);
-    
-
     }
 
     public function testUserDicPost_Exception2(): void
@@ -268,8 +228,5 @@ final class RussianUserDictTest extends TestCase
         //$correction->Plural->Locative='в чебураторах';
  
         $lresult=$testMorpher->russian->userDict->AddOrUpdate($correction);
-    
-
     }
-
 }

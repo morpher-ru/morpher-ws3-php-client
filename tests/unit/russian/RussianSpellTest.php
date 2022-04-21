@@ -11,12 +11,9 @@ use Morpher\Ws3Client\Russian as Russian;
 
 final class RussianSpellTest extends TestCase
 {
-
     public function testSpell_Success(): void
     {
         $parseResults=[
-
-            
                 "n"=> [
                     "И"=> "десять",
                     "Р"=> "десяти",
@@ -39,13 +36,11 @@ final class RussianSpellTest extends TestCase
 
         $unit="рубль";
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $spellingResult=$testMorpher->russian->Spell(10,$unit);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -78,20 +73,14 @@ final class RussianSpellTest extends TestCase
         $this->assertEquals("рублях", $spellingResult->UnitDeclension->Prepositional);
     }
 
-
-
     public function testSpell_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
-    
 
-    
         $declensionResult=$testMorpher->russian->Spell(1,'   ');
-
     }
 }

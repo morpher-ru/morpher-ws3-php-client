@@ -31,7 +31,6 @@ final class RussianSpellOrdinalTest extends TestCase
                   "Т"=>"колесом",
                   "П"=>"колесе"
                 ]         
-
         ];
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
@@ -39,13 +38,11 @@ final class RussianSpellOrdinalTest extends TestCase
         $unit="колесо";
         $num=7518;
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $spellingResult=$testMorpher->russian->SpellOrdinal($num,$unit);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -79,20 +76,14 @@ final class RussianSpellOrdinalTest extends TestCase
         $this->assertEquals("колесе", $spellingResult->UnitDeclension->Prepositional);
     }
 
-
-
     public function testSpell_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
-    
 
-    
         $declensionResult=$testMorpher->russian->SpellOrdinal(1,'   ');
-
     }
 }

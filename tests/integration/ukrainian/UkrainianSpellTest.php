@@ -15,13 +15,10 @@ final class UkrainianSpellTest extends IntegrationBase
 {
     public function testSpell_Success(): void
     {
-    
-        
         $spellingResult=self::$testMorpher->ukrainian->Spell(10,'рубль');
 
         $this->assertInstanceOf(Ukrainian\NumberSpellingResult::class,$spellingResult);
     
-        //NumberSpellingResult spellingResult = morpherClient.Ukrainian.Spell(10, $lemma);
         $this->assertNotNull($spellingResult);
 
         // number
@@ -49,6 +46,4 @@ final class UkrainianSpellTest extends IntegrationBase
         
         self::$testMorpher->ukrainian->Spell(1,"   ");
     }
-
-
 }

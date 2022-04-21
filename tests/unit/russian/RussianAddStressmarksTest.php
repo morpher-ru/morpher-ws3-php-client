@@ -14,24 +14,17 @@ final class RussianAddStressmarksTest extends TestCase
 
     public function testAddStressmarks_Success(): void
     {
-        $parseResults=
-        'Бале́т Петра́ Чайко́вского "Щелку́нчик"'
-
-        ;
-
-        
+        $parseResults='Бале́т Петра́ Чайко́вского "Щелку́нчик"';
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $text='Балет Петра Чайковского "Щелкунчик"';
-
 
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $result=$testMorpher->russian->AddStressmarks($text);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -51,28 +44,18 @@ final class RussianAddStressmarksTest extends TestCase
         $this->assertEquals('',$uri->getQuery());
         $this->assertEquals('Балет Петра Чайковского "Щелкунчик"',(string)($request->getBody()));
 
-
         $this->assertEquals('Бале́т Петра́ Чайко́вского "Щелку́нчик"',$result);
-
-
-
     }
-
-
 
     public function testAdjectivize_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
     
-
-    
         $declensionResult=$testMorpher->russian->AddStressmarks('  ');
-
     }
 }

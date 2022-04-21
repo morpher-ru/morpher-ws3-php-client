@@ -17,20 +17,17 @@ final class RussianAdjectiveGendersTest extends TestCase
             "feminine"=> "уважаемая",
             "neuter"=> "уважаемое",
             "plural"=> "уважаемые"
-
         ];
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $adj="уважаемый";
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $adjectiveGenders=$testMorpher->russian->AdjectiveGenders($adj);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -45,7 +42,6 @@ final class RussianAdjectiveGendersTest extends TestCase
         $this->assertNotNull($adjectiveGenders);
         $this->assertInstanceOf(Russian\AdjectiveGenders::class,$adjectiveGenders);
 
-        // number
         $this->assertEquals("уважаемая", $adjectiveGenders->Feminine);
         $this->assertEquals("уважаемое", $adjectiveGenders->Neuter);
         $this->assertEquals("уважаемые", $adjectiveGenders->Plural);  
@@ -53,41 +49,33 @@ final class RussianAdjectiveGendersTest extends TestCase
 
     public function testAdjectiveGenders_error(): void
     {
-        
         $this->expectException(Russian\AdjectiveFormIncorrect::class);
+
         $parseResults=[
             "feminine"=> "ERROR",
             "neuter"=> "ERROR",
             "plural"=> "ERROR"
-
         ];
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $adj="уважаемого";
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $adjectiveGenders=$testMorpher->russian->AdjectiveGenders($adj);
-        
-
     }
 
     public function testAdjectiveGenders_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
-    
 
-    
         $declensionResult=$testMorpher->russian->AdjectiveGenders('   ');
-
     }
 }

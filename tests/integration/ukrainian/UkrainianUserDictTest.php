@@ -33,7 +33,6 @@ final class UkrainianUserDictTest extends IntegrationBase
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
         $correction->Singular->Vocative='в чебураторке';
-        //$correction->Plural->Vocative='в чебураториях';
 
         self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
 
@@ -51,19 +50,14 @@ final class UkrainianUserDictTest extends IntegrationBase
                 $this->assertNull($item->Singular->Instrumental); 
                 $this->assertNull($item->Singular->Prepositional); 
                 $this->assertEquals('в чебураторке', $item->Singular->Vocative,"Не удалось добавление косвенной формы в словаре");
-     
-
-
             }
         }       
+
         $this->assertTrue($found,"Слово не найдено в словаре после добавления.");
-
-
 
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
         $correction->Singular->Vocative='в чебурелии';
-
 
         self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
 
@@ -81,10 +75,9 @@ final class UkrainianUserDictTest extends IntegrationBase
                 $this->assertNull($item->Singular->Instrumental); 
                 $this->assertNull($item->Singular->Prepositional); 
                 $this->assertEquals('в чебурелии', $item->Singular->Vocative,"Не удалось обновление косвенной формы в словаре");
-     
- 
             }
-        }       
+        }
+
         $this->assertTrue($found,"Слово не найдено в словаре после обновления.");
 
         self::$testMorpher->ukrainian->userDict->Remove($word);
@@ -200,8 +193,6 @@ final class UkrainianUserDictTest extends IntegrationBase
         $correction->Singular->Prepositional="чебурени";
         $correction->Singular->Vocative='в чебураторке';
 
-
-
         //1. удалить слово из словаря
         self::$testMorpher->ukrainian->userDict->Remove($word);
 
@@ -211,7 +202,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         {
             if ($item->Singular->Nominative == $word)
             {
-                $this->assertTrue(false,"Слово снова найдено в словаре после удаления.");
+                $this->assertTrue(false, "Слово снова найдено в словаре после удаления.");
             }
         }
 
@@ -226,8 +217,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         $this->assertNotEquals($correction->Singular->Prepositional,$declension1->Prepositional); 
         $this->assertNotEquals($correction->Singular->Vocative, $declension1->Vocative);
 
-         unset($declension1);
-        
+        unset($declension1);
 
         //добавить слово в словарь
         self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
@@ -246,8 +236,6 @@ final class UkrainianUserDictTest extends IntegrationBase
                 $this->assertEquals($correction->Singular->Instrumental,$item->Singular->Instrumental); 
                 $this->assertEquals($correction->Singular->Prepositional,$item->Singular->Prepositional); 
                 $this->assertEquals($correction->Singular->Vocative, $item->Singular->Vocative);
-     
- 
             }
         }       
         $this->assertTrue($found,"Слово не найдено в словаре после добавления.");
@@ -263,8 +251,8 @@ final class UkrainianUserDictTest extends IntegrationBase
         $this->assertEquals($correction->Singular->Prepositional,$declension2->Prepositional); 
         $this->assertEquals($correction->Singular->Vocative, $declension2->Vocative);
 
-
         unset($declension2);
+
         //удалить слово из словаря
         self::$testMorpher->ukrainian->userDict->Remove($word);
 
@@ -288,10 +276,5 @@ final class UkrainianUserDictTest extends IntegrationBase
         $this->assertNotEquals($correction->Singular->Instrumental,$declension3->Instrumental); 
         $this->assertNotEquals($correction->Singular->Prepositional,$declension3->Prepositional); 
         $this->assertNotEquals($correction->Singular->Vocative, $declension3->Vocative);
-
-
     }
-
-    
-
 }

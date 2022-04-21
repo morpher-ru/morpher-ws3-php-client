@@ -13,7 +13,6 @@ final class QazaqDeclensionTest extends TestCase
 {
     public function testQazaqParse_Success(): void
     {
-
         $parseResults=[
             "І"=> "тесттің",
             "Б"=> "тестке",
@@ -34,10 +33,6 @@ final class QazaqDeclensionTest extends TestCase
         
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
         
-
-
-
-    
         $lemma='тест';
 
         $container = [];
@@ -57,9 +52,8 @@ final class QazaqDeclensionTest extends TestCase
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
 
 
-        $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
-        //$this->assertNotNull($declensionResult);
-        $this->assertInstanceOf(Qazaq\SameNumberForms::class,$declensionResult->Plural);
+        $this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
+        $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
 
 
         $this->assertEquals("тест", $declensionResult->Nominative);
@@ -77,18 +71,10 @@ final class QazaqDeclensionTest extends TestCase
         $this->assertEquals("тесттертен", $declensionResult->Plural->Ablative);
         $this->assertEquals("тесттерте", $declensionResult->Plural->Locative);
         $this->assertEquals("тесттерпен", $declensionResult->Plural->Instrumental);
-
-
     }
-
 
     public function testQazaqParse_Personal_Success():void
     {
-
-
-
-
-
         $parseResults=[
             "A"=> "бала",
             "І"=> "баланың",
@@ -280,11 +266,8 @@ final class QazaqDeclensionTest extends TestCase
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
 
-
-        $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
-        //$this->assertNotNull($declensionResult);
-        $this->assertInstanceOf(Qazaq\SameNumberForms::class,$declensionResult->Plural);        
-
+        $this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
+        $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
 
         $this->assertNotNull($declensionResult);
         $this->assertEquals("бала", $declensionResult->Nominative);
@@ -452,7 +435,6 @@ final class QazaqDeclensionTest extends TestCase
     public function testParse_ExceptionNoWords(): void
     {
         $this->expectException(Qazaq\QazaqWordsNotFound::class);
-        //$this->expectExceptionCode(5);
         $this->expectExceptionMessage('Не найдено казахских слов.');
 
         $parseResults=[        'code'=>5,
@@ -466,15 +448,11 @@ final class QazaqDeclensionTest extends TestCase
         $lemma='test';
     
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
     }
-
-
 
     public function testParse_ExceptionNoS(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        //$this->expectExceptionCode(6);
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
@@ -488,7 +466,6 @@ final class QazaqDeclensionTest extends TestCase
         $lemma='+++';
     
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
     }
 
 
@@ -508,12 +485,5 @@ final class QazaqDeclensionTest extends TestCase
         $lemma='+++';
     
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
     }
-
-
-
-
-
-
 }

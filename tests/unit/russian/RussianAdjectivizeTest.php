@@ -17,22 +17,17 @@ final class RussianAdjectivizeTest extends TestCase
         $parseResults=[
             "мытыщинский",
             "мытыщенский"
-
         ];
-
-        
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $name="мытыщи";
-
 
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $list=$testMorpher->russian->Adjectivize($name);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -52,20 +47,14 @@ final class RussianAdjectivizeTest extends TestCase
         $this->assertContains("мытыщенский", $list);    
     }
 
-
-
     public function testAdjectivize_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-
 
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
     
-
-    
         $declensionResult=$testMorpher->russian->Adjectivize('   ');
-
     }
 }

@@ -15,30 +15,26 @@ use Morpher\Ws3Client\Russian as Russian;
 
 final class RussianSpellDateTest extends TestCase
 {
-
     public function SpellDateProvider(): array
     {
         return [["2019-06-29"],[new \DateTime('29.06.2019')],[(new \DateTime('29.06.2019'))->getTimestamp()]];
-        
     }
+
     /**
      * @dataProvider  SpellDateProvider
      */    
     public function testSpellDate_Success($date): void
     {
-    
         $parseResults=[
-            
-                "И"=>"двадцать девятое июня две тысячи девятнадцатого года",
-                "Р"=>"двадцать девятого июня две тысячи девятнадцатого года",
-                "Д"=>"двадцать девятому июня две тысячи девятнадцатого года",
-                "В"=>"двадцать девятое июня две тысячи девятнадцатого года",
-                "Т"=>"двадцать девятым июня две тысячи девятнадцатого года",
-                "П"=>"двадцать девятом июня две тысячи девятнадцатого года"
-        ]; 
+            "И"=>"двадцать девятое июня две тысячи девятнадцатого года",
+            "Р"=>"двадцать девятого июня две тысячи девятнадцатого года",
+            "Д"=>"двадцать девятому июня две тысячи девятнадцатого года",
+            "В"=>"двадцать девятое июня две тысячи девятнадцатого года",
+            "Т"=>"двадцать девятым июня две тысячи девятнадцатого года",
+            "П"=>"двадцать девятом июня две тысячи девятнадцатого года"
+        ];
+
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-
-
 
         $container = [];
 
@@ -47,9 +43,6 @@ final class RussianSpellDateTest extends TestCase
         $dateSpellingResult=$testMorpher->russian->SpellDate($date);
 
         $this->assertInstanceOf(Russian\DateSpellingResult::class,$dateSpellingResult);
-    
-        //NumberSpellingResult spellingResult = morpherClient.Russian.Spell(10, $lemma);
-        $this->assertNotNull($dateSpellingResult);
 
         $this->assertEquals("двадцать девятое июня две тысячи девятнадцатого года", $dateSpellingResult->Nominative);
         $this->assertEquals("двадцать девятого июня две тысячи девятнадцатого года", $dateSpellingResult->Genitive);
@@ -67,11 +60,8 @@ final class RussianSpellDateTest extends TestCase
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,'{}');
-    
 
-    
         $declensionResult=$testMorpher->russian->SpellDate('   ');
-
     }
 
     public function testSpellDate_Exception(): void
@@ -90,7 +80,4 @@ final class RussianSpellDateTest extends TestCase
         $testMorpher=MorpherTestHelper::createMockMorpher($container,'{"code":8,"message":"Дата указана в некорректном формате."}',499);    
         $testMorpher->russian->SpellDate("2022.10.01");
     }
-
-
-
 }
