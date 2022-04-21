@@ -39,7 +39,6 @@ class AuthorizationTest extends TestCase
      */    
     public function testAuthorization(string $method,string $requestResult, callable $callback): void
     {
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$requestResult);
@@ -47,8 +46,6 @@ class AuthorizationTest extends TestCase
         $callback($testMorpher);
 
         $this->assertAuthorization(reset($container)['request'],$method);
-
-    
     }
 
 
@@ -57,7 +54,6 @@ class AuthorizationTest extends TestCase
      */ 
     public function testNoToken(string $method,string $requestResult,callable $callback): void
     {
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$requestResult,200,'');
@@ -65,10 +61,6 @@ class AuthorizationTest extends TestCase
         $callback($testMorpher);
 
         $this->assertAuthorizationNoToken(reset($container)['request'],$method);
-
-
-
-    
     }
 
     /**
@@ -85,8 +77,8 @@ class AuthorizationTest extends TestCase
             new \GuzzleHttp\Psr7\Request($method, 'test'), 
             new \GuzzleHttp\Psr7\Response(500,[],'')
         ));
-        $callback($testMorpher);
 
+        $callback($testMorpher);
     }
 
 
@@ -105,7 +97,6 @@ class AuthorizationTest extends TestCase
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,444);
 
         $callback($testMorpher);
-
     }
 
     /**
@@ -128,8 +119,6 @@ class AuthorizationTest extends TestCase
         $callback($testMorpher);
     }
 
-
-
     /**
      * @dataProvider  CallbacksProvider
      */ 
@@ -137,7 +126,6 @@ class AuthorizationTest extends TestCase
     {
         $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
         $this->expectExceptionMessage('Неизвестный код ошибки');
-
 
         $parseResults=[        'code'=>100,
         'message'=> 'Непонятная ошибка.']; 
@@ -148,7 +136,6 @@ class AuthorizationTest extends TestCase
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,444);
     
         $callback($testMorpher);
-
     }
 
     /**
@@ -166,7 +153,6 @@ class AuthorizationTest extends TestCase
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,496);
     
         $callback($testMorpher);
-
     }
 
     public function assertAuthorization(\Psr\Http\Message\RequestInterface $request,string $method='GET'):void

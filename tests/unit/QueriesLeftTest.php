@@ -6,12 +6,8 @@ require_once __DIR__."/MorpherTestHelper.php";
 use Morpher\Ws3Client\InvalidArgumentEmptyString;
 use PHPUnit\Framework\TestCase;
 
-
-
-
 final class QueriesLeftTest extends TestCase
 {
-    
     public  function testQueriesLeft(): void
     {
         $parseResults=111;
@@ -22,7 +18,6 @@ final class QueriesLeftTest extends TestCase
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $result=$testMorpher->getQueriesLeftForToday();
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -40,7 +35,5 @@ final class QueriesLeftTest extends TestCase
 
         $this->assertIsInt($result);
         $this->assertEquals(111,$result);
-
-
     }
 }

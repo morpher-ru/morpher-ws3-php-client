@@ -15,11 +15,9 @@ use Morpher\Ws3Client\WebClient;
 
 final class UkrainianUserDictTest extends TestCase
 {
-
     public function testUserDictGet_Success(): void
     {
         $parseResults=[
-            
                 [
                     "singular"=> [
                         "Н"=> "Кошка",
@@ -31,17 +29,12 @@ final class UkrainianUserDictTest extends TestCase
                         "К"=> "в Пантере"
                     ]
                 ]
-            
-
         ];
-
-        
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        //$testUserDict=self::createMockUserDict($container,$return_text);
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $list=$testMorpher->ukrainian->userDict->GetAll();
@@ -72,17 +65,12 @@ final class UkrainianUserDictTest extends TestCase
         $this->assertEquals("Пантерой",$entry->Singular->Instrumental);
         $this->assertEquals("о Пантере",$entry->Singular->Prepositional);
         $this->assertEquals("в Пантере",$entry->Singular->Vocative);
-
-
-
     }
 
     public function testUserDictRemove_Success(): void
     {
         $parseResults=[
         ];
-
-    
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
@@ -91,7 +79,7 @@ final class UkrainianUserDictTest extends TestCase
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $lemma='кошка';
-        $lresult=$testMorpher->ukrainian->userDict->Remove($lemma);
+        $testMorpher->ukrainian->userDict->Remove($lemma);
 
         $transaction=reset($container);//get first element of requests history
 
@@ -102,9 +90,6 @@ final class UkrainianUserDictTest extends TestCase
         $this->assertEquals('/ukrainian/userdict',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.  rawurlencode($lemma) ,$uri->getQuery());
-
-    
-
     }
 
 
@@ -116,28 +101,19 @@ final class UkrainianUserDictTest extends TestCase
         $parseResults=[
         ];
 
-    
-
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
-
-        $result=$testMorpher->ukrainian->userDict->Remove('');
-
-
-    
-
+        $testMorpher->ukrainian->userDict->Remove('');
     }
 
     public function testUserDicPost_Success(): void
     {
         $parseResults=[
         ];
-
-    
 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
@@ -149,9 +125,7 @@ final class UkrainianUserDictTest extends TestCase
         $correction->Singular->Nominative='чебуратор';
         $correction->Singular->Vocative='в чебураторе';
 
-
- 
-        $lresult=$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
+        $testMorpher->ukrainian->userDict->AddOrUpdate($correction);
 
         $transaction=reset($container);//get first element of requests history
 
@@ -165,9 +139,6 @@ final class UkrainianUserDictTest extends TestCase
 
 
         $this->assertEquals(urlencode('Н').'='.urlencode('чебуратор').'&'.urlencode('К').'='.urlencode('в чебураторе') ,(string)$request->getBody());
-
-    
-
     }
 
 
@@ -190,9 +161,7 @@ final class UkrainianUserDictTest extends TestCase
         $correction->Singular->Vocative='в чебураторе';
         //$correction->Plural->Vocative='в чебураторах';
  
-        $lresult=$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
-    
-
+        $testMorpher->ukrainian->userDict->AddOrUpdate($correction);
     }
 
     public function testUserDicPost_Exception2(): void
@@ -215,8 +184,5 @@ final class UkrainianUserDictTest extends TestCase
         //$correction->Plural->Vocative='в чебураторах';
  
         $lresult=$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
-    
-
     }
-
 }

@@ -13,12 +13,11 @@ use Morpher\Ws3Client\Ukrainian as Ukrainian;
 
 final class UkrainianDeclensionTest extends TestCase
 {
-    
     public function testFlags(): void
     {
-
         $parseResults=[
-        ]; 
+        ];
+
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $lemma='тест';
@@ -38,12 +37,10 @@ final class UkrainianDeclensionTest extends TestCase
         $this->assertEquals('/ukrainian/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma).'&flags='.rawurlencode('flagA,flagB,flagC'),$uri->getQuery());
-    
     }
 
     public function testParse_Success(): void
     {
-
         $parseResults=[
             "Р"=> "теста",
             "Д"=> "тесту",
@@ -52,19 +49,17 @@ final class UkrainianDeclensionTest extends TestCase
             "М"=> "тесті",
             "К"=> "тесте",
             "рід"=> "Чоловічий"
+        ];
 
-        ]; 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $lemma='тест';
-
 
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $declensionResult=$testMorpher->ukrainian->Parse($lemma);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -78,7 +73,6 @@ final class UkrainianDeclensionTest extends TestCase
 
         $this->assertInstanceOf(Ukrainian\DeclensionResult::class,$declensionResult);
 
-
         $this->assertEquals("тест", $declensionResult->Nominative);
         $this->assertEquals("теста", $declensionResult->Genitive);
         $this->assertEquals("тесту", $declensionResult->Dative);
@@ -86,13 +80,9 @@ final class UkrainianDeclensionTest extends TestCase
         $this->assertEquals("тестом", $declensionResult->Instrumental);
         $this->assertEquals("тесті", $declensionResult->Prepositional);
         $this->assertEquals("тесте", $declensionResult->Vocative);        
- 
 
         $this->assertEquals(Ukrainian\Gender::Masculine, $declensionResult->Gender);
-
-    }
-
-
+   }
 
     public function testParse_ExceptionNoWords(): void
     {
@@ -110,11 +100,7 @@ final class UkrainianDeclensionTest extends TestCase
         $lemma='test';
     
         $declensionResult=$testMorpher->ukrainian->Parse($lemma);
-
     }
-
-
-
 
     public function testParse_ExceptionNoS(): void
     {
@@ -132,7 +118,6 @@ final class UkrainianDeclensionTest extends TestCase
         $lemma='+++';
     
         $declensionResult=$testMorpher->ukrainian->Parse($lemma);
-
     }
 
     public function testParse_ExceptionNoS2(): void
@@ -151,9 +136,7 @@ final class UkrainianDeclensionTest extends TestCase
         $lemma='+++';
     
         $declensionResult=$testMorpher->ukrainian->Parse($lemma);
-
     }
-
 
     public function testParse_InvalidFlags(): void
     {
@@ -171,8 +154,5 @@ final class UkrainianDeclensionTest extends TestCase
         $lemma='двадцать';
     
         $declensionResult=$testMorpher->ukrainian->Parse($lemma,["AAA","BBB"]);
-
     }
-
-
 }

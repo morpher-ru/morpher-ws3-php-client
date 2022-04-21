@@ -11,12 +11,9 @@ use Morpher\Ws3Client\Ukrainian as Ukrainian;
 
 final class UkrainianSpellTest extends TestCase
 {
-
     public function testSpell_Success(): void
     {
         $parseResults=[
-
-            
             "n"=> [
                 "Н"=> "десять",
                 "Р"=> "десяти",
@@ -41,13 +38,11 @@ final class UkrainianSpellTest extends TestCase
 
         $unit="рубль";
 
-
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $spellingResult=$testMorpher->ukrainian->Spell(10,$unit);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -82,20 +77,14 @@ final class UkrainianSpellTest extends TestCase
         $this->assertEquals("рублів", $spellingResult->UnitDeclension->Vocative);
     }
 
-
-
     public function testSpell_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-
 
         $container = [];
 
         $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
     
-
-    
         $declensionResult=$testMorpher->ukrainian->Spell(1,'   ');
-
     }
 }

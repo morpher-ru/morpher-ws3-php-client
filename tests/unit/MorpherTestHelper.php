@@ -18,7 +18,6 @@ class MorpherTestHelper
              new Response($code, [], $return_text)
          ]);
 
-        
         $handlerStack = HandlerStack::create($mock);
         
 
@@ -31,19 +30,16 @@ class MorpherTestHelper
         return $testMorpher;
     }    
 
-    
     public static function createMockMorpherWithException(\GuzzleHttp\Exception\TransferException $exception): \Morpher\Ws3Client\Morpher
     {
          $mock = new MockHandler([
              $exception                 //new RequestException('Error Communicating with Server', new Request('GET', 'test'))
          ]);
 
-        
         $handlerStack = HandlerStack::create($mock);      
                 
         $testMorpher=new \Morpher\Ws3Client\Morpher('https://test.uu','testtoken',10,$handlerStack);
 
         return $testMorpher;
     }    
-
 }
