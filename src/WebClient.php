@@ -1,16 +1,15 @@
 <?php
 namespace Morpher\Ws3Client;
-require_once __DIR__."/../vendor/autoload.php";
 
 use GuzzleHttp\Exception\ClientException;
 
 class WebClient
 {
-	private string $_token='';
+	private string $_token='';	
 	private string $_tokenBase64='';	
 	private \GuzzleHttp\Client $client;
 
-	public function __construct($url='https://ws3.morpher.ru',$token='',$timeout=10.0,$handler=null)
+	function __construct(string $url='https://ws3.morpher.ru',string $token='',float $timeout=10.0,$handler=null)
 	{
 		$this->_token=$token;
 		$this->_tokenBase64=base64_encode($token);
@@ -61,9 +60,9 @@ class WebClient
 				if ($code>=400)
 				{
 					$data=json_decode($response->getBody(),true);
-					if (!isset($data['message']) || empty($data['message']))
+					if (empty($data['message']))
 						throw new InvalidServerResponse();
-					if (!isset($data['code']) || empty($data['code']))
+					if (empty($data['code']))
 						throw new InvalidServerResponse();
 					
 					$msg=(string)($data['message'] ?? "Неизвестная ошибка");

@@ -13,7 +13,6 @@ final class QazaqDeclensionTest extends TestCase
 {
     public function testQazaqParse_Success(): void
     {
-
         $parseResults=[
             "І"=> "тесттің",
             "Б"=> "тестке",
@@ -34,10 +33,6 @@ final class QazaqDeclensionTest extends TestCase
         
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
         
-
-
-
-    
         $lemma='тест';
 
         $container = [];
@@ -57,9 +52,8 @@ final class QazaqDeclensionTest extends TestCase
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
 
 
-        $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
-        //$this->assertNotNull($declensionResult);
-        $this->assertInstanceOf(Qazaq\SameNumberForms::class,$declensionResult->Plural);
+        $this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
+        $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
 
 
         $this->assertEquals("тест", $declensionResult->Nominative);
@@ -77,18 +71,10 @@ final class QazaqDeclensionTest extends TestCase
         $this->assertEquals("тесттертен", $declensionResult->Plural->Ablative);
         $this->assertEquals("тесттерте", $declensionResult->Plural->Locative);
         $this->assertEquals("тесттерпен", $declensionResult->Plural->Instrumental);
-
-
     }
-
 
     public function testQazaqParse_Personal_Success():void
     {
-
-
-
-
-
         $parseResults=[
             "A"=> "бала",
             "І"=> "баланың",
@@ -280,11 +266,8 @@ final class QazaqDeclensionTest extends TestCase
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
 
-
-        $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
-        //$this->assertNotNull($declensionResult);
-        $this->assertInstanceOf(Qazaq\SameNumberForms::class,$declensionResult->Plural);        
-
+        $this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
+        $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
 
         $this->assertNotNull($declensionResult);
         $this->assertEquals("бала", $declensionResult->Nominative);
@@ -452,7 +435,6 @@ final class QazaqDeclensionTest extends TestCase
     public function testParse_ExceptionNoWords(): void
     {
         $this->expectException(Qazaq\QazaqWordsNotFound::class);
-        //$this->expectExceptionCode(5);
         $this->expectExceptionMessage('Не найдено казахских слов.');
 
         $parseResults=[        'code'=>5,
@@ -466,31 +448,11 @@ final class QazaqDeclensionTest extends TestCase
         $lemma='test';
     
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
-    }
-
-
-    public function testParse_InvalidServerResponse(): void
-    {
-        $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
-
-        $parseResults=[]; //если пустое тело сообщения об ошибке
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-
-        $container = [];
-
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,496);
-    
-        $lemma='test';
-    
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
     }
 
     public function testParse_ExceptionNoS(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        //$this->expectExceptionCode(6);
         $this->expectExceptionMessage('Передана пустая строка.');
 
         $parseResults=[        'code'=>6,
@@ -504,7 +466,6 @@ final class QazaqDeclensionTest extends TestCase
         $lemma='+++';
     
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
     }
 
 
@@ -524,97 +485,5 @@ final class QazaqDeclensionTest extends TestCase
         $lemma='+++';
     
         $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
     }
-
-
-    public function testParse_UnknownError(): void
-    {
-        $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
-        $this->expectExceptionMessage('Неизвестный код ошибки');
-
-
-        $parseResults=[        'code'=>100,
-        'message'=> 'Непонятная ошибка.']; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-
-        $container = [];
-
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,444);
-    
-        $lemma='двадцать';
-    
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
-    }
-
-    public function testParse_NetworkError1(): void
-    {
-        $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
-        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ConnectException('connection cannot be established', new \GuzzleHttp\Psr7\Request('GET', 'test')));
-        $declensionResult=$testMorpher->qazaq->Parse('двадцать');
-    }
-
-    public function testParse_NetworkError2(): void
-    {
-        $this->expectException(\GuzzleHttp\Exception\RequestException::class);
-        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\RequestException('connection cannot be established', new \GuzzleHttp\Psr7\Request('GET', 'test')));
-        $declensionResult=$testMorpher->qazaq->Parse('двадцать');
-    }
-
-
-
-
-    public function testServerkError500(): void
-    {
-        $this->expectException(\GuzzleHttp\Exception\ServerException::class);
-        $this->expectExceptionMessage('Error 500');
-    
-
-        $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ServerException(
-            'Error 500', 
-            new \GuzzleHttp\Psr7\Request('GET', 'test'), 
-            new \GuzzleHttp\Psr7\Response(500,[],'')
-        ));
-        $declensionResult=$testMorpher->qazaq->Parse('двадцать');
-
-    }
-
-
-
-    public function testInvalidJsonResponse(): void
-    {
-        $return_text='{"И":"тест","Р":"тесте",-}';
-        try 
-        {
-            $lemma='тест';
-            $container = [];
-            $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);       
-            $declensionResult=$testMorpher->qazaq->Parse($lemma);
-        }
-        catch (\Morpher\Ws3Client\InvalidServerResponse $ex)
-        {
-            $this->assertEquals($ex->response, $return_text);
-            return;
-        }
-        $this->assertTrue(false); //test failed if exception not catched
-    
-    }
-
-
-    public function testIpBlocked(): void
-    {
-        $this->expectException(\Morpher\Ws3Client\IpBlocked::class);
-        $this->expectExceptionMessage('IP заблокирован.');
-
-        $parseResults=[        'code'=>3,
-        'message'=> 'IP заблокирован.']; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-        $container = [];
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,444);
-        $lemma='двадцать';
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
-
-    }
-
 }

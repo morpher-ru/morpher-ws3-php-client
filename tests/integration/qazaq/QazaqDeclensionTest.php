@@ -4,6 +4,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 require_once __DIR__."/../IntegrationBase.php";
 use PHPUnit\Framework\TestCase;
 
+use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;
 
 use Morpher\Ws3Client\Qazaq as Qazaq;
@@ -21,6 +22,7 @@ final class QazaqDeclensionTest extends IntegrationBase
 
         $this->assertEquals("тест", $declensionResult->Nominative);
 
+
         $this->assertEquals("тестің", $declensionResult->Genitive);
         $this->assertEquals("теске", $declensionResult->Dative);
         $this->assertEquals("тесті", $declensionResult->Accusative);
@@ -35,7 +37,11 @@ final class QazaqDeclensionTest extends IntegrationBase
         $this->assertEquals("тестерден", $declensionResult->Plural->Ablative);
         $this->assertEquals("тестерде", $declensionResult->Plural->Locative);
         $this->assertEquals("тестермен", $declensionResult->Plural->Instrumental);
+
+
     }
+
+
 
     public function testQazaqParse_Personal_Success():void
     {

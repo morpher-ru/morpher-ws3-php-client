@@ -1,20 +1,19 @@
 <?php
 namespace Morpher\Ws3Client\Qazaq;
 
-require_once __DIR__."/../../vendor/autoload.php";
 
 use Morpher\Ws3Client\WebClient;
 
 class Client
 {
-	private WebClient $webClient;
+	private readonly WebClient $webClient;
 	
 	public function __construct(WebClient $webClient)
 	{
 		$this->webClient=$webClient;
 	}
 	
-	public function Parse(string $lemma)
+	public function Parse(string $lemma): DeclensionResult
 	{
 		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
 

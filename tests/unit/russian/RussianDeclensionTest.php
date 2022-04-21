@@ -13,12 +13,10 @@ use Morpher\Ws3Client\Russian as Russian;
 
 final class RussianDeclensionTest extends TestCase
 {
-    
     public function testFlags(): void
     {
+        $parseResults=[];
 
-        $parseResults=[
-        ]; 
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $lemma='тест';
@@ -38,12 +36,10 @@ final class RussianDeclensionTest extends TestCase
         $this->assertEquals('/russian/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma).'&flags='.rawurlencode('flagA,flagB,flagC'),$uri->getQuery());
-    
     }
 
     public function testParse_Success(): void
     {
-
         $parseResults=[
             "Р"=> "теста",
             "Д"=> "тесту",
@@ -68,7 +64,6 @@ final class RussianDeclensionTest extends TestCase
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $lemma='тест';
-
 
         $container = [];
 
@@ -117,13 +112,8 @@ final class RussianDeclensionTest extends TestCase
 
     }
 
-
-   
-
     public function testSplitFio_Success(): void
     {
-
-
         $parseResults=[
             "Р"=> "Александра Пушкина",
             "Д"=> "Александру Пушкину",
@@ -135,7 +125,8 @@ final class RussianDeclensionTest extends TestCase
               "И"=> "Александр",
               "О"=> "Сергеевич"
             ]
-        ]; 
+        ];
+
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $lemma="Александр Пушкин Сергеевич";
@@ -145,7 +136,6 @@ final class RussianDeclensionTest extends TestCase
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $declensionResult=$testMorpher->russian->Parse($lemma);
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -158,7 +148,6 @@ final class RussianDeclensionTest extends TestCase
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
 
         $this->assertInstanceOf(Russian\DeclensionForms::class ,$declensionResult);
-        //Assert.IsNotNull($declensionResult);
         $this->assertNotNull($declensionResult->FullName);
         $this->assertInstanceOf(Russian\FullName::class ,$declensionResult->FullName);        
         $this->assertEquals("Пушкин", $declensionResult->FullName->Surname);
@@ -169,13 +158,11 @@ final class RussianDeclensionTest extends TestCase
 
     public function testNullGenitive(): void
     {
-
         $parseResults=[
-
             "Д"=> "теляти",
             "В"=> "теля",
-  
-        ]; 
+        ];
+
         $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
         $lemma='теля';
     
@@ -184,7 +171,6 @@ final class RussianDeclensionTest extends TestCase
         $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $genitive = $testMorpher->russian->Parse($lemma)->Genitive;
-
 
         $transaction=reset($container);//get first element of requests history
 
@@ -195,8 +181,6 @@ final class RussianDeclensionTest extends TestCase
         $this->assertEquals('/russian/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
-
-    
 
         $this->assertNull($genitive);
     }
@@ -217,11 +201,7 @@ final class RussianDeclensionTest extends TestCase
         $lemma='test';
     
         $declensionResult=$testMorpher->russian->Parse($lemma);
-
     }
-
-
-
 
     public function testParse_ExceptionNoS(): void
     {
@@ -258,14 +238,12 @@ final class RussianDeclensionTest extends TestCase
         $lemma='+++';
     
         $declensionResult=$testMorpher->russian->Parse($lemma);
-
     }
 
     public function testParse_DeclensionNotSupportedUseSpell(): void
     {
         $this->expectException(Russian\DeclensionNotSupportedUseSpell::class);
         $this->expectExceptionMessage('Склонение числительных в declension не поддерживается. Используйте метод spell.');
-
 
         $parseResults=[        'code'=>4,
         'message'=> 'Склонение числительных в declension не поддерживается. Используйте метод spell.']; 
@@ -278,7 +256,6 @@ final class RussianDeclensionTest extends TestCase
         $lemma='двадцать';
     
         $declensionResult=$testMorpher->russian->Parse($lemma);
-
     }
 
 
@@ -298,13 +275,7 @@ final class RussianDeclensionTest extends TestCase
         $lemma='двадцать';
     
         $declensionResult=$testMorpher->russian->Parse($lemma,["AAA","BBB"]);
-
     }
-
-
-
-
-
 
     public function testInvalidJsonResponse(): void
     {
@@ -322,8 +293,7 @@ final class RussianDeclensionTest extends TestCase
             $this->assertEquals($ex->response, $return_text);
             return;
         }
-        $this->assertTrue(false); //test failed if exception not catched
-    
-    }
 
+        $this->assertTrue(false); //test failed if exception not catched
+    }
 }
