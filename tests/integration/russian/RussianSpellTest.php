@@ -21,7 +21,6 @@ final class RussianSpellTest extends IntegrationBase
 
         $this->assertInstanceOf(Russian\NumberSpellingResult::class,$spellingResult);
     
-        //NumberSpellingResult spellingResult = morpherClient.Russian.Spell(10, $lemma);
         $this->assertNotNull($spellingResult);
 
         // number

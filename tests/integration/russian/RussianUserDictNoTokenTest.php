@@ -15,18 +15,14 @@ use Morpher\Ws3Client\Russian\UserDict;
 final class RussianUserDictNoTokenTest extends TestCase
 {
 
-    //static UserDict $userDict;
     static Morpher $testMorpher;
 
 
     public static function setUpBeforeClass(): void
     {
-        
         $token='';
 
-        //self::$userDict=new UserDict(IntegrationBase::BASE_URL,$token);
         self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);
-
     }
 
     public function testUserDict_NoTokenError_AddOrUpdate(): void

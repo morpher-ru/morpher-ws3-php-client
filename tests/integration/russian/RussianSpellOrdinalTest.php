@@ -21,10 +21,9 @@ final class RussianSpellOrdinalTest extends IntegrationBase
 
         $this->assertInstanceOf(Russian\NumberSpellingResult::class,$spellingResult);
     
-        //NumberSpellingResult spellingResult = morpherClient.Russian.Spell(10, $lemma);
         $this->assertNotNull($spellingResult);
 
-            // number
+        // number
         $this->assertEquals("семь тысяч пятьсот восемнадцатое", $spellingResult->NumberDeclension->Nominative);
         $this->assertEquals("семь тысяч пятьсот восемнадцатого", $spellingResult->NumberDeclension->Genitive);
         $this->assertEquals("семь тысяч пятьсот восемнадцатому", $spellingResult->NumberDeclension->Dative);
