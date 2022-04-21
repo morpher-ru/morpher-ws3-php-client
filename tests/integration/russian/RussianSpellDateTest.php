@@ -29,7 +29,6 @@ final class RussianSpellDateTest extends IntegrationBase
 
         $this->assertInstanceOf(Russian\DateSpellingResult::class,$dateSpellingResult);
     
-        //NumberSpellingResult spellingResult = morpherClient.Russian.Spell(10, $lemma);
         $this->assertNotNull($dateSpellingResult);
 
         $this->assertEquals("двадцать девятое июня две тысячи девятнадцатого года", $dateSpellingResult->Nominative);
