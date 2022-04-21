@@ -42,7 +42,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
     }
 
 
-    public function testParse_ExceptionNoS(): void
+    public function testParse_InvalidArgumentEmptyString(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
