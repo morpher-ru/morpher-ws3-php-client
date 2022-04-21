@@ -32,17 +32,6 @@ final class UkrainianDeclensionTest extends IntegrationBase
          $this->assertEquals(Ukrainian\Gender::Masculine, $declensionResult->Gender);
     }
 
-
-
-    public function testParse_Exception(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-    
-        $lemma='';
-    
-        self::$testMorpher->ukrainian->Parse($lemma);
-    }
-
     public function testParse_ExceptionNoWords(): void
     {
         $this->expectException(Ukrainian\UkrainianWordsNotFound::class);
