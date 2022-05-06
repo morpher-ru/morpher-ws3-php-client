@@ -2,11 +2,6 @@
   
 [Composer package](https://packagist.org/packages/morpher/ws3-client)  
   
-## See also   
-  
-* [doctrine/inflector](https://github.com/doctrine/inflector), a popular pluralization library for English  
-* [Mikulas/inflection](https://github.com/Mikulas/inflection), a declension library for the Czech language  
-  
 ### Склонение по падежам (Морфер)  
          
 Библиотека реализует следующие функции  
@@ -485,3 +480,9 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   * Увеличить версию в composer.json.  
   * Добавить новый релиз на Гитхабе.
   * В личном кабинете на https://packagist.org опубликовать пакет.  
+
+## See also   
+  
+* [doctrine/inflector](https://github.com/doctrine/inflector), a popular pluralization library for English  
+* [Mikulas/inflection](https://github.com/Mikulas/inflection), a declension library for the Czech language  
+  
