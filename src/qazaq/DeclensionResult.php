@@ -1,21 +1,18 @@
 <?php
-namespace Morpher\Ws3Client\Qazaq;
 
+namespace Morpher\Ws3Client\Qazaq;
 
 class DeclensionResult extends SameNumberForms
 {
+	/**
+	 * @readonly
+	 */
+	public ?SameNumberForms $plural;
 
-    public readonly ?SameNumberForms $Plural;
+	public function __construct($data)
+	{
+		parent::__construct($data);
 
-    function __construct($data)
-    {
-        parent::__construct($data);
-
-        $this->Plural= isset($data['көпше']) ? new SameNumberForms($data['көпше']) : null;
-
-
-    }
-
-
-
+		$this->plural = isset($data['көпше']) ? new SameNumberForms($data['көпше']) : null;
+	}
 }

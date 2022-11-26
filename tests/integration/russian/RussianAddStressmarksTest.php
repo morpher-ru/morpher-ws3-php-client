@@ -11,7 +11,7 @@ use Morpher\Ws3Client\Russian as Russian;
 
 
 
-final class RussianAddStressmarksTest extends IntegrationBase
+final class RussianAddStressMarksTest extends IntegrationBase
 {
     public function testStressmarks_Success(): void
     {

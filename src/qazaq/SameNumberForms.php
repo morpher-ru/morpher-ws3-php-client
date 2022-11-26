@@ -1,48 +1,68 @@
 <?php
-namespace Morpher\Ws3Client\Qazaq;
 
+namespace Morpher\Ws3Client\Qazaq;
 
 class SameNumberForms extends DeclensionForms
 {
+	//[DataMember(Name = "менің")]
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $firstPerson;
 
-    //[DataMember(Name = "менің")]
-    public readonly ?DeclensionForms $FirstPerson;
+	//[DataMember(Name = "сенің")]
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $secondPerson;
 
-    //[DataMember(Name = "сенің")]
-    public readonly ?DeclensionForms $SecondPerson;
+	//[DataMember(Name = "сіздің")]
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $secondPersonRespectful;
 
-    //[DataMember(Name = "сіздің")]
-    public readonly ?DeclensionForms $SecondPersonRespectful;
+	//[DataMember(Name = "оның")]
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $thirdPerson;
 
-    //[DataMember(Name = "оның")]
-    public readonly ?DeclensionForms $ThirdPerson;
+	//[DataMember(Name = "біздің")]
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $firstPersonPlural;
 
-    //[DataMember(Name = "біздің")]
-    public readonly ?DeclensionForms $FirstPersonPlural;
+	//[DataMember(Name = "сендердің")]
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $secondPersonPlural;
 
-    //[DataMember(Name = "сендердің")]
-    public readonly ?DeclensionForms $SecondPersonPlural;
+	//[DataMember(Name = "сіздердің")]
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $secondPersonRespectfulPlural;
 
-    //[DataMember(Name = "сіздердің")]
-    public readonly ?DeclensionForms $SecondPersonRespectfulPlural;
+	//[DataMember(Name = "олардың")]
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $thirdPersonPlural;
 
-    //[DataMember(Name = "олардың")]
-    public readonly ?DeclensionForms $ThirdPersonPlural;
+	public function __construct($data)
+	{
+		parent::__construct($data);
 
-    function __construct($data)
-    {
-        parent::__construct($data);
- 
-        $this->FirstPerson=isset($data["менің"]) ? new DeclensionForms($data["менің"]) : null;
-        $this->SecondPerson=isset($data["сенің"]) ? new DeclensionForms($data["сенің"]) : null;   
-        $this->SecondPersonRespectful= isset($data["сіздің"]) ? new DeclensionForms($data["сіздің"]) : null;                
-        $this->ThirdPerson=isset($data["оның"]) ? new DeclensionForms($data["оның"]) : null;   
-        $this->FirstPersonPlural=isset($data["біздің"]) ? new DeclensionForms($data["біздің"]) : null;     
-        $this->SecondPersonPlural=isset($data["сендердің"]) ? new DeclensionForms($data["сендердің"]) : null;          
-        $this->SecondPersonRespectfulPlural=isset($data["сіздердің"]) ? new DeclensionForms($data["сіздердің"]) : null;                      
-        $this->ThirdPersonPlural=isset($data["олардың"]) ? new DeclensionForms($data["олардың"]) : null;       
-
-    }
-
-
+		$this->firstPerson = isset($data["менің"]) ? new DeclensionForms($data["менің"]) : null;
+		$this->secondPerson = isset($data["сенің"]) ? new DeclensionForms($data["сенің"]) : null;
+		$this->secondPersonRespectful = isset($data["сіздің"]) ? new DeclensionForms($data["сіздің"]) : null;
+		$this->thirdPerson = isset($data["оның"]) ? new DeclensionForms($data["оның"]) : null;
+		$this->firstPersonPlural = isset($data["біздің"]) ? new DeclensionForms($data["біздің"]) : null;
+		$this->secondPersonPlural = isset($data["сендердің"]) ? new DeclensionForms($data["сендердің"]) : null;
+		$this->secondPersonRespectfulPlural = isset($data["сіздердің"]) ? new DeclensionForms($data["сіздердің"]) : null;
+		$this->thirdPersonPlural = isset($data["олардың"]) ? new DeclensionForms($data["олардың"]) : null;
+	}
 }

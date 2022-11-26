@@ -1,52 +1,42 @@
 <?php
+
 namespace Morpher\Ws3Client\Ukrainian;
-
-
 
 class CorrectionForms
 {
-    public  ?string $Nominative;
-    public  ?string $Genitive;
-    public  ?string $Dative;
-    public  ?string $Accusative;
-    public  ?string $Instrumental;
-    public  ?string $Prepositional;
-    public  ?string $Vocative;    
+	public ?string $nominative;
+	public ?string $genitive;
+	public ?string $dative;
+	public ?string $accusative;
+	public ?string $instrumental;
+	public ?string $prepositional;
+	public ?string $vocative;
 
-    //public readonly array $data; 
-    function __construct($data)
-    {
-        $this->data=$data;
+	public function __construct($data)
+	{
+		$this->nominative = $data['Н'] ?? null;
+		$this->genitive = $data['Р'] ?? null;
+		$this->dative = $data['Д'] ?? null;
+		$this->accusative = $data['З'] ?? null;
+		$this->instrumental = $data['О'] ?? null;
+		$this->prepositional = $data['М'] ?? null;
+		$this->vocative = $data['К'] ?? null;
+	}
 
-        $this->Nominative=$data['Н'] ?? null;         
-        $this->Genitive  =$data['Р'] ?? null;     
-        $this->Dative    =$data['Д'] ?? null;
-        $this->Accusative=$data['З'] ?? null; 
-        $this->Instrumental=$data['О'] ?? null; 
-        $this->Prepositional=$data['М'] ?? null; 
-        $this->Vocative=$data['К'] ?? null; 
+	/*
+	*  returned array is compatible with __construct($data)
+	*/
+	public function getArray(): array
+	{
+		$data = [];
+		$data['Н'] = $this->nominative;
+		$data['Р'] = $this->genitive;
+		$data['Д'] = $this->dative;
+		$data['З'] = $this->accusative;
+		$data['О'] = $this->instrumental;
+		$data['М'] = $this->prepositional;
+		$data['К'] = $this->vocative;
 
-
-    }
-
-    /*
-    *  returned array is compatible with __construct($data)
-    */
-    public function getArray():array
-    {        
-        $data=[];
-        $data['Н']=$this->Nominative;         
-        $data['Р']=$this->Genitive;     
-        $data['Д']=$this->Dative;
-        $data['З']=$this->Accusative; 
-        $data['О']=$this->Instrumental; 
-        $data['М']=$this->Prepositional; 
-        $data['К']=$this->Vocative;        
-
-        $data=array_filter($data,function($var){ return !($var===null); } );
-        return $data;
-
-
-    }
-
+		return array_filter($data, static fn ($var) => !($var === null));
+	}
 }

@@ -1,7 +1,9 @@
 <?php
-namespace Morpher\Ws3Client\Ukrainian;
 
-class InvalidFlags extends \InvalidArgumentException
+namespace Morpher\Ws3Client\Ukrainian\Exceptions;
+
+use InvalidArgumentException;
+
+class InvalidFlags extends InvalidArgumentException
 {
-
 }

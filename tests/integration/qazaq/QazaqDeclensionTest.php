@@ -1,238 +1,263 @@
-<?php declare(strict_types=1);
-require_once __DIR__."/../../../vendor/autoload.php";
+<?php
 
-require_once __DIR__."/../IntegrationBase.php";
-use PHPUnit\Framework\TestCase;
+declare(strict_types=1);
 
-use Morpher\Ws3Client\WebClient;
-use Morpher\Ws3Client\Morpher;
+require_once __DIR__ . "/../../../vendor/autoload.php";
+require_once __DIR__ . "/../IntegrationBase.php";
 
-use Morpher\Ws3Client\Qazaq as Qazaq;
+use Morpher\Ws3Client\Exceptions\InvalidArgumentEmptyString;
+use Morpher\Ws3Client\Qazaq;
 
 final class QazaqDeclensionTest extends IntegrationBase
 {
-    public function testQazaqParse_Success(): void
-    {
-        $lemma='тест';
+	/**
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenRequired
+	 * @throws \Morpher\Ws3Client\Exceptions\RequestsDailyLimit
+	 * @throws \Morpher\Ws3Client\Exceptions\InvalidServerResponse
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenIncorrectFormat
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenNotFound
+	 * @throws \Morpher\Ws3Client\Exceptions\IpBlocked
+	 */
+	public function testQazaqParse_Success(): void
+	{
+		$lemma = 'тест';
 
-        $declensionResult=self::$testMorpher->qazaq->Parse($lemma);
+		$declensionResult = self::$testMorpher->qazaq->parse($lemma);
 
-        $this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
-        $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
+		$this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
+		$this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->plural);
 
-        $this->assertEquals("тест", $declensionResult->Nominative);
+		$this->assertEquals("тест", $declensionResult->nominative);
 
+		$this->assertEquals("тестің", $declensionResult->genitive);
+		$this->assertEquals("теске", $declensionResult->dative);
+		$this->assertEquals("тесті", $declensionResult->accusative);
+		$this->assertEquals("тестен", $declensionResult->ablative);
+		$this->assertEquals("тесте", $declensionResult->locative);
+		$this->assertEquals("теспен", $declensionResult->instrumental);
 
-        $this->assertEquals("тестің", $declensionResult->Genitive);
-        $this->assertEquals("теске", $declensionResult->Dative);
-        $this->assertEquals("тесті", $declensionResult->Accusative);
-        $this->assertEquals("тестен", $declensionResult->Ablative);
-        $this->assertEquals("тесте", $declensionResult->Locative);
-        $this->assertEquals("теспен", $declensionResult->Instrumental);
+		$this->assertEquals("тестер", $declensionResult->plural->nominative);
+		$this->assertEquals("тестердің", $declensionResult->plural->genitive);
+		$this->assertEquals("тестерге", $declensionResult->plural->dative);
+		$this->assertEquals("тестерді", $declensionResult->plural->accusative);
+		$this->assertEquals("тестерден", $declensionResult->plural->ablative);
+		$this->assertEquals("тестерде", $declensionResult->plural->locative);
+		$this->assertEquals("тестермен", $declensionResult->plural->instrumental);
+	}
 
-        $this->assertEquals("тестер", $declensionResult->Plural->Nominative);
-        $this->assertEquals("тестердің", $declensionResult->Plural->Genitive);
-        $this->assertEquals("тестерге", $declensionResult->Plural->Dative);
-        $this->assertEquals("тестерді", $declensionResult->Plural->Accusative);
-        $this->assertEquals("тестерден", $declensionResult->Plural->Ablative);
-        $this->assertEquals("тестерде", $declensionResult->Plural->Locative);
-        $this->assertEquals("тестермен", $declensionResult->Plural->Instrumental);
+	/**
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenRequired
+	 * @throws \Morpher\Ws3Client\Exceptions\RequestsDailyLimit
+	 * @throws \Morpher\Ws3Client\Exceptions\InvalidServerResponse
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenIncorrectFormat
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenNotFound
+	 * @throws \Morpher\Ws3Client\Exceptions\IpBlocked
+	 */
+	public function testQazaqParse_Personal_Success(): void
+	{
+		$lemma = 'бала';
 
+		$declensionResult = self::$testMorpher->qazaq->parse($lemma);
 
-    }
+		$this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
+		$this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->plural);
 
+		$this->assertNotNull($declensionResult);
+		$this->assertEquals("бала", $declensionResult->nominative);
+		$this->assertEquals("баланың", $declensionResult->genitive);
+		$this->assertEquals("балаға", $declensionResult->dative);
+		$this->assertEquals("баланы", $declensionResult->accusative);
+		$this->assertEquals("баладан", $declensionResult->ablative);
+		$this->assertEquals("балада", $declensionResult->locative);
+		$this->assertEquals("баламен", $declensionResult->instrumental);
 
+		$this->assertNotNull($declensionResult->firstPerson);
+		$this->assertEquals("балам", $declensionResult->firstPerson->nominative);
+		$this->assertEquals("баламның", $declensionResult->firstPerson->genitive);
+		$this->assertEquals("балама", $declensionResult->firstPerson->dative);
+		$this->assertEquals("баламды", $declensionResult->firstPerson->accusative);
+		$this->assertEquals("баламнан", $declensionResult->firstPerson->ablative);
+		$this->assertEquals("баламда", $declensionResult->firstPerson->locative);
+		$this->assertEquals("баламмен", $declensionResult->firstPerson->instrumental);
 
-    public function testQazaqParse_Personal_Success():void
-    {
-        $lemma='бала';
+		$this->assertNotNull($declensionResult->secondPerson);
+		$this->assertEquals("балаң", $declensionResult->secondPerson->nominative);
+		$this->assertEquals("балаңның", $declensionResult->secondPerson->genitive);
+		$this->assertEquals("балаңа", $declensionResult->secondPerson->dative);
+		$this->assertEquals("балаңды", $declensionResult->secondPerson->accusative);
+		$this->assertEquals("балаңнан", $declensionResult->secondPerson->ablative);
+		$this->assertEquals("балаңда", $declensionResult->secondPerson->locative);
+		$this->assertEquals("балаңмен", $declensionResult->secondPerson->instrumental);
 
-        $declensionResult=self::$testMorpher->qazaq->Parse($lemma);
+		$this->assertNotNull($declensionResult->secondPersonRespectful);
+		$this->assertEquals("балаңыз", $declensionResult->secondPersonRespectful->nominative);
+		$this->assertEquals("балаңыздың", $declensionResult->secondPersonRespectful->genitive);
+		$this->assertEquals("балаңызға", $declensionResult->secondPersonRespectful->dative);
+		$this->assertEquals("балаңызды", $declensionResult->secondPersonRespectful->accusative);
+		$this->assertEquals("балаңыздан", $declensionResult->secondPersonRespectful->ablative);
+		$this->assertEquals("балаңызда", $declensionResult->secondPersonRespectful->locative);
+		$this->assertEquals("балаңызбен", $declensionResult->secondPersonRespectful->instrumental);
 
-        $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
-        $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
+		$this->assertNotNull($declensionResult->thirdPerson);
+		$this->assertEquals("баласы", $declensionResult->thirdPerson->nominative);
+		$this->assertEquals("баласының", $declensionResult->thirdPerson->genitive);
+		$this->assertEquals("баласына", $declensionResult->thirdPerson->dative);
+		$this->assertEquals("баласын", $declensionResult->thirdPerson->accusative);
+		$this->assertEquals("баласынан", $declensionResult->thirdPerson->ablative);
+		$this->assertEquals("баласында", $declensionResult->thirdPerson->locative);
+		$this->assertEquals("баласымен", $declensionResult->thirdPerson->instrumental);
 
-        $this->assertNotNull($declensionResult);
-        $this->assertEquals("бала", $declensionResult->Nominative);
-        $this->assertEquals("баланың", $declensionResult->Genitive);
-        $this->assertEquals("балаға", $declensionResult->Dative);
-        $this->assertEquals("баланы", $declensionResult->Accusative);
-        $this->assertEquals("баладан", $declensionResult->Ablative);
-        $this->assertEquals("балада", $declensionResult->Locative);
-        $this->assertEquals("баламен", $declensionResult->Instrumental);
+		$this->assertNotNull($declensionResult->firstPersonPlural);
+		$this->assertEquals("баламыз", $declensionResult->firstPersonPlural->nominative);
+		$this->assertEquals("баламыздың", $declensionResult->firstPersonPlural->genitive);
+		$this->assertEquals("баламызға", $declensionResult->firstPersonPlural->dative);
+		$this->assertEquals("баламызды", $declensionResult->firstPersonPlural->accusative);
+		$this->assertEquals("баламыздан", $declensionResult->firstPersonPlural->ablative);
+		$this->assertEquals("баламызда", $declensionResult->firstPersonPlural->locative);
+		$this->assertEquals("баламызбен", $declensionResult->firstPersonPlural->instrumental);
 
-        $this->assertNotNull($declensionResult->FirstPerson);
-        $this->assertEquals("балам", $declensionResult->FirstPerson->Nominative);
-        $this->assertEquals("баламның", $declensionResult->FirstPerson->Genitive);
-        $this->assertEquals("балама", $declensionResult->FirstPerson->Dative);
-        $this->assertEquals("баламды", $declensionResult->FirstPerson->Accusative);
-        $this->assertEquals("баламнан", $declensionResult->FirstPerson->Ablative);
-        $this->assertEquals("баламда", $declensionResult->FirstPerson->Locative);
-        $this->assertEquals("баламмен", $declensionResult->FirstPerson->Instrumental);
+		$this->assertNotNull($declensionResult->secondPerson);
+		$this->assertEquals("балаң", $declensionResult->secondPerson->nominative);
+		$this->assertEquals("балаңның", $declensionResult->secondPerson->genitive);
+		$this->assertEquals("балаңа", $declensionResult->secondPerson->dative);
+		$this->assertEquals("балаңды", $declensionResult->secondPerson->accusative);
+		$this->assertEquals("балаңнан", $declensionResult->secondPerson->ablative);
+		$this->assertEquals("балаңда", $declensionResult->secondPerson->locative);
+		$this->assertEquals("балаңмен", $declensionResult->secondPerson->instrumental);
 
-        $this->assertNotNull($declensionResult->SecondPerson);
-        $this->assertEquals("балаң", $declensionResult->SecondPerson->Nominative);
-        $this->assertEquals("балаңның", $declensionResult->SecondPerson->Genitive);
-        $this->assertEquals("балаңа", $declensionResult->SecondPerson->Dative);
-        $this->assertEquals("балаңды", $declensionResult->SecondPerson->Accusative);
-        $this->assertEquals("балаңнан", $declensionResult->SecondPerson->Ablative);
-        $this->assertEquals("балаңда", $declensionResult->SecondPerson->Locative);
-        $this->assertEquals("балаңмен", $declensionResult->SecondPerson->Instrumental);
+		$this->assertNotNull($declensionResult->secondPersonRespectful);
+		$this->assertEquals("балаңыз", $declensionResult->secondPersonRespectful->nominative);
+		$this->assertEquals("балаңыздың", $declensionResult->secondPersonRespectful->genitive);
+		$this->assertEquals("балаңызға", $declensionResult->secondPersonRespectful->dative);
+		$this->assertEquals("балаңызды", $declensionResult->secondPersonRespectful->accusative);
+		$this->assertEquals("балаңыздан", $declensionResult->secondPersonRespectful->ablative);
+		$this->assertEquals("балаңызда", $declensionResult->secondPersonRespectful->locative);
+		$this->assertEquals("балаңызбен", $declensionResult->secondPersonRespectful->instrumental);
 
-        $this->assertNotNull($declensionResult->SecondPersonRespectful);
-        $this->assertEquals("балаңыз", $declensionResult->SecondPersonRespectful->Nominative);
-        $this->assertEquals("балаңыздың", $declensionResult->SecondPersonRespectful->Genitive);
-        $this->assertEquals("балаңызға", $declensionResult->SecondPersonRespectful->Dative);
-        $this->assertEquals("балаңызды", $declensionResult->SecondPersonRespectful->Accusative);
-        $this->assertEquals("балаңыздан", $declensionResult->SecondPersonRespectful->Ablative);
-        $this->assertEquals("балаңызда", $declensionResult->SecondPersonRespectful->Locative);
-        $this->assertEquals("балаңызбен", $declensionResult->SecondPersonRespectful->Instrumental);
+		$this->assertNotNull($declensionResult->thirdPersonPlural);
+		$this->assertEquals("балалары", $declensionResult->thirdPersonPlural->nominative);
+		$this->assertEquals("балаларының", $declensionResult->thirdPersonPlural->genitive);
+		$this->assertEquals("балаларына", $declensionResult->thirdPersonPlural->dative);
+		$this->assertEquals("балаларын", $declensionResult->thirdPersonPlural->accusative);
+		$this->assertEquals("балаларынан", $declensionResult->thirdPersonPlural->ablative);
+		$this->assertEquals("балаларында", $declensionResult->thirdPersonPlural->locative);
+		$this->assertEquals("балаларымен", $declensionResult->thirdPersonPlural->instrumental);
 
-        $this->assertNotNull($declensionResult->ThirdPerson);
-        $this->assertEquals("баласы", $declensionResult->ThirdPerson->Nominative);
-        $this->assertEquals("баласының", $declensionResult->ThirdPerson->Genitive);
-        $this->assertEquals("баласына", $declensionResult->ThirdPerson->Dative);
-        $this->assertEquals("баласын", $declensionResult->ThirdPerson->Accusative);
-        $this->assertEquals("баласынан", $declensionResult->ThirdPerson->Ablative);
-        $this->assertEquals("баласында", $declensionResult->ThirdPerson->Locative);
-        $this->assertEquals("баласымен", $declensionResult->ThirdPerson->Instrumental);
+		$this->assertNotNull($declensionResult->plural);
+		$this->assertEquals("балалар", $declensionResult->plural->nominative);
+		$this->assertEquals("балалардың", $declensionResult->plural->genitive);
+		$this->assertEquals("балаларға", $declensionResult->plural->dative);
+		$this->assertEquals("балаларды", $declensionResult->plural->accusative);
+		$this->assertEquals("балалардан", $declensionResult->plural->ablative);
+		$this->assertEquals("балаларда", $declensionResult->plural->locative);
+		$this->assertEquals("балалармен", $declensionResult->plural->instrumental);
 
-        $this->assertNotNull($declensionResult->FirstPersonPlural);
-        $this->assertEquals("баламыз", $declensionResult->FirstPersonPlural->Nominative);
-        $this->assertEquals("баламыздың", $declensionResult->FirstPersonPlural->Genitive);
-        $this->assertEquals("баламызға", $declensionResult->FirstPersonPlural->Dative);
-        $this->assertEquals("баламызды", $declensionResult->FirstPersonPlural->Accusative);
-        $this->assertEquals("баламыздан", $declensionResult->FirstPersonPlural->Ablative);
-        $this->assertEquals("баламызда", $declensionResult->FirstPersonPlural->Locative);
-        $this->assertEquals("баламызбен", $declensionResult->FirstPersonPlural->Instrumental);
+		$this->assertNotNull($declensionResult->plural->firstPerson);
+		$this->assertEquals("балаларым", $declensionResult->plural->firstPerson->nominative);
+		$this->assertEquals("балаларымның", $declensionResult->plural->firstPerson->genitive);
+		$this->assertEquals("балаларыма", $declensionResult->plural->firstPerson->dative);
+		$this->assertEquals("балаларымды", $declensionResult->plural->firstPerson->accusative);
+		$this->assertEquals("балаларымнан", $declensionResult->plural->firstPerson->ablative);
+		$this->assertEquals("балаларымда", $declensionResult->plural->firstPerson->locative);
+		$this->assertEquals("балаларыммен", $declensionResult->plural->firstPerson->instrumental);
 
-        $this->assertNotNull($declensionResult->SecondPerson);
-        $this->assertEquals("балаң", $declensionResult->SecondPerson->Nominative);
-        $this->assertEquals("балаңның", $declensionResult->SecondPerson->Genitive);
-        $this->assertEquals("балаңа", $declensionResult->SecondPerson->Dative);
-        $this->assertEquals("балаңды", $declensionResult->SecondPerson->Accusative);
-        $this->assertEquals("балаңнан", $declensionResult->SecondPerson->Ablative);
-        $this->assertEquals("балаңда", $declensionResult->SecondPerson->Locative);
-        $this->assertEquals("балаңмен", $declensionResult->SecondPerson->Instrumental);
+		$this->assertNotNull($declensionResult->plural->secondPerson);
+		$this->assertEquals("балаларың", $declensionResult->plural->secondPerson->nominative);
+		$this->assertEquals("балаларыңның", $declensionResult->plural->secondPerson->genitive);
+		$this->assertEquals("балаларыңа", $declensionResult->plural->secondPerson->dative);
+		$this->assertEquals("балаларыңды", $declensionResult->plural->secondPerson->accusative);
+		$this->assertEquals("балаларыңнан", $declensionResult->plural->secondPerson->ablative);
+		$this->assertEquals("балаларыңда", $declensionResult->plural->secondPerson->locative);
+		$this->assertEquals("балаларыңмен", $declensionResult->plural->secondPerson->instrumental);
 
-        $this->assertNotNull($declensionResult->SecondPersonRespectful);
-        $this->assertEquals("балаңыз", $declensionResult->SecondPersonRespectful->Nominative);
-        $this->assertEquals("балаңыздың", $declensionResult->SecondPersonRespectful->Genitive);
-        $this->assertEquals("балаңызға", $declensionResult->SecondPersonRespectful->Dative);
-        $this->assertEquals("балаңызды", $declensionResult->SecondPersonRespectful->Accusative);
-        $this->assertEquals("балаңыздан", $declensionResult->SecondPersonRespectful->Ablative);
-        $this->assertEquals("балаңызда", $declensionResult->SecondPersonRespectful->Locative);
-        $this->assertEquals("балаңызбен", $declensionResult->SecondPersonRespectful->Instrumental);
+		$this->assertNotNull($declensionResult->plural->secondPersonRespectful);
+		$this->assertEquals("балаларыңыз", $declensionResult->plural->secondPersonRespectful->nominative);
+		$this->assertEquals("балаларыңыздың", $declensionResult->plural->secondPersonRespectful->genitive);
+		$this->assertEquals("балаларыңызға", $declensionResult->plural->secondPersonRespectful->dative);
+		$this->assertEquals("балаларыңызды", $declensionResult->plural->secondPersonRespectful->accusative);
+		$this->assertEquals("балаларыңыздан", $declensionResult->plural->secondPersonRespectful->ablative);
+		$this->assertEquals("балаларыңызда", $declensionResult->plural->secondPersonRespectful->locative);
+		$this->assertEquals("балаларыңызбен", $declensionResult->plural->secondPersonRespectful->instrumental);
 
-        $this->assertNotNull($declensionResult->ThirdPersonPlural);
-        $this->assertEquals("балалары", $declensionResult->ThirdPersonPlural->Nominative);
-        $this->assertEquals("балаларының", $declensionResult->ThirdPersonPlural->Genitive);
-        $this->assertEquals("балаларына", $declensionResult->ThirdPersonPlural->Dative);
-        $this->assertEquals("балаларын", $declensionResult->ThirdPersonPlural->Accusative);
-        $this->assertEquals("балаларынан", $declensionResult->ThirdPersonPlural->Ablative);
-        $this->assertEquals("балаларында", $declensionResult->ThirdPersonPlural->Locative);
-        $this->assertEquals("балаларымен", $declensionResult->ThirdPersonPlural->Instrumental);
+		$this->assertNotNull($declensionResult->plural->thirdPerson);
+		$this->assertEquals("балалары", $declensionResult->plural->thirdPerson->nominative);
+		$this->assertEquals("балаларының", $declensionResult->plural->thirdPerson->genitive);
+		$this->assertEquals("балаларына", $declensionResult->plural->thirdPerson->dative);
+		$this->assertEquals("балаларын", $declensionResult->plural->thirdPerson->accusative);
+		$this->assertEquals("балаларынан", $declensionResult->plural->thirdPerson->ablative);
+		$this->assertEquals("балаларында", $declensionResult->plural->thirdPerson->locative);
+		$this->assertEquals("балаларымен", $declensionResult->plural->thirdPerson->instrumental);
 
-        $this->assertNotNull($declensionResult->Plural);
-        $this->assertEquals("балалар", $declensionResult->Plural->Nominative);
-        $this->assertEquals("балалардың", $declensionResult->Plural->Genitive);
-        $this->assertEquals("балаларға", $declensionResult->Plural->Dative);
-        $this->assertEquals("балаларды", $declensionResult->Plural->Accusative);
-        $this->assertEquals("балалардан", $declensionResult->Plural->Ablative);
-        $this->assertEquals("балаларда", $declensionResult->Plural->Locative);
-        $this->assertEquals("балалармен", $declensionResult->Plural->Instrumental);
+		$this->assertNotNull($declensionResult->plural->firstPersonPlural);
+		$this->assertEquals("балаларымыз", $declensionResult->plural->firstPersonPlural->nominative);
+		$this->assertEquals("балаларымыздың", $declensionResult->plural->firstPersonPlural->genitive);
+		$this->assertEquals("балаларымызға", $declensionResult->plural->firstPersonPlural->dative);
+		$this->assertEquals("балаларымызды", $declensionResult->plural->firstPersonPlural->accusative);
+		$this->assertEquals("балаларымыздан", $declensionResult->plural->firstPersonPlural->ablative);
+		$this->assertEquals("балаларымызда", $declensionResult->plural->firstPersonPlural->locative);
+		$this->assertEquals("балаларымызбен", $declensionResult->plural->firstPersonPlural->instrumental);
 
-        $this->assertNotNull($declensionResult->Plural->FirstPerson);
-        $this->assertEquals("балаларым", $declensionResult->Plural->FirstPerson->Nominative);
-        $this->assertEquals("балаларымның", $declensionResult->Plural->FirstPerson->Genitive);
-        $this->assertEquals("балаларыма", $declensionResult->Plural->FirstPerson->Dative);
-        $this->assertEquals("балаларымды", $declensionResult->Plural->FirstPerson->Accusative);
-        $this->assertEquals("балаларымнан", $declensionResult->Plural->FirstPerson->Ablative);
-        $this->assertEquals("балаларымда", $declensionResult->Plural->FirstPerson->Locative);
-        $this->assertEquals("балаларыммен", $declensionResult->Plural->FirstPerson->Instrumental);
+		$this->assertNotNull($declensionResult->plural->secondPerson);
+		$this->assertEquals("балаларың", $declensionResult->plural->secondPerson->nominative);
+		$this->assertEquals("балаларыңның", $declensionResult->plural->secondPerson->genitive);
+		$this->assertEquals("балаларыңа", $declensionResult->plural->secondPerson->dative);
+		$this->assertEquals("балаларыңды", $declensionResult->plural->secondPerson->accusative);
+		$this->assertEquals("балаларыңнан", $declensionResult->plural->secondPerson->ablative);
+		$this->assertEquals("балаларыңда", $declensionResult->plural->secondPerson->locative);
+		$this->assertEquals("балаларыңмен", $declensionResult->plural->secondPerson->instrumental);
 
-        $this->assertNotNull($declensionResult->Plural->SecondPerson);
-        $this->assertEquals("балаларың", $declensionResult->Plural->SecondPerson->Nominative);
-        $this->assertEquals("балаларыңның", $declensionResult->Plural->SecondPerson->Genitive);
-        $this->assertEquals("балаларыңа", $declensionResult->Plural->SecondPerson->Dative);
-        $this->assertEquals("балаларыңды", $declensionResult->Plural->SecondPerson->Accusative);
-        $this->assertEquals("балаларыңнан", $declensionResult->Plural->SecondPerson->Ablative);
-        $this->assertEquals("балаларыңда", $declensionResult->Plural->SecondPerson->Locative);
-        $this->assertEquals("балаларыңмен", $declensionResult->Plural->SecondPerson->Instrumental);
+		$this->assertNotNull($declensionResult->plural->secondPersonRespectful);
+		$this->assertEquals("балаларыңыз", $declensionResult->plural->secondPersonRespectful->nominative);
+		$this->assertEquals("балаларыңыздың", $declensionResult->plural->secondPersonRespectful->genitive);
+		$this->assertEquals("балаларыңызға", $declensionResult->plural->secondPersonRespectful->dative);
+		$this->assertEquals("балаларыңызды", $declensionResult->plural->secondPersonRespectful->accusative);
+		$this->assertEquals("балаларыңыздан", $declensionResult->plural->secondPersonRespectful->ablative);
+		$this->assertEquals("балаларыңызда", $declensionResult->plural->secondPersonRespectful->locative);
+		$this->assertEquals("балаларыңызбен", $declensionResult->plural->secondPersonRespectful->instrumental);
 
-        $this->assertNotNull($declensionResult->Plural->SecondPersonRespectful);
-        $this->assertEquals("балаларыңыз", $declensionResult->Plural->SecondPersonRespectful->Nominative);
-        $this->assertEquals("балаларыңыздың", $declensionResult->Plural->SecondPersonRespectful->Genitive);
-        $this->assertEquals("балаларыңызға", $declensionResult->Plural->SecondPersonRespectful->Dative);
-        $this->assertEquals("балаларыңызды", $declensionResult->Plural->SecondPersonRespectful->Accusative);
-        $this->assertEquals("балаларыңыздан", $declensionResult->Plural->SecondPersonRespectful->Ablative);
-        $this->assertEquals("балаларыңызда", $declensionResult->Plural->SecondPersonRespectful->Locative);
-        $this->assertEquals("балаларыңызбен", $declensionResult->Plural->SecondPersonRespectful->Instrumental);
+		$this->assertNotNull($declensionResult->plural->thirdPersonPlural);
+		$this->assertEquals("балалары", $declensionResult->plural->thirdPersonPlural->nominative);
+		$this->assertEquals("балаларының", $declensionResult->plural->thirdPersonPlural->genitive);
+		$this->assertEquals("балаларына", $declensionResult->plural->thirdPersonPlural->dative);
+		$this->assertEquals("балаларын", $declensionResult->plural->thirdPersonPlural->accusative);
+		$this->assertEquals("балаларынан", $declensionResult->plural->thirdPersonPlural->ablative);
+		$this->assertEquals("балаларында", $declensionResult->plural->thirdPersonPlural->locative);
+		$this->assertEquals("балаларымен", $declensionResult->plural->thirdPersonPlural->instrumental);
+	}
 
-        $this->assertNotNull($declensionResult->Plural->ThirdPerson);
-        $this->assertEquals("балалары", $declensionResult->Plural->ThirdPerson->Nominative);
-        $this->assertEquals("балаларының", $declensionResult->Plural->ThirdPerson->Genitive);
-        $this->assertEquals("балаларына", $declensionResult->Plural->ThirdPerson->Dative);
-        $this->assertEquals("балаларын", $declensionResult->Plural->ThirdPerson->Accusative);
-        $this->assertEquals("балаларынан", $declensionResult->Plural->ThirdPerson->Ablative);
-        $this->assertEquals("балаларында", $declensionResult->Plural->ThirdPerson->Locative);
-        $this->assertEquals("балаларымен", $declensionResult->Plural->ThirdPerson->Instrumental);
+	/**
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenRequired
+	 * @throws \Morpher\Ws3Client\Exceptions\RequestsDailyLimit
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenIncorrectFormat
+	 * @throws \Morpher\Ws3Client\Exceptions\InvalidServerResponse
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenNotFound
+	 * @throws \Morpher\Ws3Client\Exceptions\IpBlocked
+	 */
+	public function testParse_ExceptionNoWords(): void
+	{
+		$this->expectException(Qazaq\Exceptions\QazaqWordsNotFound::class);
+		$this->expectExceptionMessage('Не найдено казахских слов.');
 
-        $this->assertNotNull($declensionResult->Plural->FirstPersonPlural);
-        $this->assertEquals("балаларымыз", $declensionResult->Plural->FirstPersonPlural->Nominative);
-        $this->assertEquals("балаларымыздың", $declensionResult->Plural->FirstPersonPlural->Genitive);
-        $this->assertEquals("балаларымызға", $declensionResult->Plural->FirstPersonPlural->Dative);
-        $this->assertEquals("балаларымызды", $declensionResult->Plural->FirstPersonPlural->Accusative);
-        $this->assertEquals("балаларымыздан", $declensionResult->Plural->FirstPersonPlural->Ablative);
-        $this->assertEquals("балаларымызда", $declensionResult->Plural->FirstPersonPlural->Locative);
-        $this->assertEquals("балаларымызбен", $declensionResult->Plural->FirstPersonPlural->Instrumental);
+		$lemma = 'test';
 
-        $this->assertNotNull($declensionResult->Plural->SecondPerson);
-        $this->assertEquals("балаларың", $declensionResult->Plural->SecondPerson->Nominative);
-        $this->assertEquals("балаларыңның", $declensionResult->Plural->SecondPerson->Genitive);
-        $this->assertEquals("балаларыңа", $declensionResult->Plural->SecondPerson->Dative);
-        $this->assertEquals("балаларыңды", $declensionResult->Plural->SecondPerson->Accusative);
-        $this->assertEquals("балаларыңнан", $declensionResult->Plural->SecondPerson->Ablative);
-        $this->assertEquals("балаларыңда", $declensionResult->Plural->SecondPerson->Locative);
-        $this->assertEquals("балаларыңмен", $declensionResult->Plural->SecondPerson->Instrumental);
+		self::$testMorpher->qazaq->parse($lemma);
+	}
 
-        $this->assertNotNull($declensionResult->Plural->SecondPersonRespectful);
-        $this->assertEquals("балаларыңыз", $declensionResult->Plural->SecondPersonRespectful->Nominative);
-        $this->assertEquals("балаларыңыздың", $declensionResult->Plural->SecondPersonRespectful->Genitive);
-        $this->assertEquals("балаларыңызға", $declensionResult->Plural->SecondPersonRespectful->Dative);
-        $this->assertEquals("балаларыңызды", $declensionResult->Plural->SecondPersonRespectful->Accusative);
-        $this->assertEquals("балаларыңыздан", $declensionResult->Plural->SecondPersonRespectful->Ablative);
-        $this->assertEquals("балаларыңызда", $declensionResult->Plural->SecondPersonRespectful->Locative);
-        $this->assertEquals("балаларыңызбен", $declensionResult->Plural->SecondPersonRespectful->Instrumental);
+	/**
+	 * @throws \Morpher\Ws3Client\Exceptions\RequestsDailyLimit
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenRequired
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenIncorrectFormat
+	 * @throws \Morpher\Ws3Client\Exceptions\InvalidServerResponse
+	 * @throws \Morpher\Ws3Client\Exceptions\TokenNotFound
+	 * @throws \Morpher\Ws3Client\Exceptions\IpBlocked
+	 */
+	public function testParse_ExceptionNoS(): void
+	{
+		$this->expectException(InvalidArgumentEmptyString::class);
+		$this->expectExceptionMessage('Передана пустая строка.');
 
-        $this->assertNotNull($declensionResult->Plural->ThirdPersonPlural);
-        $this->assertEquals("балалары", $declensionResult->Plural->ThirdPersonPlural->Nominative);
-        $this->assertEquals("балаларының", $declensionResult->Plural->ThirdPersonPlural->Genitive);
-        $this->assertEquals("балаларына", $declensionResult->Plural->ThirdPersonPlural->Dative);
-        $this->assertEquals("балаларын", $declensionResult->Plural->ThirdPersonPlural->Accusative);
-        $this->assertEquals("балаларынан", $declensionResult->Plural->ThirdPersonPlural->Ablative);
-        $this->assertEquals("балаларында", $declensionResult->Plural->ThirdPersonPlural->Locative);
-        $this->assertEquals("балаларымен", $declensionResult->Plural->ThirdPersonPlural->Instrumental);
-    }    
+		$lemma = '';
 
-    public function testParse_ExceptionNoWords(): void
-    {
-        $this->expectException(Qazaq\QazaqWordsNotFound::class);
-        $this->expectExceptionMessage('Не найдено казахских слов.');
-
-        $lemma='test';
-    
-        self::$testMorpher->qazaq->Parse($lemma);
-    }
-
-    public function testParse_ExceptionNoS(): void
-    {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        $this->expectExceptionMessage('Передана пустая строка.');
-
-        $lemma='';
-    
-        self::$testMorpher->qazaq->Parse($lemma);
-    }
-
+		self::$testMorpher->qazaq->parse($lemma);
+	}
 }

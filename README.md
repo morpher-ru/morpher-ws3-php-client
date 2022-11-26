@@ -28,11 +28,10 @@
 ## Общие:  
   * [Остаток запросов на данный момент.](#queriesleft)  
 
-  
 Веб-сервис "Морфер 3.0" предусматривает бесплатное (с ограничениями) и платное использование. Подробнее смотрите на [сайте проекта](https://morpher.ru/ws3/#limitations).  
   
 ## Требования к системе  
-  * PHP 7.0 и выше  
+  * PHP 7.4 и выше  
   * composer  
   
 ## Установка 
@@ -48,8 +47,7 @@
 Выполните команду:
 
     $  composer require morpher/ws3-client  
-   
-    
+
 ## Использование  
 
     <?php  
@@ -58,16 +56,15 @@
     $base_url = 'https://ws3.morpher.ru';  
     $token="";  
     $morpher=new Morpher($base_url,$token);  
-    $declensionResult  = $morpher->russian->Parse('трамвай');
+    $declensionResult  = $morpher->russian->parse('трамвай');
     print_r($declensionResult);
   
 Где  ``$token="";``   в кавычках укажите токен, который получили при регистрации на сайте https://morpher.ru  .  
 Если токен пустой, сервис будет работать с ограничениями бесплатной версии.  
 Можно вызвать конструктор без аргументов, в этом случае будут использоваться параметры по умолчанию.  
-  
 
 ## <a name="rusdecl"></a>Склонение по падежам на русском языке     
-Метод ``$morpher->russian->Parse($lemma,$flags)`` решает задачу склонения слова или словосочетания по падежам;   
+Метод ``$morpher->russian->parse($lemma,$flags)`` решает задачу склонения слова или словосочетания по падежам;   
   
 Входные параметры  
 1.	Строка – слово или фраза на русском языке.  
@@ -75,29 +72,29 @@
 
 Пример:  
   
-    $lemma='фраза на русском';  
-    $declensionResult    =   $morpher->russian->Parse($lemma);  
+    $lemma = 'фраза на русском';  
+    $declensionResult = $morpher->russian->parse($lemma);  
   
 $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`` со следующими свойствами:  
-  * $declensionResult->Nominative — текст в именительном падеже;  
-  * $declensionResult->Genitive — текст в родительном падеже;  
-  * $declensionResult->Dative — текст в дательном падеже;  
-  * $declensionResult->Accusative — текст в винительном падеже;  
-  * $declensionResult->Instrumental — текст в творительном падеже;  
-  * $declensionResult->Prepositional — текст в предложном падеже;  
-  * $declensionResult->Plural — объект со свойствами-падежами для текста во множественном числе, например $declensionResult->Plural->Nominative  .  
+  * $declensionResult->nominative — текст в именительном падеже;  
+  * $declensionResult->genitive — текст в родительном падеже;  
+  * $declensionResult->dative — текст в дательном падеже;  
+  * $declensionResult->accusative — текст в винительном падеже;  
+  * $declensionResult->instrumental — текст в творительном падеже;  
+  * $declensionResult->prepositional — текст в предложном падеже;  
+  * $declensionResult->plural — объект со свойствами-падежами для текста во множественном числе, например $declensionResult->plural->nominative  .  
   
 При использовании платного аккаунта на сервисе определяются дополнительные свойства:
 
-  * $declensionResult->PrepositionalWithO — предложный падеж с предлогом О/ОБ/ОБО, предлог выбирается автоматически;  
-  * $declensionResult->Gender — род. Тип – строка. Принимает значения констант из класса ``Morpher\Ws3Client\Russian\Gender`` , всего 4 варианта -  
-    * ``Gender::Masculine``  мужской  
-    * ``Gender::Feminine``  женский  
-    * ``Gender::Neuter``  средний  
-    * ``Gender::Plural``  множественное число  
-  * $declensionResult->Where — в местном падеже (локатив) с предлогом;  
-  * $declensionResult->To – куда — в направительном падеже (аллатив) с предлогом;  
-  * $declensionResult->From –откуда — в исходном падеже (аблатив) с предлогом.  
+  * $declensionResult->prepositionalWithO — предложный падеж с предлогом О/ОБ/ОБО, предлог выбирается автоматически;  
+  * $declensionResult->gender — род. Тип – строка. Принимает значения констант из класса ``Morpher\Ws3Client\Russian\Gender`` , всего 4 варианта -  
+    * ``Gender::MASCULINE``  мужской  
+    * ``Gender::FEMININE``  женский  
+    * ``Gender::NEUTER``  средний  
+    * ``Gender::PLURAL``  множественное число  
+  * $declensionResult->where — в местном падеже (локатив) с предлогом;  
+  * $declensionResult->to – куда — в направительном падеже (аллатив) с предлогом;  
+  * $declensionResult->from – откуда — в исходном падеже (аблатив) с предлогом.  
   
 # Флаги для разрешения неоднозначностей  
 Есть слова, которые могут склоняться по-разному, например:  
@@ -108,25 +105,25 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 Для повышения качества склонения вы можете сообщить веб-сервису дополнительную информацию через флаги. Флаги принимают значения констант из класса ``Morpher\Ws3Client\Russian\Flags`` . Флаги нужно передавать в массиве:  
   
     use Morpher\Ws3Client\Russian\Flags;  
-    $morpher->russian->Parse( 'Слепов Сергей Николаевич', [Flags::Name, Flags::Masculine]);  
+    $morpher->russian->parse( 'Слепов Сергей Николаевич', [Flags::NAME, Flags::MASCULINE]);  
   
-# Флаги для ``$morpher->russian->Parse``:  
-  * Flags::Feminine — Женский род;  
-  * Flags::Masculine — Мужской род;  
-  * Flags::Animate — Одушевлённое;  
-  * Flags::Inanimate — Неодушевлённое;  
-  * Flags::Common — Нарицательное;  
-  * Flags::Name — ФИО.
+# Флаги для ``$morpher->russian->parse``:  
+  * Flags::FEMININE — Женский род;  
+  * Flags::MASCULINE — Мужской род;  
+  * Flags::ANIMATE — Одушевлённое;  
+  * Flags::INANIMATE — Неодушевлённое;  
+  * Flags::COMMON — Нарицательное;  
+  * Flags::NAME — ФИО.
   
 ## <a name="rusfio"></a>Выделение в строке фамилии, имени и отчества  
-Если входная строка распознана как ФИО, то объект ``$declensionResult->FullName`` будет содержать разбивку строки на фамилию, имя и отчество:  
-  * $declensionResult->FullName->Name - имя;  
-  * $declensionResult->FullName->Surname - фамилия;  
-  * $declensionResult->FullName->Pantronymic – отчество.  
+Если входная строка распознана как ФИО, то объект ``$declensionResult->fullName`` будет содержать разбивку строки на фамилию, имя и отчество:  
+  * $declensionResult->fullName->name - имя;  
+  * $declensionResult->fullName->surname - фамилия;  
+  * $declensionResult->fullName->patronymic – отчество.  
   
 ## <a name="russpell"></a>Пропись чисел и согласование с числом  
 
-Метод ``$morpher->russian->Spell($number, $unit)`` решает задачу получения прописи числа (тысяча сто двадцать пять) и согласование единицы измерения с предшествующем числом (1 попугай, 2 попугая, 5 попугаев).   
+Метод ``$morpher->russian->spell($number, $unit)`` решает задачу получения прописи числа (тысяча сто двадцать пять) и согласование единицы измерения с предшествующем числом (1 попугай, 2 попугая, 5 попугаев).   
 
 Входные параметры:
 
@@ -134,16 +131,16 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   * $unit – строка. 
 
 Метод возвращает объект ``Morpher\Ws3Client\Russian\NumberSpellingResult``,  
-содержащий свойства NumberDeclension и UnitDeclension.
+содержащий свойства numberDeclension и unitDeclension.
 Оба свойства содержат склонения по всем падежам:
 
-    $numberSpellingResult=$morpher->russian->Spell(235, 'рубль');  
-    print $numberSpellingResult->NumberDeclension->Dative; //двумстам тридцати пяти  
-    print $numberSpellingResult->UnitDeclension->Dative; //рублям  
+    $numberSpellingResult = $morpher->russian->spell(235, 'рубль');  
+    print $numberSpellingResult->numberDeclension->dative; // двумстам тридцати пяти  
+    print $numberSpellingResult->unitDeclension->dative; // рублям  
   
 ## <a name="russpellord"></a>Пропись чисел в виде порядковых числительных
 
-Метод $morpher->russian->SpellOrdinal($number, $unit) решает задачу прописи числа в форме порядкового числительного.
+Метод $morpher->russian->spellOrdinal($number, $unit) решает задачу прописи числа в форме порядкового числительного.
 
 Входные параметры:
 
@@ -152,13 +149,13 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Метод возвращает объект ``Morpher\Ws3Client\Russian\NumberSpellingResult``. Пример:
 
-    $numberSpellingResult =$morpher->russian->SpellOrdinal(5, 'колесо');  
-    print $numberSpellingResult->NumberDeclension->Dative; //пятому  
-    print $numberSpellingResult->UnitDeclension->Dative; //колесу  
+    $numberSpellingResult = $morpher->russian->spellOrdinal(5, 'колесо');  
+    print $numberSpellingResult->numberDeclension->dative; //пятому  
+    print $numberSpellingResult->unitDeclension->dative; //колесу  
   
 ## <a name="rusdate"></a>Пропись дат
 
-Метод ``$morpher->russian->SpellDate($date)`` решает задачу прописи даты и склонения по падежам. Дата может быть передана:
+Метод ``$morpher->russian->spellDate($date)`` решает задачу прописи даты и склонения по падежам. Дата может быть передана:
 
 - как строка в формате "2019-06-29";  
 - как объект реализующий DateTimeInterface (например класс DateTime)  
@@ -166,14 +163,14 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Метод возвращает объект ``Morpher\Ws3Client\Russian\DateSpellingResult``. Пример:
 
-    $dateSpellingResult = $morpher->russian->SpellDate('2019-06-29');  
-    print $dateSpellingResult->Genitive;  // двадцать девятого июня две тысячи девятнадцатого года  
-    print $dateSpellingResult->Dative; // двадцать девятому июня две тысячи девятнадцатого года  
-    print $dateSpellingResult->Instrumental; // двадцать девятым июня две тысячи девятнадцатого года
+    $dateSpellingResult = $morpher->russian->spellDate('2019-06-29');  
+    print $dateSpellingResult->genitive;  // двадцать девятого июня две тысячи девятнадцатого года  
+    print $dateSpellingResult->dative; // двадцать девятому июня две тысячи девятнадцатого года  
+    print $dateSpellingResult->instrumental; // двадцать девятым июня две тысячи девятнадцатого года
   
 ## <a name="rusadjgend"></a>Склонение прилагательных по родам
 
-Метод ``$morpher->russian->AdjectiveGenders($adjective)`` склоняет данное ему прилагательное, преобразуя его из мужского рода в женский, средний и во множественное число.  
+Метод ``$morpher->russian->adjectiveGenders($adjective)`` склоняет данное ему прилагательное, преобразуя его из мужского рода в женский, средний и во множественное число.  
 
 Входной параметр – строка, прилагательное. Требования к входному прилагательному:
 
@@ -183,19 +180,19 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Метод возвращает объект ``Morpher\Ws3Client\Russian\AdjectiveGenders``:
   
-    $adjectiveGenders =$morpher->russian->AdjectiveGenders('уважаемый');  
+    $adjectiveGenders =$morpher->russian->adjectiveGenders('уважаемый');  
   
-    print $adjectiveGenders->Feminine;      // уважаемая  
-    print $adjectiveGenders->Neuter;        // уважаемое  
-    print $adjectiveGenders->Plural;        // уважаемые  
+    print $adjectiveGenders->feminine;      // уважаемая  
+    print $adjectiveGenders->neuter;        // уважаемое  
+    print $adjectiveGenders->plural;        // уважаемые  
   
 ## <a name="rusadj"></a>Образование прилагательных
 
-Метод ``$morpher->russian->Adjectivize($lemma)`` образует прилагательные от названий городов и стран: Москва – московский, Ростов – ростовский, Швеция – шведский, Греция – греческий. Входной параметр – строка. Метод возвращает массив строк. Что они означают, описано [здесь](https://morpher.ru/adjectivizer/).  
+Метод ``$morpher->russian->adjectivize($lemma)`` образует прилагательные от названий городов и стран: Москва – московский, Ростов – ростовский, Швеция – шведский, Греция – греческий. Входной параметр – строка. Метод возвращает массив строк. Что они означают, описано [здесь](https://morpher.ru/adjectivizer/).  
 Пример:  
 
-    $adjectives=$morpher->russian->Adjectivize('Москва');  
-    print   $adjectives[0]; // московский  
+    $adjectives = $morpher->russian->adjectivize('Москва');  
+    print $adjectives[0]; // московский  
   
 ## <a name="russtress"></a>Расстановка ударений в текстах
 
@@ -203,17 +200,17 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 Входной параметр – строка. Метод возвращает строку аналогичную входной, но дополненную символами ударения и точками над Ё.
 Строки могут быть большой длины.
 
-    $result=$morpher->russian->addStressMarks('Три девицы под окном');  
+    $result = $morpher->russian->addStressMarks('Три девицы под окном');  
     print $result; // Три деви́цы под окно́м  
   
 Ударение отмечается символом с кодом ``U+0301``, который вставляется сразу после ударной гласной. Односложные слова не получают знака ударения, за исключением случаев, когда предлог или частица несет на себе ударение: за́ руку, не́ за что. Варианты прочтения разделяются вертикальной чертой, например:  
 
-    $result=$morpher->russian->addStressMarks('Белки питаются белками');  
+    $result = $morpher->russian->addStressMarks('Белки питаются белками');  
     print $result; // Бе́лки|Белки́ пита́ются бе́лками|белка́ми  
   
 ## <a name="ukrdecl"></a>Склонение по падежам на украинском языке  
   
-Украинский вариант склонения — метод ``$morpher->ukrainian->Parse($lemma,$flags)``.
+Украинский вариант склонения — метод ``$morpher->ukrainian->parse($lemma,$flags)``.
 
 Входные параметры:
 
@@ -222,120 +219,120 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\DeclensionResult``:
 
-    $declensionResult=$morpher->ukrainian->Parse('Крутько Катерина Володимирiвна');  
+    $declensionResult=$morpher->ukrainian->parse('Крутько Катерина Володимирiвна');  
   
-    print $declensionResult->Genitive; // Крутько Катерини Володимирівни  
-    print $declensionResult->Dative;   // Крутько Катерині Володимирівні  
-    print $declensionResult->Vocative; // Крутько Катерино Володимирівно  
+    print $declensionResult->genitive; // Крутько Катерини Володимирівни  
+    print $declensionResult->dative;   // Крутько Катерині Володимирівні  
+    print $declensionResult->vocative; // Крутько Катерино Володимирівно  
   
 Объект ``Morpher\Ws3Client\Ukrainian\DeclensionResult`` имеет следующие свойства:
 
-  * Nominative — текст в именительном падеже;  
-  * Genitive — текст в родительном падеже;  
-  * Dative — текст в дательном падеже;  
-  * Accusative — текст в винительном падеже;  
-  * Instrumental — текст в творительном падеже;  
-  * Prepositional — текст в местном падеже;  
-  * Vocative — текст в звательном падеже.  
+  * nominative — текст в именительном падеже;  
+  * genitive — текст в родительном падеже;  
+  * dative — текст в дательном падеже;  
+  * accusative — текст в винительном падеже;  
+  * instrumental — текст в творительном падеже;  
+  * prepositional — текст в местном падеже;  
+  * vocative — текст в звательном падеже.  
   
 При платном доступе возвращаются дополнительные свойства:
 
   * Gender — род, тип – строка, принимает значения констант из класса ``Morpher\Ws3Client\Ukrainian\Gender``, варианты:
-    * ``Gender::Masculine`` (Чоловічий)
-    * ``Gender::Feminine`` (Жіночий)
-    * ``Gender::Neuter``  (Середній)  
-    * ``Gender::Plural``  (Множина)  
+    * ``Gender::MASCULINE`` (Чоловічий)
+    * ``Gender::FEMININE`` (Жіночий)
+    * ``Gender::NEUTER``  (Середній)  
+    * ``Gender::PLURAL``  (Множина)  
   
 # Флаги для разрешения неоднозначностей  
 
 Пример:
 
-    use  Morpher\Ws3Client\Ukrainian\Flags;
-    $declensionResult=$morpher->ukrainian->Parse('Карен', [Flags::Feminine]);  
-    print $declensionResult->Genitive; // Карен (женское имя не склоняется)  
+    use Morpher\Ws3Client\Ukrainian\Flags;
+    $declensionResult = $morpher->ukrainian->parse('Карен', [Flags::FEMININE]);  
+    print $declensionResult->genitive; // Карен (женское имя не склоняется)  
   
-Флаги поддерживаемые для ``$morpher->ukrainian->Parse($lemma,$flags)``:
+Флаги поддерживаемые для ``$morpher->ukrainian->parse($lemma,$flags)``:
 
-  * ``Flags::Feminine`` — женский род  
-  * ``Flags::Masculine`` — мужской род  
-  * ``Gender::Neuter``  - средний род  
-  * ``Gender::Plural``  - множественное число  
+  * ``Flags::FEMININE`` — женский род  
+  * ``Flags::MASCULINE`` — мужской род  
+  * ``Gender::NEUTER``  - средний род  
+  * ``Gender::PLURAL``  - множественное число  
   
 ## <a name="ukrspell"></a>Пропись чисел и согласование с числом на украинском языке
 
-Метод ``$morpher->ukrainian->Spell($number, $unit)`` решает задачу получения прописи числа (одна тисяча сто двадцять п'ять) и согласование единицы измерения с предшествующем числом (один рубль, два рубля, п'ять рублів).  
+Метод ``$morpher->ukrainian->spell($number, $unit)`` решает задачу получения прописи числа (одна тисяча сто двадцять п'ять) и согласование единицы измерения с предшествующем числом (один рубль, два рубля, п'ять рублів).  
 Входные параметры:  
 * $number – целое число;  
 * $unit – строка.  
    
 Метод возвращает объект ``Morpher\Ws3Client\Ukrainian\NumberSpellingResult``,  
-содержащий свойства ``NumberDeclension`` и ``UnitDeclension``. Оба свойства содержат склонения по всем падежам:
+содержащий свойства ``numberDeclension`` и ``unitDeclension``. Оба свойства содержат склонения по всем падежам:
 
-    $spellingResult=$morpher->ukrainian->Spell(235, 'рубль');  
-    print $spellingResult->NumberDeclension->Genitive; // двохсот тридцяти п'яти  
-    print $spellingResult->UnitDeclension->Genitive;   // рублів  
+    $spellingResult = $morpher->ukrainian->spell(235, 'рубль');  
+    print $spellingResult->numberDeclension->genitive; // двохсот тридцяти п'яти  
+    print $spellingResult->unitDeclension->genitive;   // рублів  
   
 ## <a name="qazaqdecl"></a>Склонение по падежам, числам и лицам на казахском языке
 
-Для склонения слов и словосочетаний используется метод ``$morpher->qazaq->Parse($phrase)``.  
+Для склонения слов и словосочетаний используется метод ``$morpher->qazaq->parse($phrase)``.  
 Входной параметр – срока, слово или фраза на казахском языке. Метод возвращает объект   
 ``Morpher\Ws3Client\Qazaq\DeclensionResult``.
 
 Пример:  
 
-    $declensionResult=$morpher->qazaq->Parse('бала');
+    $declensionResult = $morpher->qazaq->parse('бала');
     print_r($declensionResult);
 
 Объект имеет сложную структуру.  
   
 Этот объект содержит 7 падежей, а также 8 лицевых форм склонений единственного числа, и каждая в себе содержит 7 падежей.
 
-    $declensionResult->Genitive  
-    $declensionResult->FirstPerson->Genitive  
-    $declensionResult->SecondPerson->Accusative  
+    $declensionResult->genitive  
+    $declensionResult->firstPerson->genitive  
+    $declensionResult->secondPerson->accusative  
     …  
-    $declensionResult->ThirdPersonPlural->Dative  
+    $declensionResult->thirdPersonPlural->dative  
 
-А также содержит объект Plural, в котором 7 падежей множественного числа, и ещё 8 лицевых форм склонений множественного числа, каждая себе содержит 7 падежей:
+А также содержит объект plural, в котором 7 падежей множественного числа, и ещё 8 лицевых форм склонений множественного числа, каждая себе содержит 7 падежей:
 
-    $declensionResult->Plural->Locative  
-    $declensionResult->Plural->FirstPerson->Locative  
-    $declensionResult->Plural->SecondPerson->Nominative  
+    $declensionResult->plural->locative  
+    $declensionResult->plural->firstPerson->locative  
+    $declensionResult->plural->secondPerson->nominative  
     …  
-    $declensionResult->Plural->ThirdPersonPlural->Dative  
+    $declensionResult->plural->thirdPersonPlural->dative  
   
 Пример:  
 
-    $declensionResult = $morpher->qazaq->Parse('менеджер');  
+    $declensionResult = $morpher->qazaq->parse('менеджер');  
   
-    print $declensionResult->Genitive;      // менеджердің  
-    print $declensionResult->Plural->Genitive;  // менеджерлердің  
-    print $declensionResult->Plural->FirstPerson->Genitive; // менеджерлеріміздің  
+    print $declensionResult->genitive;      // менеджердің  
+    print $declensionResult->plural->genitive;  // менеджерлердің  
+    print $declensionResult->plural->firstPerson->genitive; // менеджерлеріміздің  
   
 # Свойства объекта Morpher\Ws3Client\Qazaq\DeclensionResult:  
 Свойства-Падежи ед. числа:  
-  * Nominative  - атау — текст в именительном падеже;  
-  * Genitive - ілік — текст в родительном падеже;  
-  * Dative - барыс — текст в дательно-направительном падеже;  
-  * Accusative - табыс — текст в винительном падеже;  
-  * Ablative - шығыс — текст в исходном падеже;  
-  * Locative - жатыс — текст в местном падеже;  
-  * Instrumental - көмектес — текст в творительном падеже;
+  * nominative  - атау — текст в именительном падеже;  
+  * genitive - ілік — текст в родительном падеже;  
+  * dative - барыс — текст в дательно-направительном падеже;  
+  * accusative - табыс — текст в винительном падеже;  
+  * ablative - шығыс — текст в исходном падеже;  
+  * locative - жатыс — текст в местном падеже;  
+  * instrumental - көмектес — текст в творительном падеже;
 
 Свойства – лицевые формы ед. числа (в каждой свои падежи):
 
-- FirstPerson - "менің"  
-- SecondPerson -  "сенің"  
-- SecondPersonRespectful - "сіздің"  
-- ThirdPerson - "оның"  
-- FirstPersonPlural - "біздің"  
-- SecondPersonPlural - "сендердің"  
-- SecondPersonRespectfulPlural - "сіздердің"  
-- ThirdPersonPlural - "олардың"  
+- firstPerson - "менің"  
+- secondPerson -  "сенің"  
+- secondPersonRespectful - "сіздің"  
+- thirdPerson - "оның"  
+- firstPersonPlural - "біздің"  
+- secondPersonPlural - "сендердің"  
+- secondPersonRespectfulPlural - "сіздердің"  
+- thirdPersonPlural - "олардың"  
   
 Свойство множественного числа:  
 
-  * Plural - көпше — возвращает аналогичный объект со свойствами-падежами и свойствами-лицевыми формами для текста во множественном числе.  
+  * plural - көпше — возвращает аналогичный объект со свойствами-падежами и свойствами-лицевыми формами для текста во множественном числе.  
   
 ## <a name="queriesleft"></a>Остаток запросов
 
@@ -353,8 +350,8 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 Для того чтобы получить список всех исправлений, нужно использовать методы:
 
-    $rus=$morpher->russian->userDict->GetAll();   // Morpher\Ws3Client\Russian\СorrectionEntry  
-    $ukr=$morpher->ukrainian->userDict->GetAll(); // Morpher\Ws3Client\Ukrainian\СorrectionEntry  
+    $rus=$morpher->russian->userDict->getAll();   // Morpher\Ws3Client\Russian\СorrectionEntry  
+    $ukr=$morpher->ukrainian->userDict->getAll(); // Morpher\Ws3Client\Ukrainian\СorrectionEntry  
   
 Метод возвращает массив объектов CorrectionEntry в пространстве имён соответствующего языку (русскому, украинскому).  
   
@@ -368,13 +365,13 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 Указание рода не поддерживается.
   
 Объект ``Morpher\Ws3Client\Russian\CorrectionForms`` со следующими свойствами:  
-  * именительный (Nominative) — текст в именительном падеже;  
-  * родительный (Genitive) — текст в родительном падеже;  
-  * дательный (Dative) — текст в дательном падеже;  
-  * винительный (Accusative) — текст в винительном падеже;  
-  * творительный (Instrumental) — текст в творительном падеже;  
-  * предложный (Prepositional) — текст в предложном падеже;  
-  * местный (Locative) — текст в местном падеже;]  
+  * именительный (nominative) — текст в именительном падеже;  
+  * родительный (genitive) — текст в родительном падеже;  
+  * дательный (dative) — текст в дательном падеже;  
+  * винительный (accusative) — текст в винительном падеже;  
+  * творительный (instrumental) — текст в творительном падеже;  
+  * предложный (prepositional) — текст в предложном падеже;  
+  * местный (locative) — текст в местном падеже;]  
   
 ### Для украинского языка:
 
@@ -386,46 +383,46 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 Объект ``Morpher\Ws3Client\Ukrainian\CorrectionForms`` со следующими свойствами:
 
-  * називний (Nominative) — текст в именительном падеже;  
-  * родовий (Genitive) — текст в родительном падеже;  
-  * давальний (Dative) — текст в дательном падеже;  
-  * знахідний (Accusative) — текст в винительном падеже;  
-  * орудний (Instrumental) — текст в творительном падеже;  
-  * місцевий (Prepositional) — текст в местном падеже;  
-  * кличний (Vocative) — текст в звательном падеже.  
+  * називний (nominative) — текст в именительном падеже;  
+  * родовий (genitive) — текст в родительном падеже;  
+  * давальний (dative) — текст в дательном падеже;  
+  * знахідний (accusative) — текст в винительном падеже;  
+  * орудний (instrumental) — текст в творительном падеже;  
+  * місцевий (prepositional) — текст в местном падеже;  
+  * кличний (vocative) — текст в звательном падеже.  
   
 ## Добавить или изменить исправление
 
 Для добавления или изменения исправления использовать метод   
-``$morpher->russian->userDict->AddOrUpdate($entry)``,  
+``$morpher->russian->userDict->addOrUpdate($entry)``,  
 или аналогично   
-``$morpher->ukrainian->userDict->AddOrUpdate($entry)``:  
+``$morpher->ukrainian->userDict->addOrUpdate($entry)``:  
   
-    $correctionEntry=new \Morpher\Ws3Client\Russian\CorrectionEntry();  
-    $correctionEntry->Singular->Nominative="чебуратор";  
-    $correctionEntry->Singular->Locative='в чебураторке';  
-    $correctionEntry->Plural->Locative='в чебураториях';  
-    $morpher->russian->userDict->AddOrUpdate($correctionEntry);  
+    $correctionEntry = new \Morpher\Ws3Client\Russian\CorrectionEntry();  
+    $correctionEntry->singular->nominative="чебуратор";  
+    $correctionEntry->singular->locative='в чебураторке';  
+    $correctionEntry->plural->locative='в чебураториях';  
+    $morpher->russian->userDict->addOrUpdate($correctionEntry);  
   
 ## Удаление исправления
 
 Для того чтобы удалить исправление, достаточно передать строку в именительном падеже в метод   
       
-    $morpher->russian->userDict->Remove($nominativeForm);     
+    $morpher->russian->userDict->remove($nominativeForm);     
 
 или аналогично   
       
-    $morpher->ukrainian->userDict->Remove($nominativeForm);  
+    $morpher->ukrainian->userDict->remove($nominativeForm);  
   
 Пример:  
       
-    $morpher->russian->userDict->Remove('чебуратор');  
+    $morpher->russian->userDict->remove('чебуратор');  
   
 # <a name="dev"></a>Разработка
 
 ## <a name="devsys"></a>Системные требования
 Должны быть установлены:
-* PHP 7.0 или выше
+* PHP 7.4 или выше
 * composer
   
 ## <a name="devinstall"></a>Установка
@@ -461,7 +458,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
     <?php  
     DEFINE("MORPHER_RU_TOKEN" ,"xxxxx-xxxxxx-xxxxxxx");  
   
-2)	Подходит для запуска в контейнере GitHub Actions. В GitHub Actions, в разделе Secrets, создать переменную окружения MORPHER_RU_TOKEN, и сохранить токен в неё.  
+2) Подходит для запуска в контейнере GitHub Actions. В GitHub Actions, в разделе Secrets, создать переменную окружения MORPHER_RU_TOKEN, и сохранить токен в неё.  
   
 Запуск интеграционного теста:  
   

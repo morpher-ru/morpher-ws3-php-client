@@ -2,27 +2,56 @@
     "name": "morpher/ws3-client",
     "version": "0.2.1",
     "description": "Склонение по падежам на русском, украинском и казахском языках, расстановка ударений в текстах - PHP-клиент для API morpher.ru",
-    "keywords": ["declension","inflection","pluralization","russian","ukrainian","qazaq"],
+    "keywords": [
+        "declension",
+        "inflection",
+        "pluralization",
+        "russian",
+        "ukrainian",
+        "qazaq"
+    ],
     "homepage": "https://github.com/morpher-ru/morpher-ws3-php-client",
     "type": "library",
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-   
-        },   
-        "classmap": [
-            "src"
-        ]
-    },
     "authors": [
         {
             "name": "Mikhail Lukovnikov"
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.4"
+        "php": "^7.4.0|^8.0",
+        "guzzlehttp/guzzle": "^7.5"
     },
     "require-dev": {
-      "phpunit/phpunit": "9.5.*"
+        "phpunit/phpunit": "^8.5 || ^9.0",
+        "rector/rector": "^0.14.8",
+        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan-phpunit": "^1.2",
+        "phpstan/phpstan-strict-rules": "^1.4",
+        "squizlabs/php_codesniffer": "^3.7",
+        "slevomat/coding-standard": "^8.6",
+        "phpstan/extension-installer": "^1.2",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Morpher\\Ws3Client\\": "src"
+        }
+    },
+    "scripts": {
+        "check-all": [
+            "@cs-check",
+            "@inspect"
+        ],
+        "cs-check": "phpcs src --colors",
+        "cs-fix": "phpcbf src --colors",
+        "inspect": "phpstan analyse src -l7 --ansi"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
     }
 }

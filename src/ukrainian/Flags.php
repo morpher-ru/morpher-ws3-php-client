@@ -1,8 +1,9 @@
 <?php
+
 namespace Morpher\Ws3Client\Ukrainian;
 
 class Flags
 {
-    const Feminine='Feminine';    //	Женский род
-    const Masculine='Masculine';  //	Мужской род
+	public const FEMININE  = 'Feminine';  // Женский род
+	public const MASCULINE = 'Masculine'; // Мужской род
 }

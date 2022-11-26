@@ -1,7 +1,9 @@
 <?php
-namespace Morpher\Ws3Client;
 
-class MorpherError extends \Exception
+namespace Morpher\Ws3Client\Exceptions;
+
+use Exception;
+
+class MorpherError extends Exception
 {
-
 }

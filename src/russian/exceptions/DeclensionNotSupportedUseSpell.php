@@ -1,7 +1,9 @@
 <?php
-namespace Morpher\Ws3Client\Russian;
 
-class DeclensionNotSupportedUseSpell extends \InvalidArgumentException
+namespace Morpher\Ws3Client\Russian\Exceptions;
+
+use InvalidArgumentException;
+
+class DeclensionNotSupportedUseSpell extends InvalidArgumentException
 {
-
 }

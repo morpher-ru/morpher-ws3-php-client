@@ -1,94 +1,128 @@
 <?php
+
 namespace Morpher\Ws3Client;
 
-
 use InvalidArgumentException;
-use Morpher\Ws3Client\WebClient;
-use Morpher\Ws3Client\Russian\DeclensionResult;
-use TypeError;
+use Morpher\Ws3Client\Exceptions\InvalidArgumentEmptyString;
+use Morpher\Ws3Client\Exceptions\InvalidServerResponse;
+use Morpher\Ws3Client\Exceptions\IpBlocked;
+use Morpher\Ws3Client\Exceptions\MorpherError;
+use Morpher\Ws3Client\Exceptions\RequestsDailyLimit;
+use Morpher\Ws3Client\Exceptions\TokenIncorrectFormat;
+use Morpher\Ws3Client\Exceptions\TokenNotFound;
+use Morpher\Ws3Client\Exceptions\TokenRequired;
 
 abstract class UserDictBase
 {
-	protected readonly WebClient $webClient;
+	/**
+	 * @readonly
+	 */
+	protected WebClient $webClient;
 
-    protected readonly string $endpoint;
+	/**
+	 * @readonly
+	 */
+	protected string $endpoint;
 
-    protected readonly string $CorrectionEntryClassName;
-	
-	function __construct(WebClient $webClient, string $endpoint, string $CorrectionEntryClassName)
+	/**
+	 * @readonly
+	 */
+	protected string $correctionEntryClassName;
+
+	public function __construct(WebClient $webClient, string $endpoint, string $correctionEntryClassName)
 	{
-		$this->webClient=$webClient;
-        $this->endpoint=$endpoint;
-        $this->CorrectionEntryClassName=$CorrectionEntryClassName;
-	}
-	
-	protected function AddOrUpdateBase(CorrectionEntryInterface $entry): void
-	{
-        if (!($entry instanceof $this->CorrectionEntryClassName))
-        {
-            throw new InvalidArgumentException("$entry не является экземпляром подходящего класса.");
-        }
-
- 		if (!$entry->SingularNominativeExists())
-		{
-			throw new \InvalidArgumentException("Обязательно должен быть указан именительный падеж единственного числа.");
-		}
-
-		$formParam=$entry->getArrayForRequest();
-
-        if (count($formParam)<2)
-        {
-            throw new \InvalidArgumentException("Нужно указать хотя бы одну косвенную форму.");
-        }
-
-		try
-        {
-			$this->webClient->send($this->endpoint,[],'POST',null,null,$formParam);
-		}
-		catch (\Morpher\Ws3Client\MorpherError $ex)
-		{
-            // todo: проверить ошибку 6
-
-			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
-		}
+		$this->webClient = $webClient;
+		$this->endpoint = $endpoint;
+		$this->correctionEntryClassName = $correctionEntryClassName;
 	}
 
-	public function Remove(string $NominativeForm): void
+	/**
+	 * @throws RequestsDailyLimit
+	 * @throws TokenRequired
+	 * @throws TokenIncorrectFormat
+	 * @throws InvalidServerResponse
+	 * @throws TokenNotFound
+	 * @throws IpBlocked
+	 */
+	public function remove(string $nominativeForm): void
 	{
-		if (empty(trim($NominativeForm)))
+		if (empty(trim($nominativeForm)))
 		{
-			throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
+			throw new InvalidArgumentEmptyString();
 		}
 
-		$queryParam=["s"=>$NominativeForm];
+		$queryParam = ["s" => $nominativeForm];
 
 		try
-        {
-			$this->webClient->send($this->endpoint,$queryParam,'DELETE');
-		}
-		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
-			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+			$this->webClient->send($this->endpoint, $queryParam, 'DELETE');
+		}
+		catch (MorpherError $ex)
+		{
+			throw new InvalidServerResponse("Неизвестный код ошибки");
 		}
 	}
 
-	public function GetAll(): array
+	/**
+	 * @throws TokenRequired
+	 * @throws RequestsDailyLimit
+	 * @throws TokenIncorrectFormat
+	 * @throws InvalidServerResponse
+	 * @throws TokenNotFound
+	 * @throws IpBlocked
+	 */
+	public function getAll(): array
 	{
-		$result_raw="";
 		try
-        {
-			$result_raw=$this->webClient->send($this->endpoint,[],'GET');
-		}
-		catch (\Morpher\Ws3Client\MorpherError $ex)
 		{
-			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+			$result_raw = $this->webClient->send($this->endpoint);
+		}
+		catch (MorpherError $ex)
+		{
+			throw new InvalidServerResponse("Неизвестный код ошибки");
 		}
 
-		$result=WebClient::JsonDecode($result_raw);
-        //print_r($result);
+		$result = WebClient::JsonDecode($result_raw);
 
-        $array=array_map(function (array $item) { return new ($this->CorrectionEntryClassName)($item);}, $result );
+		return array_map(fn (array $item) => new $this->correctionEntryClassName($item), $result);
+	}
 
-        return $array;
+	/**
+	 * @throws TokenRequired
+	 * @throws RequestsDailyLimit
+	 * @throws InvalidServerResponse
+	 * @throws TokenIncorrectFormat
+	 * @throws TokenNotFound
+	 * @throws IpBlocked
+	 */
+	protected function addOrUpdateBase(CorrectionEntryInterface $entry): void
+	{
+		if (!($entry instanceof $this->correctionEntryClassName))
+		{
+			throw new InvalidArgumentException("$entry не является экземпляром подходящего класса.");
+		}
+
+		if (!$entry->singularNominativeExists())
+		{
+			throw new InvalidArgumentException("Обязательно должен быть указан именительный падеж единственного числа.");
+		}
+
+		$formParam = $entry->getArrayForRequest();
+
+		if (count($formParam) < 2)
+		{
+			throw new InvalidArgumentException("Нужно указать хотя бы одну косвенную форму.");
+		}
+
+		try
+		{
+			$this->webClient->send($this->endpoint, [], 'POST', null, null, $formParam);
+		}
+		catch (MorpherError $ex)
+		{
+			// todo: проверить ошибку 6
+
+			throw new InvalidServerResponse("Неизвестный код ошибки");
+		}
 	}
 }

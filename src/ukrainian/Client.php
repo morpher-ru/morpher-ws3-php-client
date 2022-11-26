@@ -1,90 +1,116 @@
 <?php
+
 namespace Morpher\Ws3Client\Ukrainian;
 
-
+use Morpher\Ws3Client\Exceptions\InvalidArgumentEmptyString;
+use Morpher\Ws3Client\Exceptions\InvalidServerResponse;
+use Morpher\Ws3Client\Exceptions\IpBlocked;
+use Morpher\Ws3Client\Exceptions\MorpherError;
+use Morpher\Ws3Client\Exceptions\RequestsDailyLimit;
+use Morpher\Ws3Client\Exceptions\TokenIncorrectFormat;
+use Morpher\Ws3Client\Exceptions\TokenNotFound;
+use Morpher\Ws3Client\Exceptions\TokenRequired;
 use Morpher\Ws3Client\WebClient;
-//use Morpher\Ws3Client\Ukrainian\DeclensionResult;
-
+use Morpher\Ws3Client\Ukrainian\Exceptions\InvalidFlags;
+use Morpher\Ws3Client\Ukrainian\Exceptions\UkrainianWordsNotFound;
 
 class Client
 {
-	private readonly WebClient $webClient;
-	public readonly UserDict $userDict;
-	
+	/**
+	 * @readonly
+	 */
+	public UserDict $userDict;
+	/**
+	 * @readonly
+	 */
+	private WebClient $webClient;
+
 	public function __construct(WebClient $webClient)
 	{
-		$this->webClient=$webClient;
-		$this->userDict=new UserDict($webClient);
+		$this->webClient = $webClient;
+		$this->userDict = new UserDict($webClient);
 	}
-	
-	public function Parse(string $lemma,array $flags=[]): DeclensionResult
-	{
-		if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
 
-		$query=["s"=>$lemma];
+	/**
+	 * @throws TokenRequired
+	 * @throws RequestsDailyLimit
+	 * @throws InvalidServerResponse
+	 * @throws TokenIncorrectFormat
+	 * @throws TokenNotFound
+	 * @throws IpBlocked
+	 */
+	public function parse(string $lemma, array $flags = []): DeclensionResult
+	{
+		if (trim($lemma) == '')
+		{
+			throw new InvalidArgumentEmptyString();
+		}
+
+		$query = ["s" => $lemma];
 		if (!empty($flags))
 		{
-			$query['flags']=implode(',',$flags);
+			$query['flags'] = implode(',', $flags);
 		}
 
-		$result_raw="";
-		try{
-
-			$result_raw=$this->webClient->send("/ukrainian/declension",$query,'GET');
-		}
-		catch (\Morpher\Ws3Client\MorpherError $ex)
+		try
 		{
-			$morpher_code=$ex->getCode();
-			$msg=$ex->getMessage();
-			if ($morpher_code==5) throw new UkrainianWordsNotFound($msg);
-			if ($morpher_code==12) throw new InvalidFlags($msg);
-			
-			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+			$result_raw = $this->webClient->send("/ukrainian/declension", $query);
+		}
+		catch (MorpherError $ex)
+		{
+			$morpher_code = $ex->getCode();
+			$msg = $ex->getMessage();
+
+			if ($morpher_code == 5)
+			{
+				throw new UkrainianWordsNotFound($msg);
+			}
+			if ($morpher_code == 12)
+			{
+				throw new InvalidFlags($msg);
+			}
+
+			throw new InvalidServerResponse("Неизвестный код ошибки");
 		}
 
-		$result=WebClient::JsonDecode($result_raw);
-		//
-		//parse result
+		$result = WebClient::jsonDecode($result_raw);
 
-		$result['Н']=$lemma;
-		$declensionResult = new DeclensionResult($result);
+		$result['Н'] = $lemma;
 
-
-		return $declensionResult;
+		return new DeclensionResult($result);
 	}
-	
 
-	public function Spell(int $number, string $unit): NumberSpellingResult
+	/**
+	 * @throws TokenRequired
+	 * @throws RequestsDailyLimit
+	 * @throws TokenIncorrectFormat
+	 * @throws InvalidServerResponse
+	 * @throws TokenNotFound
+	 * @throws IpBlocked
+	 */
+	public function spell(int $number, string $unit): NumberSpellingResult
 	{
 		if (empty(trim($unit)))
 		{
-			throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
+			throw new InvalidArgumentEmptyString();
 		}
 
-		$queryParam=["n"=>$number,'unit'=>$unit];
+		$queryParam = ['n' => $number, 'unit' => $unit];
 
-		$result_raw="";
-		try{
-
-			$result_raw=$this->webClient->send("/ukrainian/spell",$queryParam,'GET');
-		}
-		catch (\Morpher\Ws3Client\MorpherError $ex)
+		try
 		{
-			//$morpher_code=$ex->getCode();
-			//$msg=$ex->getMessage();
+			$result_raw = $this->webClient->send("/ukrainian/spell", $queryParam);
+		}
+		catch (MorpherError $ex)
+		{
+			//$morpher_code = $ex->getCode();
+			//$msg = $ex->getMessage();
 
-			throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+			throw new InvalidServerResponse("Неизвестный код ошибки");
 		}
 
-		$result=WebClient::JsonDecode($result_raw);
-		$spellResult = new NumberSpellingResult($result);
+		$result = WebClient::jsonDecode($result_raw);
 
-		return $spellResult;
-
-
+		return new NumberSpellingResult($result);
 	}
-
-
-
-	
 }

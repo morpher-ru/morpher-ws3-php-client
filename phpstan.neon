@@ -1,0 +1,8 @@
+parameters:
+    level: max
+    paths:
+        - samples
+        - src
+        - tests
+
+    treatPhpDocTypesAsCertain: false

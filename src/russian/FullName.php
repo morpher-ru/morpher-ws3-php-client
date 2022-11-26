@@ -1,20 +1,26 @@
 <?php
+
 namespace Morpher\Ws3Client\Russian;
-
-
 
 class FullName
 {
-    
-    public readonly ?string $Surname;
-    public readonly ?string $Name;
-    public readonly ?string $Pantronymic;
+	/**
+	 * @readonly
+	 */
+	public ?string $surname;
+	/**
+	 * @readonly
+	 */
+	public ?string $name;
+	/**
+	 * @readonly
+	 */
+	public ?string $patronymic;
 
-    function __construct(array $data)
-    {
-        $this->Surname=$data['Ф'] ?? null;
-        $this->Name=$data['И'] ?? null;
-        $this->Pantronymic=$data['О'] ?? null;
-    }
-
+	public function __construct(array $data)
+	{
+		$this->surname = $data['Ф'] ?? null;
+		$this->name = $data['И'] ?? null;
+		$this->patronymic = $data['О'] ?? null;
+	}
 }

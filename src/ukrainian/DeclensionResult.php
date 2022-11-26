@@ -1,29 +1,18 @@
 <?php
+
 namespace Morpher\Ws3Client\Ukrainian;
-
-
-
 
 class DeclensionResult extends DeclensionForms
 {
+	/**
+	 * @readonly
+	 */
+	public ?string $gender;
 
+	public function __construct($data)
+	{
+		parent::__construct($data);
 
-
-    public readonly ?string $Gender;
-
-
-    function __construct($data)
-    {
-        parent::__construct($data);
-
-   
-        $this->Gender=isset($data["рід"]) ? Gender::DecodeName($data["рід"]) : null;
-
-
-
-    }   
-
-
-
-
+		$this->gender = isset($data["рід"]) ? Gender::decodeName($data["рід"]) : null;
+	}
 }

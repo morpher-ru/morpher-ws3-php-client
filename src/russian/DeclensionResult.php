@@ -1,41 +1,50 @@
 <?php
+
 namespace Morpher\Ws3Client\Russian;
-
-
-
 
 class DeclensionResult extends DeclensionForms
 {
+	//protected $declensionForms_plural=null;
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $plural;
 
+	/**
+	 * @readonly
+	 */
+	public ?string $gender;
+	/**
+	 * @readonly
+	 */
+	public ?string $where;
+	/**
+	 * @readonly
+	 */
+	public ?string $from;
+	/**
+	 * @readonly
+	 */
+	public ?string $to;
+	/**
+	 * @readonly
+	 */
+	public ?FullName $fullName;
 
-    //protected $declensionForms_plural=null;
-    public readonly ?DeclensionForms $Plural;
+	public function __construct($data)
+	{
+		parent::__construct($data);
 
-    public readonly ?string $Gender;
-    public readonly ?string $Where;
-    public readonly ?string $From;
-    public readonly ?string $To;
-    public readonly ?FullName $FullName;
+		$this->plural = isset($data['множественное']) ? new DeclensionForms($data['множественное']) : null;
 
-    function __construct($data)
-    {
-        parent::__construct($data);
+		$this->gender = isset($data["род"]) ? Gender::DecodeName($data["род"]) : null;
 
-        $this->Plural=isset($data['множественное']) ? new DeclensionForms($data['множественное']) : null;
-  
-        $this->Gender=isset($data["род"]) ? Gender::DecodeName($data["род"]) : null;
+		$this->fullName = isset($data['ФИО']) ? new FullName($data['ФИО']) : null;
 
-        $this->FullName=isset($data['ФИО']) ?  new FullName($data['ФИО']) : null;
+		$this->where = $data["где"] ?? null;
 
-        $this->Where=$data["где"] ?? null;
+		$this->to = $data["куда"] ?? null;
 
-        $this->To=$data["куда"] ?? null;        
-        
-        $this->From=$data["откуда"] ?? null;
-
-    }   
-
-
-
-
+		$this->from = $data["откуда"] ?? null;
+	}
 }

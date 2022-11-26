@@ -1,7 +1,9 @@
 <?php
-namespace Morpher\Ws3Client\Qazaq;
 
-class QazaqWordsNotFound extends \InvalidArgumentException
+namespace Morpher\Ws3Client\Qazaq\Exceptions;
+
+use InvalidArgumentException;
+
+class QazaqWordsNotFound extends InvalidArgumentException
 {
-
 }

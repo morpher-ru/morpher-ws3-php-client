@@ -1,17 +1,22 @@
 <?php
-namespace Morpher\Ws3Client\Russian;
 
+namespace Morpher\Ws3Client\Russian;
 
 class NumberSpellingResult
 {
-    //[DataMember(Name = "n")]
-    public readonly ?DeclensionForms $NumberDeclension;
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $numberDeclension;
 
-    //[DataMember(Name = "unit")]
-    public readonly ?DeclensionForms $UnitDeclension;
-    function __construct($data)
-    {
-        $this->NumberDeclension=new DeclensionForms($data['n']);
-        $this->UnitDeclension=new DeclensionForms($data['unit']);
-    }
+	/**
+	 * @readonly
+	 */
+	public ?DeclensionForms $unitDeclension;
+
+	public function __construct($data)
+	{
+		$this->numberDeclension = new DeclensionForms($data['n']);
+		$this->unitDeclension = new DeclensionForms($data['unit']);
+	}
 }

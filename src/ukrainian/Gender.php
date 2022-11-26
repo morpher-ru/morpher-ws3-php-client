@@ -4,13 +4,16 @@ namespace Morpher\Ws3Client\Ukrainian;
 
 class Gender
 {
-    const Masculine='Masculine';
-    const Feminine='Feminine';
+	public const MASCULINE = 'Masculine';
+	public const FEMININE = 'Feminine';
 
-    const decode_array=['Чоловічий'=>self::Masculine,'Жіночий'=>self::Feminine];
+	public const decode_array = [
+		'Чоловічий' => self::MASCULINE,
+		'Жіночий' => self::FEMININE
+	];
 
-    public static function DecodeName(string $gender_name): ?string
-    {
-        return self::decode_array[$gender_name] ?? null;
-    }
+	public static function decodeName(string $gender_name): ?string
+	{
+		return self::decode_array[$gender_name] ?? null;
+	}
 }

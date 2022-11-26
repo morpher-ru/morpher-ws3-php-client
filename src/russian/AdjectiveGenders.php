@@ -1,22 +1,33 @@
 <?php
+
 namespace Morpher\Ws3Client\Russian;
 
 class AdjectiveGenders
 {
-    public readonly ?string $Feminine;
-    public readonly ?string $Neuter;
-    public readonly ?string $Plural;
+	/**
+	 * @readonly
+	 */
+	public ?string $feminine;
+	/**
+	 * @readonly
+	 */
+	public ?string $neuter;
+	/**
+	 * @readonly
+	 */
+	public ?string $plural;
 
-    public readonly array $data; 
-    function __construct($data)
-    {
-        $this->data=$data;
+	/**
+	 * @readonly
+	 */
+	public array $data;
 
-        $this->Feminine=$data['feminine'] ?? null;         
-        $this->Neuter =$data['neuter'] ?? null;     
-        $this->Plural =$data['plural'] ?? null;
+	public function __construct($data)
+	{
+		$this->data = $data;
 
-
-
-    }    
+		$this->feminine = $data['feminine'] ?? null;
+		$this->neuter = $data['neuter'] ?? null;
+		$this->plural = $data['plural'] ?? null;
+	}
 }

@@ -1,32 +1,53 @@
 <?php
+
 namespace Morpher\Ws3Client\Russian;
-
-
 
 class DeclensionForms
 {
-    public readonly ?string $Nominative;
-    public readonly ?string $Genitive;
-    public readonly ?string $Dative;
-    public readonly ?string $Accusative;
-    public readonly ?string $Instrumental;
-    public readonly ?string $Prepositional;
-    public readonly ?string $PrepositionalWithO;    
+	/**
+	 * @readonly
+	 */
+	public ?string $nominative;
+	/**
+	 * @readonly
+	 */
+	public ?string $genitive;
+	/**
+	 * @readonly
+	 */
+	public ?string $dative;
+	/**
+	 * @readonly
+	 */
+	public ?string $accusative;
+	/**
+	 * @readonly
+	 */
+	public ?string $instrumental;
+	/**
+	 * @readonly
+	 */
+	public ?string $prepositional;
+	/**
+	 * @readonly
+	 */
+	public ?string $prepositionalWithO;
 
-    public readonly array $data; 
-    function __construct($data)
-    {
-        $this->data=$data;
+	/**
+	 * @readonly
+	 */
+	public array $data;
 
-        $this->Nominative=$data['И'] ?? null;         
-        $this->Genitive  =$data['Р'] ?? null;     
-        $this->Dative    =$data['Д'] ?? null;
-        $this->Accusative=$data['В'] ?? null; 
-        $this->Instrumental=$data['Т'] ?? null; 
-        $this->Prepositional=$data['П'] ?? null; 
-        $this->PrepositionalWithO=$data['П_о'] ?? null; 
+	public function __construct($data)
+	{
+		$this->data = $data;
 
-
-    }
-
+		$this->nominative = $data['И'] ?? null;
+		$this->genitive = $data['Р'] ?? null;
+		$this->dative = $data['Д'] ?? null;
+		$this->accusative = $data['В'] ?? null;
+		$this->instrumental = $data['Т'] ?? null;
+		$this->prepositional = $data['П'] ?? null;
+		$this->prepositionalWithO = $data['П_о'] ?? null;
+	}
 }

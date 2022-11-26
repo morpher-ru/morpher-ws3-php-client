@@ -1,7 +1,9 @@
 <?php
-namespace Morpher\Ws3Client\Ukrainian;
 
-class UkrainianWordsNotFound extends \InvalidArgumentException
+namespace Morpher\Ws3Client\Ukrainian\Exceptions;
+
+use InvalidArgumentException;
+
+class UkrainianWordsNotFound extends InvalidArgumentException
 {
-
 }
