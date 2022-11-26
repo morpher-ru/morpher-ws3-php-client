@@ -61,7 +61,7 @@ class Morpher
 			throw new InvalidServerResponse("Неизвестный код ошибки");
 		}
 
-		$result = WebClient::JsonDecode($result_raw);
+		$result = WebClient::jsonDecode($result_raw);
 
 		return (int)$result;
 	}

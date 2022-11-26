@@ -82,7 +82,7 @@ abstract class UserDictBase
 			throw new InvalidServerResponse("Неизвестный код ошибки");
 		}
 
-		$result = WebClient::JsonDecode($result_raw);
+		$result = WebClient::jsonDecode($result_raw);
 
 		return array_map(fn (array $item) => new $this->correctionEntryClassName($item), $result);
 	}
