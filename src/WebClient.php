@@ -84,7 +84,7 @@ class WebClient
 
 		return $result;
 	}
- public static function JsonDecode(string $text)
+	public static function JsonDecode(string $text)
 	{
 		try
 		{
