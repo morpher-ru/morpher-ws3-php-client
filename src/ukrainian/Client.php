@@ -8,8 +8,14 @@ use Morpher\Ws3Client\WebClient;
 
 class Client
 {
-	private readonly WebClient $webClient;
-	public readonly UserDict $userDict;
+	/**
+  * @readonly
+  */
+ private WebClient $webClient;
+	/**
+  * @readonly
+  */
+ public UserDict $userDict;
 	
 	public function __construct(WebClient $webClient)
 	{

@@ -6,28 +6,52 @@ class SameNumberForms extends DeclensionForms
 {
 
     //[DataMember(Name = "менің")]
-    public readonly ?DeclensionForms $FirstPerson;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $FirstPerson;
 
     //[DataMember(Name = "сенің")]
-    public readonly ?DeclensionForms $SecondPerson;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $SecondPerson;
 
     //[DataMember(Name = "сіздің")]
-    public readonly ?DeclensionForms $SecondPersonRespectful;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $SecondPersonRespectful;
 
     //[DataMember(Name = "оның")]
-    public readonly ?DeclensionForms $ThirdPerson;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $ThirdPerson;
 
     //[DataMember(Name = "біздің")]
-    public readonly ?DeclensionForms $FirstPersonPlural;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $FirstPersonPlural;
 
     //[DataMember(Name = "сендердің")]
-    public readonly ?DeclensionForms $SecondPersonPlural;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $SecondPersonPlural;
 
     //[DataMember(Name = "сіздердің")]
-    public readonly ?DeclensionForms $SecondPersonRespectfulPlural;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $SecondPersonRespectfulPlural;
 
     //[DataMember(Name = "олардың")]
-    public readonly ?DeclensionForms $ThirdPersonPlural;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $ThirdPersonPlural;
 
     function __construct($data)
     {

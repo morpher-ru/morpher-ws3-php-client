@@ -5,13 +5,34 @@ namespace Morpher\Ws3Client\Qazaq;
 
 class DeclensionForms
 {
-    public readonly ?string $Nominative;
-    public readonly ?string $Genitive;
-    public readonly ?string $Dative;
-    public readonly ?string $Accusative;
-    public readonly ?string $Ablative;
-    public readonly ?string $Locative;
-    public readonly ?string $Instrumental;    
+    /**
+     * @readonly
+     */
+    public ?string $Nominative;
+    /**
+     * @readonly
+     */
+    public ?string $Genitive;
+    /**
+     * @readonly
+     */
+    public ?string $Dative;
+    /**
+     * @readonly
+     */
+    public ?string $Accusative;
+    /**
+     * @readonly
+     */
+    public ?string $Ablative;
+    /**
+     * @readonly
+     */
+    public ?string $Locative;
+    /**
+     * @readonly
+     */
+    public ?string $Instrumental;    
 
     //public readonly array $data; 
     function __construct($data)

@@ -9,11 +9,20 @@ use TypeError;
 
 abstract class UserDictBase
 {
-	protected readonly WebClient $webClient;
+	/**
+  * @readonly
+  */
+ protected WebClient $webClient;
 
-    protected readonly string $endpoint;
+    /**
+     * @readonly
+     */
+    protected string $endpoint;
 
-    protected readonly string $CorrectionEntryClassName;
+    /**
+     * @readonly
+     */
+    protected string $CorrectionEntryClassName;
 	
 	function __construct(WebClient $webClient, string $endpoint, string $CorrectionEntryClassName)
 	{
@@ -87,7 +96,7 @@ abstract class UserDictBase
 		$result=WebClient::JsonDecode($result_raw);
         //print_r($result);
 
-        $array=array_map(function (array $item) { return new ($this->CorrectionEntryClassName)($item);}, $result );
+        $array=array_map(function (array $item) { return new $this->CorrectionEntryClassName($item);}, $result );
 
         return $array;
 	}

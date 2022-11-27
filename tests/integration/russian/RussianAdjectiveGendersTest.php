@@ -29,7 +29,7 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
 
     public function testAdjectiveGenders_error(): void
     {
-        
+
         $this->expectException(Russian\AdjectiveFormIncorrect::class);
         $adjectiveGenders=self::$testMorpher->russian->AdjectiveGenders("уважаемого");
 

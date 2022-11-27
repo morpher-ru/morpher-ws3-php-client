@@ -257,7 +257,7 @@ final class RussianUserDictTest extends IntegrationBase
         //проверить что склонение работает стандартным образом
         $declension1=self::$testMorpher->russian->parse($word);
         //print_r($declension1);
-        
+
         $this->assertNotEquals($correction->Singular->Genitive,$declension1->Genitive); 
         $this->assertNotEquals($correction->Singular->Dative,$declension1->Dative);
         $this->assertNotEquals($correction->Singular->Accusative,$declension1->Accusative); 
@@ -274,7 +274,7 @@ final class RussianUserDictTest extends IntegrationBase
         $this->assertNotEquals($correction->Plural->Prepositional,$declension1->Plural->Prepositional); 
         //$this->assertNotEquals($correction->Plural->Locative,$declension1->Plural->Where);
         unset($declension1);
-        
+
 
         //добавить слово в словарь
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
@@ -293,7 +293,7 @@ final class RussianUserDictTest extends IntegrationBase
                 $this->assertEquals($correction->Singular->Instrumental,$item->Singular->Instrumental); 
                 $this->assertEquals($correction->Singular->Prepositional,$item->Singular->Prepositional); 
                 $this->assertEquals($correction->Singular->Locative, $item->Singular->Locative);
-     
+
                 $this->assertEquals($correction->Plural->Nominative, $item->Plural->Nominative);        
 
                 $this->assertEquals($correction->Plural->Genitive, $item->Plural->Genitive); 
@@ -344,7 +344,7 @@ final class RussianUserDictTest extends IntegrationBase
         //проверить что склонение работает стандартным образом
         $declension3=self::$testMorpher->russian->parse($word);
         //print_r($declension1);
-        
+
         $this->assertNotEquals($correction->Singular->Genitive,$declension3->Genitive); 
         $this->assertNotEquals($correction->Singular->Dative,$declension3->Dative);
         $this->assertNotEquals($correction->Singular->Accusative,$declension3->Accusative); 

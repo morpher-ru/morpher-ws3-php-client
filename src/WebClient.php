@@ -85,7 +85,10 @@ class WebClient
 		return $result;
 	}
 
-	public static function JsonDecode(string $text):mixed
+	/**
+  * @return mixed
+  */
+ public static function JsonDecode(string $text)
 	{
 		try
 		{

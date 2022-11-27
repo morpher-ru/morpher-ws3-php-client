@@ -9,13 +9,31 @@ class DeclensionResult extends DeclensionForms
 
 
     //protected $declensionForms_plural=null;
-    public readonly ?DeclensionForms $Plural;
+    /**
+     * @readonly
+     */
+    public ?DeclensionForms $Plural;
 
-    public readonly ?string $Gender;
-    public readonly ?string $Where;
-    public readonly ?string $From;
-    public readonly ?string $To;
-    public readonly ?FullName $FullName;
+    /**
+     * @readonly
+     */
+    public ?string $Gender;
+    /**
+     * @readonly
+     */
+    public ?string $Where;
+    /**
+     * @readonly
+     */
+    public ?string $From;
+    /**
+     * @readonly
+     */
+    public ?string $To;
+    /**
+     * @readonly
+     */
+    public ?FullName $FullName;
 
     function __construct($data)
     {
