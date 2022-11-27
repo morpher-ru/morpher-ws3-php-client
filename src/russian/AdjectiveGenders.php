@@ -9,9 +9,6 @@ class AdjectiveGenders
 
     public ?string $Plural;
 
-    /**
-     * @readonly
-     */
     public array $data; 
     function __construct($data)
     {

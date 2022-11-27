@@ -19,7 +19,7 @@ class DeclensionForms
 
     public ?string $Instrumental;    
 
-    //public readonly array $data; 
+    //public array $data;
     function __construct($data)
     {
         //$this->data=$data;

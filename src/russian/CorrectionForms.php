@@ -13,7 +13,7 @@ class CorrectionForms
     public  ?string $Prepositional;
     public  ?string $Locative;    
 
-    //public readonly array $data; 
+    //public array $data;
     function __construct($data)
     {
         $this->data=$data;
