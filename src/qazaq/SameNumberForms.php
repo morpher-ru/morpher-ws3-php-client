@@ -4,53 +4,28 @@ namespace Morpher\Ws3Client\Qazaq;
 
 class SameNumberForms extends DeclensionForms
 {
-
     //[DataMember(Name = "менің")]
-    /**
-     * @readonly
-     */
     public ?DeclensionForms $FirstPerson;
 
     //[DataMember(Name = "сенің")]
-    /**
-     * @readonly
-     */
     public ?DeclensionForms $SecondPerson;
 
     //[DataMember(Name = "сіздің")]
-    /**
-     * @readonly
-     */
     public ?DeclensionForms $SecondPersonRespectful;
 
     //[DataMember(Name = "оның")]
-    /**
-     * @readonly
-     */
     public ?DeclensionForms $ThirdPerson;
 
     //[DataMember(Name = "біздің")]
-    /**
-     * @readonly
-     */
     public ?DeclensionForms $FirstPersonPlural;
 
     //[DataMember(Name = "сендердің")]
-    /**
-     * @readonly
-     */
     public ?DeclensionForms $SecondPersonPlural;
 
     //[DataMember(Name = "сіздердің")]
-    /**
-     * @readonly
-     */
     public ?DeclensionForms $SecondPersonRespectfulPlural;
 
     //[DataMember(Name = "олардың")]
-    /**
-     * @readonly
-     */
     public ?DeclensionForms $ThirdPersonPlural;
 
     function __construct($data)

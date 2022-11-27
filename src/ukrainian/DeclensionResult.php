@@ -6,14 +6,7 @@ namespace Morpher\Ws3Client\Ukrainian;
 
 class DeclensionResult extends DeclensionForms
 {
-
-
-
-    /**
-     * @readonly
-     */
     public ?string $Gender;
-
 
     function __construct($data)
     {

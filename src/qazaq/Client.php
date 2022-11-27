@@ -6,9 +6,6 @@ use Morpher\Ws3Client\WebClient;
 
 class Client
 {
-	/**
-  * @readonly
-  */
  private WebClient $webClient;
 	
 	public function __construct(WebClient $webClient)

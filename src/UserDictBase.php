@@ -9,19 +9,10 @@ use TypeError;
 
 abstract class UserDictBase
 {
-	/**
-  * @readonly
-  */
- protected WebClient $webClient;
+	protected WebClient $webClient;
 
-    /**
-     * @readonly
-     */
     protected string $endpoint;
 
-    /**
-     * @readonly
-     */
     protected string $CorrectionEntryClassName;
 	
 	function __construct(WebClient $webClient, string $endpoint, string $CorrectionEntryClassName)

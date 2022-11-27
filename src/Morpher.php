@@ -5,22 +5,12 @@ namespace Morpher\Ws3Client;
 
 class Morpher
 {
-	/**
-  * @readonly
-  */
  public Russian\Client $russian;
-	/**
-  * @readonly
-  */
+
  public Qazaq\Client $qazaq;
-	/**
-  * @readonly
-  */
+
  public Ukrainian\Client $ukrainian;
 
-	/**
-  * @readonly
-  */
  private WebClient $_webClient;
 	
 	public function __construct(string $url='https://ws3.morpher.ru',string $token='',float $timeout=10.0, $handler=null)

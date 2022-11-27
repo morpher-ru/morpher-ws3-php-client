@@ -8,13 +8,8 @@ use Morpher\Ws3Client\Russian\DeclensionResult;
 
 class Client
 {
-	/**
-  * @readonly
-  */
  private WebClient $webClient;
-	/**
-  * @readonly
-  */
+
  public UserDict $userDict;
 	
 	public function __construct(WebClient $webClient)

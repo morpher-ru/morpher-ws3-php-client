@@ -3,17 +3,10 @@ namespace Morpher\Ws3Client\Russian;
 
 class AdjectiveGenders
 {
-    /**
-     * @readonly
-     */
     public ?string $Feminine;
-    /**
-     * @readonly
-     */
+
     public ?string $Neuter;
-    /**
-     * @readonly
-     */
+
     public ?string $Plural;
 
     /**

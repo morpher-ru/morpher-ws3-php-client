@@ -5,38 +5,20 @@ namespace Morpher\Ws3Client\Ukrainian;
 
 class DeclensionForms
 {
-    /**
-     * @readonly
-     */
     public ?string $Nominative;
-    /**
-     * @readonly
-     */
+
     public ?string $Genitive;
-    /**
-     * @readonly
-     */
+
     public ?string $Dative;
-    /**
-     * @readonly
-     */
+
     public ?string $Accusative;
-    /**
-     * @readonly
-     */
+
     public ?string $Instrumental;
-    /**
-     * @readonly
-     */
+
     public ?string $Prepositional;
-    /**
-     * @readonly
-     */
+
     public ?string $Vocative;    
 
-    /**
-     * @readonly
-     */
     public array $data; 
     function __construct($data)
     {
