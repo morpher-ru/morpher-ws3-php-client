@@ -18,12 +18,12 @@ class WebClient
             'base_uri'=>$url,
             'timeout'=>$timeout,
             'handler'=>$handler
-            ]);    
+        ]);    
     }
 
     public function getStandardHeaders():array
     {
-        $headers=['Accept'=> 'application/json'];
+        $headers = ['Accept' => 'application/json'];
 
         if (!empty($this->_tokenBase64))
         {
@@ -75,7 +75,7 @@ class WebClient
                     if ($morpher_code==10) throw new TokenIncorrectFormat($data['message']);
                     if ($morpher_code==25) throw new TokenRequired($data['message']);
 
-                    throw new MorpherError($msg,$morpher_code);
+                    throw new MorpherError($msg, $morpher_code);
                 }
             }
 
