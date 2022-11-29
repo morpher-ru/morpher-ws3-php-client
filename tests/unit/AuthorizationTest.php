@@ -10,7 +10,6 @@ use Morpher\Ws3Client\Ukrainian as Ukrainian;
 
 class AuthorizationTest extends TestCase
 {
-
     public function CallbacksProvider():array
     {
         return [  //список функций для прогонки через тесты [текст ответа (json), функция вызова запроса]
@@ -30,7 +29,6 @@ class AuthorizationTest extends TestCase
             ['POST','[]'                  ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->AddOrUpdate(new Ukrainian\CorrectionEntry(['singular'=>['Н'=>'чебуратор','Р'=>'чебурыла']]));     }],//dataset #13
             ['DELETE','[]'                ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->Remove('чебуратор');     }],//dataset #14
             ['GET','111'                  ,function ($testMorpher)    {     $testMorpher->getQueriesLeftForToday();     }],//dataset #15
-
         ];
     }
 
@@ -70,7 +68,6 @@ class AuthorizationTest extends TestCase
     {
         $this->expectException(\GuzzleHttp\Exception\ServerException::class);
         $this->expectExceptionMessage('Error 500');
-    
 
         $testMorpher=MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ServerException(
             'Error 500', 
@@ -80,7 +77,6 @@ class AuthorizationTest extends TestCase
 
         $callback($testMorpher);
     }
-
 
     /**
      * @dataProvider  CallbacksProvider

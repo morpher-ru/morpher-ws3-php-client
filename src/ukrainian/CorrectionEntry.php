@@ -2,7 +2,6 @@
 namespace Morpher\Ws3Client\Ukrainian;
 
 
-
 class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
 {
     public ?CorrectionForms $Singular=null;
@@ -11,10 +10,8 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
 
     function __construct(array $data=[])
     {
-
         $this->Singular=new CorrectionForms($data['singular'] ?? null);
         //$this->Plural=new CorrectionForms($data['plural'] ?? null);
-
     }
 
     /*
@@ -53,7 +50,6 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
         // }
 
         return $data;
-
     }
 
     public function SingularNominativeExists():bool
@@ -61,5 +57,4 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
         if ($this->Singular===null) return false;
         return !empty(trim($this->Singular->Nominative));
     }
-
 }

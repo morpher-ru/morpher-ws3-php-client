@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
-require_once __DIR__."/../../vendor/autoload.php";
 
+require_once __DIR__."/../../vendor/autoload.php";
 
 use PHPUnit\Framework\TestCase;
 
@@ -36,7 +36,6 @@ final class InvalidJsonTest extends TestCase
         ];
     }
 
-
     /**
      * @dataProvider  CallbacksProvider
      */    
@@ -57,9 +56,5 @@ final class InvalidJsonTest extends TestCase
             return;
         }
         $this->assertTrue(false,"test failed - exception InvalidServerResponse not catched"); //test failed if exception not catched
-    
     }
-
-
-
 }
