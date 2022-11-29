@@ -202,7 +202,7 @@ class Client
     {
         if (trim($text)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         
-        $headers=$this->webClient->getStandartHeaders();
+        $headers=$this->webClient->getStandardHeaders();
         $headers['Content-Type']= 'text/plain; charset=utf-8';
         try
         {

@@ -21,15 +21,15 @@ class WebClient
             ]);    
     }
 
-    public function getStandartHeaders():array
+    public function getStandardHeaders():array
     {
         $headers=['Accept'=> 'application/json'];
 
         if (!empty($this->_tokenBase64))
         {
             $headers['Authorization']= 'Basic '.$this->_tokenBase64;
-
         }
+        
         return $headers;
     }
 
@@ -37,7 +37,7 @@ class WebClient
     {
         if ($Headers===null)
         {
-            $Headers=$this->getStandartHeaders();
+            $Headers=$this->getStandardHeaders();
         }
         try
         {
