@@ -1,6 +1,6 @@
 <?php
-namespace Morpher\Ws3Client\Russian;
 
+namespace Morpher\Ws3Client\Russian;
 
 class DateSpellingResult extends DeclensionForms
 {

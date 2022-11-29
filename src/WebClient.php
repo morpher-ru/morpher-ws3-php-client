@@ -1,52 +1,55 @@
 <?php
+
 namespace Morpher\Ws3Client;
 
 use GuzzleHttp\Exception\ClientException;
 
 class WebClient
 {
-	private string $_token='';	
-	private string $_tokenBase64='';	
+	private string $_token = '';
+	private string $_tokenBase64 = '';
 	private \GuzzleHttp\Client $client;
 
-	function __construct(string $url='https://ws3.morpher.ru',string $token='',float $timeout=10.0,$handler=null)
+	function __construct(string $url = 'https://ws3.morpher.ru', string $token = '', float $timeout = 10.0,
+		$handler = null)
 	{
-		$this->_token=$token;
-		$this->_tokenBase64=base64_encode($token);
+		$this->_token = $token;
+		$this->_tokenBase64 = base64_encode($token);
 
-		$this->client=new \GuzzleHttp\Client([
-			'base_uri'=>$url,
-			'timeout'=>$timeout,
-			'handler'=>$handler
-			]);	
+		$this->client = new \GuzzleHttp\Client([
+			'base_uri' => $url,
+			'timeout' => $timeout,
+			'handler' => $handler
+		]);
 	}
 
-	public function getStandartHeaders():array
+	public static function JsonDecode(string $text)
 	{
-		$headers=['Accept'=> 'application/json'];
-
-		if (!empty($this->_tokenBase64))
+		try
 		{
-			$headers['Authorization']= 'Basic '.$this->_tokenBase64;
-
+			return json_decode($text, true, 512, JSON_THROW_ON_ERROR);
 		}
-		return $headers;
+		catch (\JsonException $ex)
+		{
+			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера", $text);
+		}
 	}
 
-	public function send(string $Endpoint,$QueryParameters=[],string $Method='GET',$Headers=null,$body=null,$form_params=null): string
-    {
-		if ($Headers===null)
+	public function send(string $Endpoint, $QueryParameters = [], string $Method = 'GET', $Headers = null, $body = null,
+		$form_params = null): string
+	{
+		if ($Headers === null)
 		{
-			$Headers=$this->getStandartHeaders();
+			$Headers = $this->getStandartHeaders();
 		}
 		try
 		{
-			$response=$this->client->request($Method, $Endpoint, [
+			$response = $this->client->request($Method, $Endpoint, [
 				'query' => $QueryParameters,
-				'headers'=>$Headers,
-				'http_errors'=>true,
-				'body'=>$body,
-				'form_params'=>$form_params
+				'headers' => $Headers,
+				'http_errors' => true,
+				'body' => $body,
+				'form_params' => $form_params
 			]);
 
 			$result = $response->getBody();
@@ -55,27 +58,49 @@ class WebClient
 		{
 			if ($ex->hasResponse())
 			{
-				$response=$ex->getResponse();
-				$code=$response->getStatusCode();
-				if ($code>=400)
+				$response = $ex->getResponse();
+				$code = $response->getStatusCode();
+				if ($code >= 400)
 				{
-					$data=json_decode($response->getBody(),true);
+					$data = json_decode($response->getBody(), true);
 					if (empty($data['message']))
+					{
 						throw new InvalidServerResponse();
+					}
 					if (empty($data['code']))
+					{
 						throw new InvalidServerResponse();
-					
-					$msg=(string)($data['message'] ?? "Неизвестная ошибка");
-					$morpher_code=(int)($data['code'] ?? $code);
+					}
 
-					if ($morpher_code==6) throw new InvalidArgumentEmptyString();
-					if ($morpher_code==1) throw new RequestsDailyLimit($data['message']);
-					if ($morpher_code==3) throw new IpBlocked($data['message']);
-					if ($morpher_code==9) throw new TokenNotFound($data['message']);
-					if ($morpher_code==10) throw new TokenIncorrectFormat($data['message']);
-					if ($morpher_code==25) throw new TokenRequired($data['message']);
+					$msg = (string)($data['message'] ?? "Неизвестная ошибка");
+					$morpher_code = (int)($data['code'] ?? $code);
 
-					throw new MorpherError($msg,$morpher_code);
+					if ($morpher_code == 6)
+					{
+						throw new InvalidArgumentEmptyString();
+					}
+					if ($morpher_code == 1)
+					{
+						throw new RequestsDailyLimit($data['message']);
+					}
+					if ($morpher_code == 3)
+					{
+						throw new IpBlocked($data['message']);
+					}
+					if ($morpher_code == 9)
+					{
+						throw new TokenNotFound($data['message']);
+					}
+					if ($morpher_code == 10)
+					{
+						throw new TokenIncorrectFormat($data['message']);
+					}
+					if ($morpher_code == 25)
+					{
+						throw new TokenRequired($data['message']);
+					}
+
+					throw new MorpherError($msg, $morpher_code);
 				}
 			}
 
@@ -84,15 +109,17 @@ class WebClient
 
 		return $result;
 	}
-	public static function JsonDecode(string $text)
+
+	public function getStandartHeaders(): array
 	{
-		try
+		$headers = ['Accept' => 'application/json'];
+
+		if (!empty($this->_tokenBase64))
 		{
-			return json_decode($text,true,512,JSON_THROW_ON_ERROR);
+			$headers['Authorization'] = 'Basic ' . $this->_tokenBase64;
+
 		}
-		catch (\JsonException $ex)
-		{
-			throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$text);
-		}
+
+		return $headers;
 	}
 }
