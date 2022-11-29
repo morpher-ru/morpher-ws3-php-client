@@ -4,14 +4,14 @@ namespace Morpher\Ws3Client\Qazaq;
 
 class SameNumberForms extends DeclensionForms
 {
-    public readonly ?DeclensionForms $FirstPerson;
-    public readonly ?DeclensionForms $SecondPerson;
-    public readonly ?DeclensionForms $SecondPersonRespectful;
-    public readonly ?DeclensionForms $ThirdPerson;
-    public readonly ?DeclensionForms $FirstPersonPlural;
-    public readonly ?DeclensionForms $SecondPersonPlural;
-    public readonly ?DeclensionForms $SecondPersonRespectfulPlural;
-    public readonly ?DeclensionForms $ThirdPersonPlural;
+    public ?DeclensionForms $FirstPerson;
+    public ?DeclensionForms $SecondPerson;
+    public ?DeclensionForms $SecondPersonRespectful;
+    public ?DeclensionForms $ThirdPerson;
+    public ?DeclensionForms $FirstPersonPlural;
+    public ?DeclensionForms $SecondPersonPlural;
+    public ?DeclensionForms $SecondPersonRespectfulPlural;
+    public ?DeclensionForms $ThirdPersonPlural;
 
     function __construct($data)
     {

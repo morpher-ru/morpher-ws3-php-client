@@ -4,8 +4,8 @@ namespace Morpher\Ws3Client\Russian;
 
 class NumberSpellingResult
 {
-    public readonly ?DeclensionForms $NumberDeclension;
-    public readonly ?DeclensionForms $UnitDeclension;
+    public ?DeclensionForms $NumberDeclension;
+    public ?DeclensionForms $UnitDeclension;
     
     function __construct($data)
     {

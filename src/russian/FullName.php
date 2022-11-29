@@ -4,9 +4,9 @@ namespace Morpher\Ws3Client\Russian;
 
 class FullName
 {
-    public readonly ?string $Surname;
-    public readonly ?string $Name;
-    public readonly ?string $Pantronymic;
+    public ?string $Surname;
+    public ?string $Name;
+    public ?string $Pantronymic;
 
     function __construct(array $data)
     {

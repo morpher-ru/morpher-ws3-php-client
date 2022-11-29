@@ -7,7 +7,7 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
 {
     public ?CorrectionForms $Singular=null;
     //public ?CorrectionForms $Plural=null;
-    //public readonly ?string $Gender;
+    //public ?string $Gender;
 
     function __construct(array $data=[])
     {

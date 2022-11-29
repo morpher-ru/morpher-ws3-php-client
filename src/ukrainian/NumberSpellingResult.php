@@ -5,10 +5,10 @@ namespace Morpher\Ws3Client\Ukrainian;
 class NumberSpellingResult
 {
     //[DataMember(Name = "n")]
-    public readonly ?DeclensionForms $NumberDeclension;
+    public ?DeclensionForms $NumberDeclension;
 
     //[DataMember(Name = "unit")]
-    public readonly ?DeclensionForms $UnitDeclension;
+    public ?DeclensionForms $UnitDeclension;
     function __construct($data)
     {
         $this->NumberDeclension=new DeclensionForms($data['n']);

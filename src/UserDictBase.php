@@ -9,11 +9,11 @@ use TypeError;
 
 abstract class UserDictBase
 {
-    protected readonly WebClient $webClient;
+    protected WebClient $webClient;
 
-    protected readonly string $endpoint;
+    protected string $endpoint;
 
-    protected readonly string $CorrectionEntryClassName;
+    protected string $CorrectionEntryClassName;
     
     function __construct(WebClient $webClient, string $endpoint, string $CorrectionEntryClassName)
     {

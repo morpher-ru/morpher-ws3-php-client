@@ -9,7 +9,7 @@ class DeclensionResult extends DeclensionForms
 
 
 
-    public readonly ?string $Gender;
+    public ?string $Gender;
 
 
     function __construct($data)

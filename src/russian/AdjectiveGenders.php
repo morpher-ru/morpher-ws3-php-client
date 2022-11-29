@@ -3,9 +3,9 @@ namespace Morpher\Ws3Client\Russian;
 
 class AdjectiveGenders
 {
-    public readonly ?string $Feminine;
-    public readonly ?string $Neuter;
-    public readonly ?string $Plural;
+    public ?string $Feminine;
+    public ?string $Neuter;
+    public ?string $Plural;
 
     function __construct($data)
     {

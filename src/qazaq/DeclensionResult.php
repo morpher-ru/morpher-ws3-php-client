@@ -3,7 +3,7 @@ namespace Morpher\Ws3Client\Qazaq;
 
 class DeclensionResult extends SameNumberForms
 {
-    public readonly ?SameNumberForms $Plural;
+    public ?SameNumberForms $Plural;
 
     function __construct($data)
     {
