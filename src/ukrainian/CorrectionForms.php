@@ -2,7 +2,6 @@
 namespace Morpher\Ws3Client\Ukrainian;
 
 
-
 class CorrectionForms
 {
     public  ?string $Nominative;
@@ -13,11 +12,8 @@ class CorrectionForms
     public  ?string $Prepositional;
     public  ?string $Vocative;    
 
-    //public readonly array $data; 
     function __construct($data)
     {
-        $this->data=$data;
-
         $this->Nominative=$data['Н'] ?? null;         
         $this->Genitive  =$data['Р'] ?? null;     
         $this->Dative    =$data['Д'] ?? null;
@@ -25,8 +21,6 @@ class CorrectionForms
         $this->Instrumental=$data['О'] ?? null; 
         $this->Prepositional=$data['М'] ?? null; 
         $this->Vocative=$data['К'] ?? null; 
-
-
     }
 
     /*
@@ -45,8 +39,5 @@ class CorrectionForms
 
         $data=array_filter($data,function($var){ return !($var===null); } );
         return $data;
-
-
     }
-
 }

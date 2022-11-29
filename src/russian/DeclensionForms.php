@@ -12,11 +12,8 @@ class DeclensionForms
     public readonly ?string $Prepositional;
     public readonly ?string $PrepositionalWithO;    
 
-    public readonly array $data; 
     function __construct($data)
     {
-        $this->data=$data;
-
         $this->Nominative=$data['И'] ?? null;         
         $this->Genitive  =$data['Р'] ?? null;     
         $this->Dative    =$data['Д'] ?? null;

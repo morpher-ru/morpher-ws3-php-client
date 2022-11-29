@@ -2,7 +2,6 @@
 namespace Morpher\Ws3Client\Ukrainian;
 
 
-
 class DeclensionForms
 {
     public readonly ?string $Nominative;
@@ -13,11 +12,8 @@ class DeclensionForms
     public readonly ?string $Prepositional;
     public readonly ?string $Vocative;    
 
-    public readonly array $data; 
     function __construct($data)
     {
-        $this->data=$data;
-
         $this->Nominative=$data['Н'] ?? null;         
         $this->Genitive  =$data['Р'] ?? null;     
         $this->Dative    =$data['Д'] ?? null;
@@ -25,8 +21,5 @@ class DeclensionForms
         $this->Instrumental=$data['О'] ?? null; 
         $this->Prepositional=$data['М'] ?? null; 
         $this->Vocative=$data['К'] ?? null; 
-
-
     }
-
 }
