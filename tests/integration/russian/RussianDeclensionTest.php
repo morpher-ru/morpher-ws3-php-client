@@ -10,7 +10,6 @@ use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
 
-
 final class RussianDeclensionTest extends IntegrationBase
 {
     public function testParse_Success(): void
@@ -46,8 +45,6 @@ final class RussianDeclensionTest extends IntegrationBase
 
         $this->assertEquals(Russian\Gender::Masculine, $declensionResult->Gender);
     }
-
-
 
     public function testSplitFio_Success(): void
     {
@@ -92,7 +89,6 @@ final class RussianDeclensionTest extends IntegrationBase
         self::$testMorpher->russian->Parse($lemma);
     }
 
-
     public function testParse_ExceptionNoS(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
@@ -101,7 +97,6 @@ final class RussianDeclensionTest extends IntegrationBase
         $lemma='';
         self::$testMorpher->russian->Parse($lemma);
     }
-
 
     public function testParse_DeclensionNotSupportedUseSpell(): void
     {

@@ -85,7 +85,6 @@ abstract class UserDictBase
 		}
 
 		$result=WebClient::JsonDecode($result_raw);
-        //print_r($result);
 
         $array=array_map(function (array $item) { return new ($this->CorrectionEntryClassName)($item);}, $result );
 

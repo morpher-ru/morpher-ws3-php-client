@@ -8,13 +8,10 @@ use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;
 
 
-
 final class QueriesLeftTest extends IntegrationBase
 {
-    
     public  function testQueriesLeft(): void
     {
-
         $c=self::$testMorpher->getQueriesLeftForToday();
         print "\r\n";
         print($c." queries left for today\r\n");

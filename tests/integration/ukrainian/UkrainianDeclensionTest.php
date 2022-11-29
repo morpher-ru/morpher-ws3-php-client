@@ -10,7 +10,6 @@ use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Ukrainian as Ukrainian;
 
 
-
 final class UkrainianDeclensionTest extends IntegrationBase
 {
     public function testParse_Success(): void
@@ -29,7 +28,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->assertEquals("тесті", $declensionResult->Prepositional);
         $this->assertEquals("тесте", $declensionResult->Vocative);
 
-         $this->assertEquals(Ukrainian\Gender::Masculine, $declensionResult->Gender);
+        $this->assertEquals(Ukrainian\Gender::Masculine, $declensionResult->Gender);
     }
 
     public function testParse_ExceptionNoWords(): void
@@ -41,7 +40,6 @@ final class UkrainianDeclensionTest extends IntegrationBase
         self::$testMorpher->ukrainian->Parse($lemma);
     }
 
-
     public function testParse_InvalidArgumentEmptyString(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
@@ -50,7 +48,6 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $lemma='';
         self::$testMorpher->ukrainian->Parse($lemma);
     }
-
 
     public function testParse_InvalidFlags(): void
     {

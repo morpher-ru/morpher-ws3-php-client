@@ -2,7 +2,6 @@
 namespace Morpher\Ws3Client;
 
 
-
 class Morpher
 {
 	public readonly Russian\Client $russian;

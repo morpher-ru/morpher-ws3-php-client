@@ -10,7 +10,6 @@ use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
 
-
 final class RussianAdjectiveGendersTest extends IntegrationBase
 {
     public function testAdjectiveGenders_Success(): void
@@ -23,13 +22,10 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
         $this->assertEquals("уважаемая", $adjectiveGenders->Feminine);
         $this->assertEquals("уважаемое", $adjectiveGenders->Neuter);
         $this->assertEquals("уважаемые", $adjectiveGenders->Plural);   
-        
-
     }
 
     public function testAdjectiveGenders_error(): void
     {
-        
         $this->expectException(Russian\AdjectiveFormIncorrect::class);
         $adjectiveGenders=self::$testMorpher->russian->AdjectiveGenders("уважаемого");
 
@@ -39,8 +35,6 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
          $this->assertEquals("ERROR", $adjectiveGenders->Feminine);
         $this->assertEquals("ERROR", $adjectiveGenders->Neuter);
         $this->assertEquals("ERROR", $adjectiveGenders->Plural);    */
-        
-
     }
 
     public function testAdjectiveGenders_Empty(): void
@@ -49,6 +43,4 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
         
         self::$testMorpher->russian->AdjectiveGenders("   ");
     }
-
-
 }

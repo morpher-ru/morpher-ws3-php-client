@@ -8,19 +8,15 @@ use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;
 
 
-
 final class QueriesLeftNoTokenTest extends TestCase
 {
     static Morpher $testMorpher;
 
     public static function setUpBeforeClass(): void
     {
-        
         $token='';
 
-
         self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);
-
     }
     
     public  function testQueriesLeft(): void

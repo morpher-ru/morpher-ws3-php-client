@@ -13,6 +13,7 @@ use Morpher\Ws3Client\Russian\CorrectionEntry;
 use Morpher\Ws3Client\Russian\Gender;
 use Morpher\Ws3Client\Russian\UserDict;
 
+
 final class RussianUserDictTest extends IntegrationBase
 {
     public function testUserDict_Success(): void
@@ -64,8 +65,6 @@ final class RussianUserDictTest extends IntegrationBase
             }
         }       
         $this->assertTrue($found,"Слово не найдено в словаре после добавления.");
-
-
 
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
@@ -167,8 +166,6 @@ final class RussianUserDictTest extends IntegrationBase
         }       
         $this->assertTrue($found,"Слово не найдено в словаре после добавления.");
 
-
-
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
         $correction->Singular->Locative='в чебурелии';
@@ -240,7 +237,6 @@ final class RussianUserDictTest extends IntegrationBase
         $correction->Plural->Prepositional="чебуречках";        
         $correction->Plural->Locative='в чебураториях';
 
-
         //1. удалить слово из словаря
         self::$testMorpher->russian->userDict->Remove($word);
 
@@ -275,7 +271,6 @@ final class RussianUserDictTest extends IntegrationBase
         //$this->assertNotEquals($correction->Plural->Locative,$declension1->Plural->Where);
         unset($declension1);
         
-
         //добавить слово в словарь
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
@@ -328,6 +323,7 @@ final class RussianUserDictTest extends IntegrationBase
         //$this->assertEquals($correction->Plural->Locative,$declension2->Plural->Where);
 
         unset($declension2);
+        
         //удалить слово из словаря
         self::$testMorpher->russian->userDict->Remove($word);
 
@@ -360,9 +356,5 @@ final class RussianUserDictTest extends IntegrationBase
         $this->assertNotEquals($correction->Plural->Instrumental,$declension3->Plural->Instrumental); 
         $this->assertNotEquals($correction->Plural->Prepositional,$declension3->Plural->Prepositional); 
         //$this->assertNotEquals($correction->Plural->Locative,$declension3->Plural->Where);
-
     }
-
-    
-
 }

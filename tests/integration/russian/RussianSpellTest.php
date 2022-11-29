@@ -10,13 +10,10 @@ use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
 
-
 final class RussianSpellTest extends IntegrationBase
 {
     public function testSpell_Success(): void
     {
-    
-        
         $spellingResult=self::$testMorpher->russian->Spell(10,'рубль');
 
         $this->assertInstanceOf(Russian\NumberSpellingResult::class,$spellingResult);
@@ -30,7 +27,6 @@ final class RussianSpellTest extends IntegrationBase
         $this->assertEquals("десять", $spellingResult->NumberDeclension->Accusative);
         $this->assertEquals("десятью", $spellingResult->NumberDeclension->Instrumental);
         $this->assertEquals("десяти", $spellingResult->NumberDeclension->Prepositional);
-
 
         // unit
         $this->assertEquals("рублей", $spellingResult->UnitDeclension->Nominative);
@@ -47,6 +43,4 @@ final class RussianSpellTest extends IntegrationBase
         
         self::$testMorpher->russian->Spell(1,"   ");
     }
-
-
 }

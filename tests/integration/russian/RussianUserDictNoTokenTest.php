@@ -14,9 +14,7 @@ use Morpher\Ws3Client\Russian\UserDict;
 
 final class RussianUserDictNoTokenTest extends TestCase
 {
-
     static Morpher $testMorpher;
-
 
     public static function setUpBeforeClass(): void
     {
@@ -49,7 +47,4 @@ final class RussianUserDictNoTokenTest extends TestCase
         $word='чебуратор';
         self::$testMorpher->russian->userDict->Remove($word);
     }
-
-    
-
 }

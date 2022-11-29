@@ -9,5 +9,4 @@ class InvalidServerResponse extends \Exception
         parent::__construct($message);
         $this->response=$response;
     }
-
 }

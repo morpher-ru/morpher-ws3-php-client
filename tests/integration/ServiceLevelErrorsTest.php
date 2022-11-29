@@ -12,7 +12,6 @@ use Morpher\Ws3Client\Ukrainian as Ukrainian;
 
 final class ServiceLevelErrorsTest extends TestCase
 {
-
     public function CallbacksProvider():array
     {
         return [  //список функций для прогонки через тесты
@@ -78,7 +77,4 @@ final class ServiceLevelErrorsTest extends TestCase
 
         $callback($testMorpher);
     }
-
-
-
 }

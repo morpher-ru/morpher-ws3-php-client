@@ -15,8 +15,5 @@ class AdjectiveGenders
         $this->Feminine=$data['feminine'] ?? null;         
         $this->Neuter =$data['neuter'] ?? null;     
         $this->Plural =$data['plural'] ?? null;
-
-
-
     }    
 }

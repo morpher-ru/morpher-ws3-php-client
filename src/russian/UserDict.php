@@ -16,6 +16,5 @@ class UserDict extends UserDictBase
 	public function AddOrUpdate(CorrectionEntry $entry): void
 	{
 		$this->AddOrUpdateBase($entry);
-
 	}
 }

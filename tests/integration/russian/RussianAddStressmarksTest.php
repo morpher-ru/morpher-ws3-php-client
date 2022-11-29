@@ -10,18 +10,13 @@ use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
 
-
 final class RussianAddStressmarksTest extends IntegrationBase
 {
     public function testStressmarks_Success(): void
     {
         $result=self::$testMorpher->russian->AddStressmarks('Балет Петра Чайковского "Щелкунчик"');
 
-
         $this->assertEquals('Бале́т Петра́ Чайко́вского "Щелку́нчик"',$result);
-
-        
-
     }
 
     public function testStressmarks_Empty(): void
@@ -30,6 +25,4 @@ final class RussianAddStressmarksTest extends IntegrationBase
         
         self::$testMorpher->russian->AddStressmarks("   ");
     }
-
-
 }

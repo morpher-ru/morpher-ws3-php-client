@@ -2,7 +2,6 @@
 namespace Morpher\Ws3Client\Russian;
 
 
-
 class DeclensionForms
 {
     public readonly ?string $Nominative;
@@ -25,8 +24,5 @@ class DeclensionForms
         $this->Instrumental=$data['Т'] ?? null; 
         $this->Prepositional=$data['П'] ?? null; 
         $this->PrepositionalWithO=$data['П_о'] ?? null; 
-
-
     }
-
 }

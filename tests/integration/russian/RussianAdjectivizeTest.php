@@ -10,13 +10,11 @@ use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
 
-
 final class RussianAdjectivizeTest extends IntegrationBase
 {
     public function testAdjectivize_Success(): void
     {
         $list=self::$testMorpher->russian->Adjectivize("мытыщи");
-
 
         $this->assertNotNull($list);
         $this->assertIsArray($list);
@@ -24,8 +22,6 @@ final class RussianAdjectivizeTest extends IntegrationBase
 
         $this->assertContains("мытыщинский",$list);
         $this->assertContains("мытыщенский", $list);
-        
-
     }
 
     public function testAdjectiveGenders_Empty(): void
@@ -34,6 +30,4 @@ final class RussianAdjectivizeTest extends IntegrationBase
         
         self::$testMorpher->russian->Adjectivize("   ");
     }
-
-
 }

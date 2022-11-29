@@ -22,7 +22,6 @@ final class QazaqDeclensionTest extends IntegrationBase
 
         $this->assertEquals("тест", $declensionResult->Nominative);
 
-
         $this->assertEquals("тестің", $declensionResult->Genitive);
         $this->assertEquals("теске", $declensionResult->Dative);
         $this->assertEquals("тесті", $declensionResult->Accusative);
@@ -37,11 +36,7 @@ final class QazaqDeclensionTest extends IntegrationBase
         $this->assertEquals("тестерден", $declensionResult->Plural->Ablative);
         $this->assertEquals("тестерде", $declensionResult->Plural->Locative);
         $this->assertEquals("тестермен", $declensionResult->Plural->Instrumental);
-
-
     }
-
-
 
     public function testQazaqParse_Personal_Success():void
     {
@@ -234,5 +229,4 @@ final class QazaqDeclensionTest extends IntegrationBase
     
         self::$testMorpher->qazaq->Parse($lemma);
     }
-
 }

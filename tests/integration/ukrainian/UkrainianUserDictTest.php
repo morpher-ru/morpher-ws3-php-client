@@ -137,12 +137,10 @@ final class UkrainianUserDictTest extends IntegrationBase
         }       
         $this->assertTrue($found,"Слово не найдено в словаре после добавления.");
 
-
-
         $correction=new CorrectionEntry();
         $correction->Singular->Nominative=$word;
         $correction->Singular->Vocative='в чебурелии';
-         $correction->Gender=Gender::Masculine;
+        $correction->Gender=Gender::Masculine;
 
         self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
 

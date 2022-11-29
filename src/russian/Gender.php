@@ -2,8 +2,6 @@
 namespace Morpher\Ws3Client\Russian;
 
 
-
-
 class Gender
 {
     const Masculine='Masculine';
@@ -18,6 +16,5 @@ class Gender
         if ($gender_name=='') return self::Plural; //Множественное число кодируется пустым тегом
 
         return self::decode_array[$gender_name] ?? null;
-
     }
 }

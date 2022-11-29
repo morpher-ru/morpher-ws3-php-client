@@ -10,7 +10,6 @@ use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
 
-
 final class RussianSpellDateTest extends IntegrationBase
 {
     public function SpellDateProvider(): array
@@ -23,8 +22,6 @@ final class RussianSpellDateTest extends IntegrationBase
      */    
     public function testSpellDate_Success($date): void
     {
-    
-        
         $dateSpellingResult=self::$testMorpher->russian->SpellDate($date);
 
         $this->assertInstanceOf(Russian\DateSpellingResult::class,$dateSpellingResult);
@@ -59,6 +56,4 @@ final class RussianSpellDateTest extends IntegrationBase
         
         self::$testMorpher->russian->SpellDate("2022.10.01");
     }
-
-
 }

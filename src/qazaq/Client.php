@@ -38,5 +38,4 @@ class Client
 
 		return $declensionResult;
 	}
-	
 }

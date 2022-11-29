@@ -13,11 +13,9 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
 
     function __construct(array $data=[])
     {
-
         $this->Singular=new CorrectionForms($data['singular'] ?? null);
         $this->Plural=new CorrectionForms($data['plural'] ?? null);
         //$this->Gender=isset($data['gender']) ? Gender::DecodeName($data['gender']) : null;
-
     }
 
     /*
@@ -60,7 +58,6 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
             $data['gender']=$this->Gender;*/
 
         return $data;
-
     }
 
     public function SingularNominativeExists():bool
@@ -68,5 +65,4 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
         if ($this->Singular===null) return false;
         return !empty(trim($this->Singular->Nominative));
     }
-
 }

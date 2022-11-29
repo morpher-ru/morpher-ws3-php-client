@@ -2,10 +2,8 @@
 namespace Morpher\Ws3Client\Russian;
 
 
-
 class FullName
 {
-    
     public readonly ?string $Surname;
     public readonly ?string $Name;
     public readonly ?string $Pantronymic;
@@ -16,5 +14,4 @@ class FullName
         $this->Name=$data['И'] ?? null;
         $this->Pantronymic=$data['О'] ?? null;
     }
-
 }

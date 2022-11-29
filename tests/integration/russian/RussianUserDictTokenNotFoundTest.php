@@ -12,18 +12,16 @@ use Morpher\Ws3Client\Russian\CorrectionForms;
 use Morpher\Ws3Client\Russian\CorrectionEntry;
 use Morpher\Ws3Client\Russian\UserDict;
 
+
 final class RussianUserDictTokenNotFoundTest extends TestCase
 {
     static Morpher $testMorpher;
 
-
     public static function setUpBeforeClass(): void
     {
-        
         $token='41e2111a-767b-4a07-79A3-d52c02cb5a0d';
 
         self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);
-
     }
 
     public function testUserDict_NoTokenError_AddOrUpdate(): void
@@ -50,7 +48,4 @@ final class RussianUserDictTokenNotFoundTest extends TestCase
         $word='чебуратор';
         self::$testMorpher->russian->userDict->Remove($word);
     }
-
-    
-
 }

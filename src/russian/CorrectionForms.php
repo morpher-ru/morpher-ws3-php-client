@@ -13,11 +13,8 @@ class CorrectionForms
     public  ?string $Prepositional;
     public  ?string $Locative;    
 
-    //public readonly array $data; 
     function __construct($data)
     {
-        $this->data=$data;
-
         $this->Nominative=$data['И'] ?? null;         
         $this->Genitive  =$data['Р'] ?? null;     
         $this->Dative    =$data['Д'] ?? null;
@@ -25,8 +22,6 @@ class CorrectionForms
         $this->Instrumental=$data['Т'] ?? null; 
         $this->Prepositional=$data['П'] ?? null; 
         $this->Locative=$data['М'] ?? null; 
-
-
     }
 
     /*
@@ -45,8 +40,5 @@ class CorrectionForms
 
         $data=array_filter($data,function($var){ return !($var===null); } );
         return $data;
-
-
     }
-
 }

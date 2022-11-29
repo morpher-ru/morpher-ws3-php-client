@@ -10,7 +10,6 @@ use Morpher\Ws3Client\Morpher;
 use Morpher\Ws3Client\Russian as Russian;
 
 
-
 final class RussianDeclensionNoTokenTest extends TestCase
 {
     static function getToken(): string

@@ -14,15 +14,12 @@ use Morpher\Ws3Client\Russian\UserDict;
 
 final class RussianUserDictIncorrectTokenTest extends TestCase
 {
-
     static Morpher $testMorpher;
 
     public static function setUpBeforeClass(): void
     {
-        
         $token='35523523523523521f4f432f434f';
         self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);
-
     }
 
     public function testUserDict_NoTokenError_AddOrUpdate(): void
@@ -49,7 +46,4 @@ final class RussianUserDictIncorrectTokenTest extends TestCase
         $word='чебуратор';
         self::$testMorpher->russian->userDict->Remove($word);
     }
-
-    
-
 }
