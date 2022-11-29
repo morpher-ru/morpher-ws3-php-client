@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 require_once __DIR__ . "/../../../vendor/autoload.php";
 
 require_once __DIR__ . "/../MorpherTestHelper.php";
@@ -10,49 +11,49 @@ use Morpher\Ws3Client\Russian as Russian;
 final class RussianAdjectivizeTest extends TestCase
 {
 
-	public function testAdjectivize_Success(): void
-	{
-		$parseResults = [
-			"мытыщинский",
-			"мытыщенский"
-		];
+    public function testAdjectivize_Success(): void
+    {
+        $parseResults = [
+            "мытыщинский",
+            "мытыщенский"
+        ];
 
-		$return_text = json_encode($parseResults, JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults, JSON_UNESCAPED_UNICODE);
 
-		$name = "мытыщи";
+        $name = "мытыщи";
 
-		$container = [];
+        $container = [];
 
-		$testMorpher = MorpherTestHelper::createMockMorpher($container, $return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $return_text);
 
-		$list = $testMorpher->russian->Adjectivize($name);
+        $list = $testMorpher->russian->Adjectivize($name);
 
-		$transaction = reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
-		//check request parameters, headers, uri
-		$request = $transaction['request'];
+        //check request parameters, headers, uri
+        $request = $transaction['request'];
 
-		$uri = $request->getUri();
-		$this->assertEquals('/russian/adjectivize', $uri->getPath());
-		$this->assertEquals('test.uu', $uri->getHost());
-		$this->assertEquals('s=' . rawurlencode($name), $uri->getQuery());
+        $uri = $request->getUri();
+        $this->assertEquals('/russian/adjectivize', $uri->getPath());
+        $this->assertEquals('test.uu', $uri->getHost());
+        $this->assertEquals('s=' . rawurlencode($name), $uri->getQuery());
 
-		$this->assertNotNull($list);
-		$this->assertIsArray($list);
-		$this->assertCount(2, $list);
+        $this->assertNotNull($list);
+        $this->assertIsArray($list);
+        $this->assertCount(2, $list);
 
-		$this->assertContains("мытыщинский", $list);
-		$this->assertContains("мытыщенский", $list);
-	}
+        $this->assertContains("мытыщинский", $list);
+        $this->assertContains("мытыщенский", $list);
+    }
 
-	public function testAdjectivize_Empty(): void
-	{
-		$this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+    public function testAdjectivize_Empty(): void
+    {
+        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
 
-		$container = [];
+        $container = [];
 
-		$testMorpher = MorpherTestHelper::createMockMorpher($container, '');
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, '');
 
-		$declensionResult = $testMorpher->russian->Adjectivize('   ');
-	}
+        $declensionResult = $testMorpher->russian->Adjectivize('   ');
+    }
 }

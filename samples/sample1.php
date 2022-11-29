@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 require_once __DIR__ . "/../vendor/autoload.php";
 @include_once __DIR__ .
-              "/../secret.php";//файл секретов есть только локально, на github не выгружаю. отсутствие файла - не ошибка.
+    "/../secret.php";//файл секретов есть только локально, на github не выгружаю. отсутствие файла - не ошибка.
 
 use Morpher\Ws3Client\WebClient;
 use Morpher\Ws3Client\Morpher;

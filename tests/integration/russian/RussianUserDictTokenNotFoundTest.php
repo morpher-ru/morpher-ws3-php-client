@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 require_once __DIR__ . "/../../../vendor/autoload.php";
 
 require_once __DIR__ . "/../IntegrationBase.php";
@@ -15,40 +16,40 @@ use Morpher\Ws3Client\Russian\UserDict;
 
 final class RussianUserDictTokenNotFoundTest extends TestCase
 {
-	static Morpher $testMorpher;
+    static Morpher $testMorpher;
 
-	public static function setUpBeforeClass(): void
-	{
+    public static function setUpBeforeClass(): void
+    {
 
-		$token = '41e2111a-767b-4a07-79A3-d52c02cb5a0d';
+        $token = '41e2111a-767b-4a07-79A3-d52c02cb5a0d';
 
-		self::$testMorpher = new Morpher(IntegrationBase::BASE_URL, $token);
+        self::$testMorpher = new Morpher(IntegrationBase::BASE_URL, $token);
 
-	}
+    }
 
-	public function testUserDict_NoTokenError_AddOrUpdate(): void
-	{
-		$this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
-		$word = 'чебуратор';
-		$correction = new CorrectionEntry();
-		$correction->Singular->Nominative = $word;
-		$correction->Singular->Locative = 'в чебураторке';
-		$correction->Plural->Locative = 'в чебураториях';
+    public function testUserDict_NoTokenError_AddOrUpdate(): void
+    {
+        $this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
+        $word = 'чебуратор';
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = $word;
+        $correction->Singular->Locative = 'в чебураторке';
+        $correction->Plural->Locative = 'в чебураториях';
 
-		self::$testMorpher->russian->userDict->AddOrUpdate($correction);
-	}
+        self::$testMorpher->russian->userDict->AddOrUpdate($correction);
+    }
 
-	public function testUserDict_NoTokenError_GetAll(): void
-	{
-		$this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
-		self::$testMorpher->russian->userDict->GetAll();
-	}
+    public function testUserDict_NoTokenError_GetAll(): void
+    {
+        $this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
+        self::$testMorpher->russian->userDict->GetAll();
+    }
 
-	public function testUserDict_NoTokenError_Remove(): void
-	{
-		$this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
-		$word = 'чебуратор';
-		self::$testMorpher->russian->userDict->Remove($word);
-	}
+    public function testUserDict_NoTokenError_Remove(): void
+    {
+        $this->expectException(\Morpher\Ws3Client\TokenNotFound::class);
+        $word = 'чебуратор';
+        self::$testMorpher->russian->userDict->Remove($word);
+    }
 
 }
