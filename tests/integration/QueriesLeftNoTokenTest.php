@@ -19,7 +19,7 @@ final class QueriesLeftNoTokenTest extends TestCase
         self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);
     }
     
-    public  function testQueriesLeft(): void
+    public function testQueriesLeft(): void
     {
         $c=self::$testMorpher->getQueriesLeftForToday();
         print "\r\n";
