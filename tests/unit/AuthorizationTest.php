@@ -32,9 +32,9 @@ class AuthorizationTest extends TestCase
         ];
     }
 
-     /**
-     * @dataProvider  CallbacksProvider
-     */    
+    /**
+    * @dataProvider  CallbacksProvider
+    */
     public function testAuthorization(string $method,string $requestResult, callable $callback): void
     {
         $container = [];
