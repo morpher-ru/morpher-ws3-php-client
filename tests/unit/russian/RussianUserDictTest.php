@@ -96,7 +96,7 @@ final class RussianUserDictTest extends TestCase
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $lemma = 'кошка';
-        $lresult = $testMorpher->russian->userDict->Remove($lemma);
+        $testMorpher->russian->userDict->Remove($lemma);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -124,7 +124,7 @@ final class RussianUserDictTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $result = $testMorpher->russian->userDict->Remove('');
+        $testMorpher->russian->userDict->Remove('');
     }
 
     public function testUserDicPost_Success(): void
@@ -143,7 +143,7 @@ final class RussianUserDictTest extends TestCase
         $correction->Singular->Locative = 'в чебураторе';
         $correction->Plural->Locative = 'в чебураторах';
 
-        $lresult = $testMorpher->russian->userDict->AddOrUpdate($correction);
+        $testMorpher->russian->userDict->AddOrUpdate($correction);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -172,7 +172,7 @@ final class RussianUserDictTest extends TestCase
         $correction->Singular->Nominative = 'чебуратор';
         $correction->Plural->Locative = 'в чебураторах';
 
-        $lresult = $testMorpher->russian->userDict->AddOrUpdate($correction);
+        $testMorpher->russian->userDict->AddOrUpdate($correction);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -205,7 +205,7 @@ final class RussianUserDictTest extends TestCase
         $correction->Singular->Locative = 'в чебураторе';
         $correction->Plural->Locative = 'в чебураторах';
  
-        $lresult = $testMorpher->russian->userDict->AddOrUpdate($correction);
+        $testMorpher->russian->userDict->AddOrUpdate($correction);
     }
 
     public function testUserDicPost_Exception2(): void
@@ -227,6 +227,6 @@ final class RussianUserDictTest extends TestCase
         //$correction->Singular->Locative = 'в чебураторе';
         //$correction->Plural->Locative = 'в чебураторах';
  
-        $lresult = $testMorpher->russian->userDict->AddOrUpdate($correction);
+        $testMorpher->russian->userDict->AddOrUpdate($correction);
     }
 }
