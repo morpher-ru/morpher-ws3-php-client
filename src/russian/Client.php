@@ -112,8 +112,13 @@ class Client
     }
 
 
-    //yyyy-MM-dd
-    public function SpellDate( $date): DateSpellingResult  //$date - string, timestamp, DateTimeInterface
+    /**
+     * @param $date string|int|DateTimeInterface @date Строка в формате yyyy-MM-dd, int timestamp или DateTimeInterface
+     * @throws \Morpher\Ws3Client\InvalidArgumentEmptyString
+     * @throws \Morpher\Ws3Client\InvalidServerResponse
+     * @throws \InvalidArgumentException
+     */
+    public function SpellDate($date): DateSpellingResult
     {
         if (is_int($date))
         {
@@ -198,7 +203,12 @@ class Client
         return $result;
     }
 
-    public function AddStressmarks(string $text):string
+    /**
+    * Добавляет знаки ударения и точки над Ё к тексту на русском языке.
+    * @param $text string text Текст на русском языке: "На золотом крыльце сидели"
+    * @returns string Текст со знаками ударения: "На золото́́м крыльце́ сиде́ли"
+    */
+    public function AddStressmarks(string $text): string
     {
         if (trim($text)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         
