@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
@@ -13,43 +13,43 @@ final class UkrainianSpellTest extends TestCase
 {
     public function testSpell_Success(): void
     {
-        $parseResults=[
-            "n"=> [
-                "Н"=> "десять",
-                "Р"=> "десяти",
-                "Д"=> "десяти",
-                "З"=> "десять",
-                "О"=> "десятьма",
-                "М"=> "десяти",
-                "К"=> "десять"
+        $parseResults = [
+            "n" => [
+                "Н" => "десять",
+                "Р" => "десяти",
+                "Д" => "десяти",
+                "З" => "десять",
+                "О" => "десятьма",
+                "М" => "десяти",
+                "К" => "десять"
             ],
-            "unit"=> [
-                "Н"=> "рублів",
-                "Р"=> "рублів",
-                "Д"=> "рублям",
-                "З"=> "рублів",
-                "О"=> "рублями",
-                "М"=> "рублях",
-                "К"=> "рублів"
+            "unit" => [
+                "Н" => "рублів",
+                "Р" => "рублів",
+                "Д" => "рублям",
+                "З" => "рублів",
+                "О" => "рублями",
+                "М" => "рублях",
+                "К" => "рублів"
             ]
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $unit="рубль";
+        $unit = "рубль";
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $spellingResult=$testMorpher->ukrainian->Spell(10,$unit);
+        $spellingResult = $testMorpher->ukrainian->Spell(10,$unit);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/ukrainian/spell',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('n=10&unit='.rawurlencode($unit),$uri->getQuery());
@@ -83,8 +83,8 @@ final class UkrainianSpellTest extends TestCase
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
     
-        $declensionResult=$testMorpher->ukrainian->Spell(1,'   ');
+        $declensionResult = $testMorpher->ukrainian->Spell(1,'   ');
     }
 }

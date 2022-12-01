@@ -9,6 +9,6 @@ class DeclensionResult extends SameNumberForms
     {
         parent::__construct($data);
 
-        $this->Plural= isset($data['көпше']) ? new SameNumberForms($data['көпше']) : null;
+        $this->Plural = isset($data['көпше']) ? new SameNumberForms($data['көпше']) : null;
     }
 }

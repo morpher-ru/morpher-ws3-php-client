@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -22,7 +22,7 @@ final class RussianSpellDateTest extends IntegrationBase
      */    
     public function testSpellDate_Success($date): void
     {
-        $dateSpellingResult=self::$testMorpher->russian->SpellDate($date);
+        $dateSpellingResult = self::$testMorpher->russian->SpellDate($date);
 
         $this->assertInstanceOf(Russian\DateSpellingResult::class,$dateSpellingResult);
     

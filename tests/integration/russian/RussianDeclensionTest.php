@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -14,9 +14,9 @@ final class RussianDeclensionTest extends IntegrationBase
 {
     public function testParse_Success(): void
     {
-        $lemma='тест';
+        $lemma = 'тест';
 
-        $declensionResult=self::$testMorpher->russian->Parse($lemma);
+        $declensionResult = self::$testMorpher->russian->Parse($lemma);
 
         $this->assertInstanceOf(Russian\DeclensionResult::class,$declensionResult);
 
@@ -48,9 +48,9 @@ final class RussianDeclensionTest extends IntegrationBase
 
     public function testSplitFio_Success(): void
     {
-        $lemma="Пушкин Александр Сергеевич";
+        $lemma = "Пушкин Александр Сергеевич";
 
-        $declensionResult=self::$testMorpher->russian->Parse($lemma, [Russian\Flags::Name]);
+        $declensionResult = self::$testMorpher->russian->Parse($lemma, [Russian\Flags::Name]);
 
         $this->assertInstanceOf(Russian\DeclensionForms::class, $declensionResult);
         $this->assertNotNull($declensionResult->FullName);
@@ -64,7 +64,7 @@ final class RussianDeclensionTest extends IntegrationBase
     {
         $this->expectException(InvalidArgumentException::class);
     
-        $lemma='';
+        $lemma = '';
     
         self::$testMorpher->russian->Parse($lemma);
     }
@@ -72,7 +72,7 @@ final class RussianDeclensionTest extends IntegrationBase
 
     public function testNullGenitive(): void
     {
-        $lemma='теля';
+        $lemma = 'теля';
    
         $genitive = self::$testMorpher->russian->Parse($lemma)->Genitive;
 
@@ -85,7 +85,7 @@ final class RussianDeclensionTest extends IntegrationBase
         $this->expectException(Russian\RussianWordsNotFound::class);
         $this->expectExceptionMessage('Не найдено русских слов.');
    
-        $lemma='test';
+        $lemma = 'test';
         self::$testMorpher->russian->Parse($lemma);
     }
 
@@ -94,7 +94,7 @@ final class RussianDeclensionTest extends IntegrationBase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-        $lemma='';
+        $lemma = '';
         self::$testMorpher->russian->Parse($lemma);
     }
 
@@ -103,7 +103,7 @@ final class RussianDeclensionTest extends IntegrationBase
         $this->expectException(Russian\DeclensionNotSupportedUseSpell::class);
         $this->expectExceptionMessage('Склонение числительных в declension не поддерживается. Используйте метод spell.');
    
-        $lemma='двадцать';
+        $lemma = 'двадцать';
         self::$testMorpher->russian->Parse($lemma);
     }
 
@@ -112,7 +112,7 @@ final class RussianDeclensionTest extends IntegrationBase
         $this->expectException(Russian\InvalidFlags::class);
         $this->expectExceptionMessage('Указаны неправильные флаги.');
    
-        $lemma='тест';
+        $lemma = 'тест';
         self::$testMorpher->russian->Parse($lemma,["AAA","BBB"]);
     }
 }

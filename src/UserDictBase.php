@@ -17,9 +17,9 @@ abstract class UserDictBase
     
     function __construct(WebClient $webClient, string $endpoint, string $CorrectionEntryClassName)
     {
-        $this->webClient=$webClient;
-        $this->endpoint=$endpoint;
-        $this->CorrectionEntryClassName=$CorrectionEntryClassName;
+        $this->webClient = $webClient;
+        $this->endpoint = $endpoint;
+        $this->CorrectionEntryClassName = $CorrectionEntryClassName;
     }
     
     protected function AddOrUpdateBase(CorrectionEntryInterface $entry): void
@@ -34,7 +34,7 @@ abstract class UserDictBase
             throw new \InvalidArgumentException("Обязательно должен быть указан именительный падеж единственного числа.");
         }
 
-        $formParam=$entry->getArrayForRequest();
+        $formParam = $entry->getArrayForRequest();
 
         if (count($formParam)<2)
         {
@@ -60,7 +60,7 @@ abstract class UserDictBase
             throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         }
 
-        $queryParam=["s"=>$NominativeForm];
+        $queryParam = ["s" => $NominativeForm];
 
         try
         {
@@ -74,19 +74,19 @@ abstract class UserDictBase
 
     public function GetAll(): array
     {
-        $result_raw="";
+        $result_raw = "";
         try
         {
-            $result_raw=$this->webClient->send($this->endpoint,[],'GET');
+            $result_raw = $this->webClient->send($this->endpoint,[],'GET');
         }
         catch (\Morpher\Ws3Client\MorpherError $ex)
         {
             throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
         }
 
-        $result=WebClient::JsonDecode($result_raw);
+        $result = WebClient::JsonDecode($result_raw);
 
-        $array=array_map(function (array $item) { return new ($this->CorrectionEntryClassName)($item);}, $result );
+        $array = array_map(function (array $item) { return new ($this->CorrectionEntryClassName)($item);}, $result );
 
         return $array;
     }

@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
@@ -15,24 +15,24 @@ final class RussianDeclensionTest extends TestCase
 {
     public function testFlags(): void
     {
-        $parseResults=[];
+        $parseResults = [];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $lemma='тест';
+        $lemma = 'тест';
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult=$testMorpher->russian->Parse($lemma,['flagA','flagB','flagC']);
+        $declensionResult = $testMorpher->russian->Parse($lemma,['flagA','flagB','flagC']);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma).'&flags='.rawurlencode('flagA,flagB,flagC'),$uri->getQuery());
@@ -40,44 +40,44 @@ final class RussianDeclensionTest extends TestCase
 
     public function testParse_Success(): void
     {
-        $parseResults=[
-            "Р"=> "теста",
-            "Д"=> "тесту",
-            "В"=> "тест",
-            "Т"=> "тестом",
-            "П"=> "тесте",
-            "П_о"=> "о тесте",
-            "род"=> "Мужской",
-            "множественное"=> [
-                "И"=> "тесты",
-                "Р"=> "тестов",
-                "Д"=> "тестам",
-                "В"=> "тесты",
-                "Т"=> "тестами",
-                "П"=> "тестах",
-                "П_о"=>"о тестах"
+        $parseResults = [
+            "Р" => "теста",
+            "Д" => "тесту",
+            "В" => "тест",
+            "Т" => "тестом",
+            "П" => "тесте",
+            "П_о" => "о тесте",
+            "род" => "Мужской",
+            "множественное" => [
+                "И" => "тесты",
+                "Р" => "тестов",
+                "Д" => "тестам",
+                "В" => "тесты",
+                "Т" => "тестами",
+                "П" => "тестах",
+                "П_о" => "о тестах"
             ],
-            "где"=> "в тесте",
-            "куда"=> "в тест",
-            "откуда"=> "из теста"
+            "где" => "в тесте",
+            "куда" => "в тест",
+            "откуда" => "из теста"
         ]; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $lemma='тест';
+        $lemma = 'тест';
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult=$testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->Parse($lemma);
 
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
@@ -114,35 +114,35 @@ final class RussianDeclensionTest extends TestCase
 
     public function testSplitFio_Success(): void
     {
-        $parseResults=[
-            "Р"=> "Александра Пушкина",
-            "Д"=> "Александру Пушкину",
-            "В"=> "Александра Пушкина",
-            "Т"=> "Александром Пушкиным",
-            "П"=> "Александре Пушкине",
-            "ФИО"=> [
-              "Ф"=> "Пушкин",
-              "И"=> "Александр",
-              "О"=> "Сергеевич"
+        $parseResults = [
+            "Р" => "Александра Пушкина",
+            "Д" => "Александру Пушкину",
+            "В" => "Александра Пушкина",
+            "Т" => "Александром Пушкиным",
+            "П" => "Александре Пушкине",
+            "ФИО" => [
+              "Ф" => "Пушкин",
+              "И" => "Александр",
+              "О" => "Сергеевич"
             ]
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $lemma="Александр Пушкин Сергеевич";
+        $lemma = "Александр Пушкин Сергеевич";
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult=$testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->Parse($lemma);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
@@ -158,26 +158,26 @@ final class RussianDeclensionTest extends TestCase
 
     public function testNullGenitive(): void
     {
-        $parseResults=[
-            "Д"=> "теляти",
-            "В"=> "теля",
+        $parseResults = [
+            "Д" => "теляти",
+            "В" => "теля",
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
-        $lemma='теля';
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $lemma = 'теля';
     
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $genitive = $testMorpher->russian->Parse($lemma)->Genitive;
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
@@ -190,17 +190,17 @@ final class RussianDeclensionTest extends TestCase
         $this->expectException(Russian\RussianWordsNotFound::class);
         $this->expectExceptionMessage('Не найдено русских слов.');
 
-        $parseResults=[        'code'=>5,
-        'message'=> 'Не найдено русских слов.']; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $parseResults = [        'code' => 5,
+        'message' => 'Не найдено русских слов.']; 
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,496);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,496);
     
-        $lemma='test';
+        $lemma = 'test';
     
-        $declensionResult=$testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->Parse($lemma);
     }
 
     public function testParse_ExceptionNoS(): void
@@ -208,17 +208,17 @@ final class RussianDeclensionTest extends TestCase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-        $parseResults=[        'code'=>6,
-        'message'=> 'Не указан обязательный параметр: s.'];
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $parseResults = [        'code' => 6,
+        'message' => 'Не указан обязательный параметр: s.'];
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,400);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,400);
     
-        $lemma='+++';
+        $lemma = '+++';
     
-        $declensionResult=$testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->Parse($lemma);
 
     }
 
@@ -227,17 +227,17 @@ final class RussianDeclensionTest extends TestCase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-        $parseResults=[        'code'=>6,
-        'message'=> 'Другое сообщение от сервера']; //с кодом 6 любое сообшение от сервера не учитывается
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $parseResults = [        'code' => 6,
+        'message' => 'Другое сообщение от сервера']; //с кодом 6 любое сообшение от сервера не учитывается
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,400);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,400);
     
-        $lemma='+++';
+        $lemma = '+++';
     
-        $declensionResult=$testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->Parse($lemma);
     }
 
     public function testParse_DeclensionNotSupportedUseSpell(): void
@@ -245,17 +245,17 @@ final class RussianDeclensionTest extends TestCase
         $this->expectException(Russian\DeclensionNotSupportedUseSpell::class);
         $this->expectExceptionMessage('Склонение числительных в declension не поддерживается. Используйте метод spell.');
 
-        $parseResults=[        'code'=>4,
-        'message'=> 'Склонение числительных в declension не поддерживается. Используйте метод spell.']; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $parseResults = [        'code' => 4,
+        'message' => 'Склонение числительных в declension не поддерживается. Используйте метод spell.']; 
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,495);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,495);
     
-        $lemma='двадцать';
+        $lemma = 'двадцать';
     
-        $declensionResult=$testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->Parse($lemma);
     }
 
 
@@ -264,29 +264,29 @@ final class RussianDeclensionTest extends TestCase
         $this->expectException(Russian\InvalidFlags::class);
         $this->expectExceptionMessage('Указаны неправильные флаги.');
 
-        $parseResults=[        'code'=>12,
-        'message'=> 'Указаны неправильные флаги.']; 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $parseResults = [        'code' => 12,
+        'message' => 'Указаны неправильные флаги.']; 
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,494);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,494);
     
-        $lemma='двадцать';
+        $lemma = 'двадцать';
     
-        $declensionResult=$testMorpher->russian->Parse($lemma,["AAA","BBB"]);
+        $declensionResult = $testMorpher->russian->Parse($lemma,["AAA","BBB"]);
     }
 
     public function testInvalidJsonResponse(): void
     {
-        $return_text='{"И":"тест","Р":"тесте",-}';
+        $return_text = '{"И":"тест","Р":"тесте",-}';
         try 
         {
 
-            $lemma='тест';
+            $lemma = 'тест';
             $container = [];
-            $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);       
-            $declensionResult=$testMorpher->russian->Parse($lemma);
+            $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);       
+            $declensionResult = $testMorpher->russian->Parse($lemma);
         }
         catch (\Morpher\Ws3Client\InvalidServerResponse $ex)
         {

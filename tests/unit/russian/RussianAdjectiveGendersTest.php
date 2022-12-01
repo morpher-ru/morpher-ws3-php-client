@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
@@ -13,28 +13,28 @@ final class RussianAdjectiveGendersTest extends TestCase
 {
     public function testSpell_Success(): void
     {
-        $parseResults=[
-            "feminine"=> "уважаемая",
-            "neuter"=> "уважаемое",
-            "plural"=> "уважаемые"
+        $parseResults = [
+            "feminine" => "уважаемая",
+            "neuter" => "уважаемое",
+            "plural" => "уважаемые"
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $adj="уважаемый";
+        $adj = "уважаемый";
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $adjectiveGenders=$testMorpher->russian->AdjectiveGenders($adj);
+        $adjectiveGenders = $testMorpher->russian->AdjectiveGenders($adj);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/genders',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($adj),$uri->getQuery());
@@ -51,21 +51,21 @@ final class RussianAdjectiveGendersTest extends TestCase
     {
         $this->expectException(Russian\AdjectiveFormIncorrect::class);
 
-        $parseResults=[
-            "feminine"=> "ERROR",
-            "neuter"=> "ERROR",
-            "plural"=> "ERROR"
+        $parseResults = [
+            "feminine" => "ERROR",
+            "neuter" => "ERROR",
+            "plural" => "ERROR"
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $adj="уважаемого";
+        $adj = "уважаемого";
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $adjectiveGenders=$testMorpher->russian->AdjectiveGenders($adj);
+        $adjectiveGenders = $testMorpher->russian->AdjectiveGenders($adj);
     }
 
     public function testAdjectiveGenders_Empty(): void
@@ -74,8 +74,8 @@ final class RussianAdjectiveGendersTest extends TestCase
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
 
-        $declensionResult=$testMorpher->russian->AdjectiveGenders('   ');
+        $declensionResult = $testMorpher->russian->AdjectiveGenders('   ');
     }
 }

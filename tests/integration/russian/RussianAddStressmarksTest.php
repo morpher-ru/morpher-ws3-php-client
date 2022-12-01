@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -14,7 +14,7 @@ final class RussianAddStressmarksTest extends IntegrationBase
 {
     public function testStressmarks_Success(): void
     {
-        $result=self::$testMorpher->russian->AddStressmarks('Балет Петра Чайковского "Щелкунчик"');
+        $result = self::$testMorpher->russian->AddStressmarks('Балет Петра Чайковского "Щелкунчик"');
 
         $this->assertEquals('Бале́т Петра́ Чайко́вского "Щелку́нчик"',$result);
     }

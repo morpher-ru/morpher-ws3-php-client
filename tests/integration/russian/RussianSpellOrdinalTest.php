@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -14,7 +14,7 @@ final class RussianSpellOrdinalTest extends IntegrationBase
 {
     public function testSpellOrdinal_Success(): void
     {
-        $spellingResult=self::$testMorpher->russian->SpellOrdinal(7518 ,'колесо');
+        $spellingResult = self::$testMorpher->russian->SpellOrdinal(7518 ,'колесо');
 
         $this->assertInstanceOf(Russian\NumberSpellingResult::class,$spellingResult);
     

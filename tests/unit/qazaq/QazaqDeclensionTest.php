@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 require_once __DIR__."/../../../vendor/autoload.php";
 
@@ -13,40 +13,40 @@ final class QazaqDeclensionTest extends TestCase
 {
     public function testQazaqParse_Success(): void
     {
-        $parseResults=[
-            "І"=> "тесттің",
-            "Б"=> "тестке",
-            "Т"=> "тестті",
-            "Ш"=> "тесттен",
-            "Ж"=> "тестте",
-            "К"=> "тестпен",    
-            "көпше"=> [
-                "A"=> "тесттер",
-                "І"=> "тесттертің",
-                "Б"=> "тесттерке",
-                "Т"=> "тесттерті",
-                "Ш"=> "тесттертен",
-                "Ж"=> "тесттерте",
-                "К"=> "тесттерпен"
+        $parseResults = [
+            "І" => "тесттің",
+            "Б" => "тестке",
+            "Т" => "тестті",
+            "Ш" => "тесттен",
+            "Ж" => "тестте",
+            "К" => "тестпен",    
+            "көпше" => [
+                "A" => "тесттер",
+                "І" => "тесттертің",
+                "Б" => "тесттерке",
+                "Т" => "тесттерті",
+                "Ш" => "тесттертен",
+                "Ж" => "тесттерте",
+                "К" => "тесттерпен"
             ]
         ];
         
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
         
-        $lemma='тест';
+        $lemma = 'тест';
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->Parse($lemma);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/qazaq/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
@@ -75,193 +75,193 @@ final class QazaqDeclensionTest extends TestCase
 
     public function testQazaqParse_Personal_Success():void
     {
-        $parseResults=[
-            "A"=> "бала",
-            "І"=> "баланың",
-            "Б"=> "балаға",
-            "Т"=> "баланы",
-            "Ш"=> "баладан",
-            "Ж"=> "балада",
-            "К"=> "баламен",
-            "менің"=> [
-                "A"=> "балам",
-                "І"=> "баламның",
-                "Б"=> "балама",
-                "Т"=> "баламды",
-                "Ш"=> "баламнан",
-                "Ж"=> "баламда",
-                "К"=> "баламмен"
+        $parseResults = [
+            "A" => "бала",
+            "І" => "баланың",
+            "Б" => "балаға",
+            "Т" => "баланы",
+            "Ш" => "баладан",
+            "Ж" => "балада",
+            "К" => "баламен",
+            "менің" => [
+                "A" => "балам",
+                "І" => "баламның",
+                "Б" => "балама",
+                "Т" => "баламды",
+                "Ш" => "баламнан",
+                "Ж" => "баламда",
+                "К" => "баламмен"
             ],
-            "сенің"=> [
-                "A"=> "балаң",
-                "І"=> "балаңның",
-                "Б"=> "балаңа",
-                "Т"=> "балаңды",
-                "Ш"=> "балаңнан",
-                "Ж"=> "балаңда",
-                "К"=> "балаңмен"
+            "сенің" => [
+                "A" => "балаң",
+                "І" => "балаңның",
+                "Б" => "балаңа",
+                "Т" => "балаңды",
+                "Ш" => "балаңнан",
+                "Ж" => "балаңда",
+                "К" => "балаңмен"
             ],
-            "сіздің"=> [
-                "A"=> "балаңыз",
-                "І"=> "балаңыздың",
-                "Б"=> "балаңызға",
-                "Т"=> "балаңызды",
-                "Ш"=> "балаңыздан",
-                "Ж"=> "балаңызда",
-                "К"=> "балаңызбен"
+            "сіздің" => [
+                "A" => "балаңыз",
+                "І" => "балаңыздың",
+                "Б" => "балаңызға",
+                "Т" => "балаңызды",
+                "Ш" => "балаңыздан",
+                "Ж" => "балаңызда",
+                "К" => "балаңызбен"
             ],
-            "оның"=> [
-                "A"=> "баласы",
-                "І"=> "баласының",
-                "Б"=> "баласына",
-                "Т"=> "баласын",
-                "Ш"=> "баласынан",
-                "Ж"=> "баласында",
-                "К"=> "баласымен"
+            "оның" => [
+                "A" => "баласы",
+                "І" => "баласының",
+                "Б" => "баласына",
+                "Т" => "баласын",
+                "Ш" => "баласынан",
+                "Ж" => "баласында",
+                "К" => "баласымен"
             ],
-            "біздің"=> [
-                "A"=> "баламыз",
-                "І"=> "баламыздың",
-                "Б"=> "баламызға",
-                "Т"=> "баламызды",
-                "Ш"=> "баламыздан",
-                "Ж"=> "баламызда",
-                "К"=> "баламызбен"
+            "біздің" => [
+                "A" => "баламыз",
+                "І" => "баламыздың",
+                "Б" => "баламызға",
+                "Т" => "баламызды",
+                "Ш" => "баламыздан",
+                "Ж" => "баламызда",
+                "К" => "баламызбен"
             ],
-            "сендердің"=> [
-                "A"=> "балаларың",
-                "І"=> "балаларыңның",
-                "Б"=> "балаларыңа",
-                "Т"=> "балаларыңды",
-                "Ш"=> "балаларыңнан",
-                "Ж"=> "балаларыңда",
-                "К"=> "балаларыңмен"
+            "сендердің" => [
+                "A" => "балаларың",
+                "І" => "балаларыңның",
+                "Б" => "балаларыңа",
+                "Т" => "балаларыңды",
+                "Ш" => "балаларыңнан",
+                "Ж" => "балаларыңда",
+                "К" => "балаларыңмен"
             ],
-            "сіздердің"=> [
-                "A"=> "балаларыңыз",
-                "І"=> "балаларыңыздың",
-                "Б"=> "балаларыңызға",
-                "Т"=> "балаларыңызды",
-                "Ш"=> "балаларыңыздан",
-                "Ж"=> "балаларыңызда",
-                "К"=> "балаларыңызбен"
+            "сіздердің" => [
+                "A" => "балаларыңыз",
+                "І" => "балаларыңыздың",
+                "Б" => "балаларыңызға",
+                "Т" => "балаларыңызды",
+                "Ш" => "балаларыңыздан",
+                "Ж" => "балаларыңызда",
+                "К" => "балаларыңызбен"
             ],
-            "олардың"=> [
-                "A"=> "балалары",
-                "І"=> "балаларының",
-                "Б"=> "балаларына",
-                "Т"=> "балаларын",
-                "Ш"=> "балаларынан",
-                "Ж"=> "балаларында",
-                "К"=> "балаларымен"
+            "олардың" => [
+                "A" => "балалары",
+                "І" => "балаларының",
+                "Б" => "балаларына",
+                "Т" => "балаларын",
+                "Ш" => "балаларынан",
+                "Ж" => "балаларында",
+                "К" => "балаларымен"
             ],
-            "көпше"=> [
-                "A"=> "балалар",
-                "І"=> "балалардың",
-                "Б"=> "балаларға",
-                "Т"=> "балаларды",
-                "Ш"=> "балалардан",
-                "Ж"=> "балаларда",
-                "К"=> "балалармен",
-                "менің"=> [
-                    "A"=> "балаларым",
-                    "І"=> "балаларымның",
-                    "Б"=> "балаларыма",
-                    "Т"=> "балаларымды",
-                    "Ш"=> "балаларымнан",
-                    "Ж"=> "балаларымда",
-                    "К"=> "балаларыммен"
+            "көпше" => [
+                "A" => "балалар",
+                "І" => "балалардың",
+                "Б" => "балаларға",
+                "Т" => "балаларды",
+                "Ш" => "балалардан",
+                "Ж" => "балаларда",
+                "К" => "балалармен",
+                "менің" => [
+                    "A" => "балаларым",
+                    "І" => "балаларымның",
+                    "Б" => "балаларыма",
+                    "Т" => "балаларымды",
+                    "Ш" => "балаларымнан",
+                    "Ж" => "балаларымда",
+                    "К" => "балаларыммен"
                 ],
-                "сенің"=> [
-                    "A"=> "балаларың",
-                    "І"=> "балаларыңның",
-                    "Б"=> "балаларыңа",
-                    "Т"=> "балаларыңды",
-                    "Ш"=> "балаларыңнан",
-                    "Ж"=> "балаларыңда",
-                    "К"=> "балаларыңмен"
+                "сенің" => [
+                    "A" => "балаларың",
+                    "І" => "балаларыңның",
+                    "Б" => "балаларыңа",
+                    "Т" => "балаларыңды",
+                    "Ш" => "балаларыңнан",
+                    "Ж" => "балаларыңда",
+                    "К" => "балаларыңмен"
                 ],
-                "сіздің"=> [
-                    "A"=> "балаларыңыз",
-                    "І"=> "балаларыңыздың",
-                    "Б"=> "балаларыңызға",
-                    "Т"=> "балаларыңызды",
-                    "Ш"=> "балаларыңыздан",
-                    "Ж"=> "балаларыңызда",
-                    "К"=> "балаларыңызбен"
+                "сіздің" => [
+                    "A" => "балаларыңыз",
+                    "І" => "балаларыңыздың",
+                    "Б" => "балаларыңызға",
+                    "Т" => "балаларыңызды",
+                    "Ш" => "балаларыңыздан",
+                    "Ж" => "балаларыңызда",
+                    "К" => "балаларыңызбен"
                 ],
-                "оның"=> [
-                    "A"=> "балалары",
-                    "І"=> "балаларының",
-                    "Б"=> "балаларына",
-                    "Т"=> "балаларын",
-                    "Ш"=> "балаларынан",
-                    "Ж"=> "балаларында",
-                    "К"=> "балаларымен"
+                "оның" => [
+                    "A" => "балалары",
+                    "І" => "балаларының",
+                    "Б" => "балаларына",
+                    "Т" => "балаларын",
+                    "Ш" => "балаларынан",
+                    "Ж" => "балаларында",
+                    "К" => "балаларымен"
                 ],
-                "біздің"=> [
-                    "A"=> "балаларымыз",
-                    "І"=> "балаларымыздың",
-                    "Б"=> "балаларымызға",
-                    "Т"=> "балаларымызды",
-                    "Ш"=> "балаларымыздан",
-                    "Ж"=> "балаларымызда",
-                    "К"=> "балаларымызбен"
+                "біздің" => [
+                    "A" => "балаларымыз",
+                    "І" => "балаларымыздың",
+                    "Б" => "балаларымызға",
+                    "Т" => "балаларымызды",
+                    "Ш" => "балаларымыздан",
+                    "Ж" => "балаларымызда",
+                    "К" => "балаларымызбен"
                 ],
-                "сендердің"=> [
-                    "A"=> "балаларың",
-                    "І"=> "балаларыңның",
-                    "Б"=> "балаларыңа",
-                    "Т"=> "балаларыңды",
-                    "Ш"=> "балаларыңнан",
-                    "Ж"=> "балаларыңда",
-                    "К"=> "балаларыңмен"
+                "сендердің" => [
+                    "A" => "балаларың",
+                    "І" => "балаларыңның",
+                    "Б" => "балаларыңа",
+                    "Т" => "балаларыңды",
+                    "Ш" => "балаларыңнан",
+                    "Ж" => "балаларыңда",
+                    "К" => "балаларыңмен"
                 ],
-                "сіздердің"=> [
-                    "A"=> "балаларыңыз",
-                    "І"=> "балаларыңыздың",
-                    "Б"=> "балаларыңызға",
-                    "Т"=> "балаларыңызды",
-                    "Ш"=> "балаларыңыздан",
-                    "Ж"=> "балаларыңызда",
-                    "К"=> "балаларыңызбен"
+                "сіздердің" => [
+                    "A" => "балаларыңыз",
+                    "І" => "балаларыңыздың",
+                    "Б" => "балаларыңызға",
+                    "Т" => "балаларыңызды",
+                    "Ш" => "балаларыңыздан",
+                    "Ж" => "балаларыңызда",
+                    "К" => "балаларыңызбен"
                 ],
-                "олардың"=> [
-                    "A"=> "балалары",
-                    "І"=> "балаларының",
-                    "Б"=> "балаларына",
-                    "Т"=> "балаларын",
-                    "Ш"=> "балаларынан",
-                    "Ж"=> "балаларында",
-                    "К"=> "балаларымен"
+                "олардың" => [
+                    "A" => "балалары",
+                    "І" => "балаларының",
+                    "Б" => "балаларына",
+                    "Т" => "балаларын",
+                    "Ш" => "балаларынан",
+                    "Ж" => "балаларында",
+                    "К" => "балаларымен"
                 ]
             ]
         ];
         
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
         
 
 
 
     
-        $lemma='бала';
+        $lemma = 'бала';
 
 
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->Parse($lemma);
 
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/qazaq/declension',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.rawurlencode($lemma),$uri->getQuery());
@@ -437,17 +437,17 @@ final class QazaqDeclensionTest extends TestCase
         $this->expectException(Qazaq\QazaqWordsNotFound::class);
         $this->expectExceptionMessage('Не найдено казахских слов.');
 
-        $parseResults=[        'code'=>5,
-        'message'=> 'Не найдено казахских слов.']; //тело сообщения об ошибке содержит информацию
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $parseResults = [        'code' => 5,
+        'message' => 'Не найдено казахских слов.']; //тело сообщения об ошибке содержит информацию
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,496);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,496);
     
-        $lemma='test';
+        $lemma = 'test';
     
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->Parse($lemma);
     }
 
     public function testParse_ExceptionNoS(): void
@@ -455,17 +455,17 @@ final class QazaqDeclensionTest extends TestCase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-        $parseResults=[        'code'=>6,
-        'message'=> 'Не указан обязательный параметр: s.']; //тело сообщения об ошибке содержит информацию
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $parseResults = [        'code' => 6,
+        'message' => 'Не указан обязательный параметр: s.']; //тело сообщения об ошибке содержит информацию
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,400);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,400);
     
-        $lemma='+++';
+        $lemma = '+++';
     
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->Parse($lemma);
     }
 
 
@@ -474,16 +474,16 @@ final class QazaqDeclensionTest extends TestCase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-        $parseResults=[        'code'=>6,
-        'message'=> 'Другое сообщение от сервера']; //с кодом 6 любое сообшение от сервера не учитывается
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $parseResults = [        'code' => 6,
+        'message' => 'Другое сообщение от сервера']; //с кодом 6 любое сообшение от сервера не учитывается
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text,400);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,400);
     
-        $lemma='+++';
+        $lemma = '+++';
     
-        $declensionResult=$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->Parse($lemma);
     }
 }

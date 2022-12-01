@@ -17,13 +17,13 @@ class SameNumberForms extends DeclensionForms
     {
         parent::__construct($data);
  
-        $this->FirstPerson=isset($data["менің"]) ? new DeclensionForms($data["менің"]) : null;
-        $this->SecondPerson=isset($data["сенің"]) ? new DeclensionForms($data["сенің"]) : null;   
-        $this->SecondPersonRespectful= isset($data["сіздің"]) ? new DeclensionForms($data["сіздің"]) : null;                
-        $this->ThirdPerson=isset($data["оның"]) ? new DeclensionForms($data["оның"]) : null;   
-        $this->FirstPersonPlural=isset($data["біздің"]) ? new DeclensionForms($data["біздің"]) : null;     
-        $this->SecondPersonPlural=isset($data["сендердің"]) ? new DeclensionForms($data["сендердің"]) : null;          
-        $this->SecondPersonRespectfulPlural=isset($data["сіздердің"]) ? new DeclensionForms($data["сіздердің"]) : null;                      
-        $this->ThirdPersonPlural=isset($data["олардың"]) ? new DeclensionForms($data["олардың"]) : null;       
+        $this->FirstPerson = isset($data["менің"]) ? new DeclensionForms($data["менің"]) : null;
+        $this->SecondPerson = isset($data["сенің"]) ? new DeclensionForms($data["сенің"]) : null;   
+        $this->SecondPersonRespectful = isset($data["сіздің"]) ? new DeclensionForms($data["сіздің"]) : null;                
+        $this->ThirdPerson = isset($data["оның"]) ? new DeclensionForms($data["оның"]) : null;   
+        $this->FirstPersonPlural = isset($data["біздің"]) ? new DeclensionForms($data["біздің"]) : null;     
+        $this->SecondPersonPlural = isset($data["сендердің"]) ? new DeclensionForms($data["сендердің"]) : null;          
+        $this->SecondPersonRespectfulPlural = isset($data["сіздердің"]) ? new DeclensionForms($data["сіздердің"]) : null;                      
+        $this->ThirdPersonPlural = isset($data["олардың"]) ? new DeclensionForms($data["олардың"]) : null;       
     }
 }

@@ -9,7 +9,7 @@ class NumberSpellingResult
     
     function __construct($data)
     {
-        $this->NumberDeclension=new DeclensionForms($data['n']);
-        $this->UnitDeclension=new DeclensionForms($data['unit']);
+        $this->NumberDeclension = new DeclensionForms($data['n']);
+        $this->UnitDeclension = new DeclensionForms($data['unit']);
     }
 }

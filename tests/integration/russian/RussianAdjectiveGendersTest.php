@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -14,7 +14,7 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
 {
     public function testAdjectiveGenders_Success(): void
     {
-        $adjectiveGenders=self::$testMorpher->russian->AdjectiveGenders("уважаемый");
+        $adjectiveGenders = self::$testMorpher->russian->AdjectiveGenders("уважаемый");
 
         $this->assertNotNull($adjectiveGenders);
         $this->assertInstanceOf(Russian\AdjectiveGenders::class,$adjectiveGenders);
@@ -27,7 +27,7 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
     public function testAdjectiveGenders_error(): void
     {
         $this->expectException(Russian\AdjectiveFormIncorrect::class);
-        $adjectiveGenders=self::$testMorpher->russian->AdjectiveGenders("уважаемого");
+        $adjectiveGenders = self::$testMorpher->russian->AdjectiveGenders("уважаемого");
 
  /*       $this->assertNotNull($adjectiveGenders);
         $this->assertInstanceOf(Russian\AdjectiveGenders::class,$adjectiveGenders);

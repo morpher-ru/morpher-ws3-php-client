@@ -13,39 +13,39 @@ class Client
     
     public function __construct(WebClient $webClient)
     {
-        $this->webClient=$webClient;
-        $this->userDict=new UserDict($webClient);
+        $this->webClient = $webClient;
+        $this->userDict = new UserDict($webClient);
     }
     
-    public function Parse(string $lemma,array $flags=[]): DeclensionResult
+    public function Parse(string $lemma,array $flags = []): DeclensionResult
     {
-        if (trim($lemma)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
+        if (trim($lemma) == '') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
 
-        $query=["s"=>$lemma];
+        $query = ["s" => $lemma];
 
         if (!empty($flags))
         {
-            $query['flags']=implode(',',$flags);
+            $query['flags'] = implode(',',$flags);
         }
 
         try
         {
-            $result_raw=$this->webClient->send("/russian/declension", $query);
+            $result_raw = $this->webClient->send("/russian/declension", $query);
         }
         catch (\Morpher\Ws3Client\MorpherError $ex)
         {
-            $morpher_code=$ex->getCode();
-            $msg=$ex->getMessage();
-            if ($morpher_code==5) throw new RussianWordsNotFound($msg);
-            if ($morpher_code==12) throw new InvalidFlags($msg);
-            if ($morpher_code==4) throw new DeclensionNotSupportedUseSpell($msg);
+            $morpher_code = $ex->getCode();
+            $msg = $ex->getMessage();
+            if ($morpher_code == 5) throw new RussianWordsNotFound($msg);
+            if ($morpher_code == 12) throw new InvalidFlags($msg);
+            if ($morpher_code == 4) throw new DeclensionNotSupportedUseSpell($msg);
             
             throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
         }
 
-        $result=WebClient::JsonDecode($result_raw);
+        $result = WebClient::JsonDecode($result_raw);
 
-        $result['И']=$lemma;
+        $result['И'] = $lemma;
 
         $declensionResult = new DeclensionResult($result);
 
@@ -60,22 +60,22 @@ class Client
             throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         }
 
-        $queryParam=["n"=>$number,'unit'=>$unit];
+        $queryParam = ["n" => $number,'unit' => $unit];
 
         try
         {
-            $result_raw=$this->webClient->send("/russian/spell",$queryParam);
+            $result_raw = $this->webClient->send("/russian/spell",$queryParam);
         }
         catch (\Morpher\Ws3Client\MorpherError $ex)
         {
-            $morpher_code=$ex->getCode();
-            $msg=$ex->getMessage();
-            if ($morpher_code==5) throw new RussianWordsNotFound($msg);
+            $morpher_code = $ex->getCode();
+            $msg = $ex->getMessage();
+            if ($morpher_code == 5) throw new RussianWordsNotFound($msg);
 
             throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
         }
 
-        $result=WebClient::JsonDecode($result_raw);
+        $result = WebClient::JsonDecode($result_raw);
 
         $spellResult = new NumberSpellingResult($result);
 
@@ -89,22 +89,22 @@ class Client
             throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         }
 
-        $queryParam=["n"=>$number,'unit'=>$unit];
+        $queryParam = ["n" => $number,'unit' => $unit];
 
         try{
 
-            $result_raw=$this->webClient->send("/russian/spell-ordinal",$queryParam);
+            $result_raw = $this->webClient->send("/russian/spell-ordinal",$queryParam);
         }
         catch (\Morpher\Ws3Client\MorpherError $ex)
         {
-            $morpher_code=$ex->getCode();
-            $msg=$ex->getMessage();
-            if ($morpher_code==5) throw new RussianWordsNotFound($msg);
+            $morpher_code = $ex->getCode();
+            $msg = $ex->getMessage();
+            if ($morpher_code == 5) throw new RussianWordsNotFound($msg);
 
             throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
         }
 
-        $result=WebClient::JsonDecode($result_raw);
+        $result = WebClient::JsonDecode($result_raw);
 
         $spellResult = new NumberSpellingResult($result);
 
@@ -122,11 +122,11 @@ class Client
     {
         if (is_int($date))
         {
-            $date=date('Y-m-d',$date);
+            $date = date('Y-m-d',$date);
         } else 
         if ($date instanceof \DateTimeInterface)
         {
-            $date=$date->format('Y-m-d');
+            $date = $date->format('Y-m-d');
         }
 
         if (!is_string($date))
@@ -138,22 +138,22 @@ class Client
             throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         }
 
-        $queryParam=["date"=>$date];
+        $queryParam = ["date" => $date];
 
         try
         {
-            $result_raw=$this->webClient->send("/russian/spell-date",$queryParam);
+            $result_raw = $this->webClient->send("/russian/spell-date",$queryParam);
         }
         catch (\Morpher\Ws3Client\MorpherError $ex)
         {
-            $morpher_code=$ex->getCode();
-            $msg=$ex->getMessage();
-            if ($morpher_code==8) throw new IncorrectDateFormat($msg);
+            $morpher_code = $ex->getCode();
+            $msg = $ex->getMessage();
+            if ($morpher_code == 8) throw new IncorrectDateFormat($msg);
 
             throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
         }
 
-        $result=WebClient::JsonDecode($result_raw);
+        $result = WebClient::JsonDecode($result_raw);
         $spellResult = new DateSpellingResult($result);
 
         return $spellResult;
@@ -161,23 +161,23 @@ class Client
 
     public function AdjectiveGenders(string $adj): AdjectiveGenders
     {
-        if (trim($adj)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
+        if (trim($adj) == '') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         
-        $query=['s'=>$adj];
+        $query = ['s' => $adj];
 
         try
         {
-            $result_raw=$this->webClient->send("/russian/genders",$query);
+            $result_raw = $this->webClient->send("/russian/genders",$query);
         }
         catch (\Morpher\Ws3Client\MorpherError $ex)
         {
             throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
         }
 
-        $result=WebClient::JsonDecode($result_raw);
+        $result = WebClient::JsonDecode($result_raw);
 
         $genders = new AdjectiveGenders($result);
-        if ($genders->Feminine=='ERROR') throw new AdjectiveFormIncorrect();
+        if ($genders->Feminine == 'ERROR') throw new AdjectiveFormIncorrect();
 
         return $genders;
     }
@@ -185,20 +185,20 @@ class Client
     
     public function Adjectivize(string $name): array
     {
-        if (trim($name)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
+        if (trim($name) == '') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         
-        $query="s=".urlencode($name);
+        $query = "s=".urlencode($name);
 
         try
         {
-            $result_raw=$this->webClient->send("/russian/adjectivize",$query);
+            $result_raw = $this->webClient->send("/russian/adjectivize",$query);
         }
         catch (\Morpher\Ws3Client\MorpherError $ex)
         {
             throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
         }
 
-        $result=WebClient::JsonDecode($result_raw);
+        $result = WebClient::JsonDecode($result_raw);
 
         return $result;
     }
@@ -210,20 +210,20 @@ class Client
     */
     public function AddStressmarks(string $text): string
     {
-        if (trim($text)=='') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
+        if (trim($text) == '') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
         
-        $headers=$this->webClient->getStandardHeaders();
-        $headers['Content-Type']= 'text/plain; charset=utf-8';
+        $headers = $this->webClient->getStandardHeaders();
+        $headers['Content-Type'] = 'text/plain; charset=utf-8';
         try
         {
-            $result_raw=$this->webClient->send("/russian/addstressmarks",[],'POST',$headers,$text);
+            $result_raw = $this->webClient->send("/russian/addstressmarks",[],'POST',$headers,$text);
         }
         catch (\Morpher\Ws3Client\MorpherError $ex)
         {
             throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
         }
 
-        $result=WebClient::JsonDecode($result_raw);
+        $result = WebClient::JsonDecode($result_raw);
 
         return $result;
     }

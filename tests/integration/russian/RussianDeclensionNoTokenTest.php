@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -21,16 +21,16 @@ final class RussianDeclensionNoTokenTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $token=self::getToken();
+        $token = self::getToken();
 
-        self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);        
+        self::$testMorpher = new Morpher(IntegrationBase::BASE_URL,$token);        
     }
 
     public function testParse_SuccessNoToken(): void
     {
-        $lemma='тест';
+        $lemma = 'тест';
 
-        $declensionResult=self::$testMorpher->russian->Parse($lemma);
+        $declensionResult = self::$testMorpher->russian->Parse($lemma);
 
         $this->assertInstanceOf(Russian\DeclensionResult::class,$declensionResult);
 

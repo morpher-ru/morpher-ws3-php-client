@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 require_once __DIR__."/../../vendor/autoload.php";
 
@@ -25,11 +25,11 @@ final class InvalidJsonTest extends TestCase
             [function ($testMorpher)    {     $testMorpher->russian->Adjectivize("мытыщи");  }],//dataset #6
             [function ($testMorpher)    {     $testMorpher->russian->AddStressmarks("тест");  }],//dataset #7
             [function ($testMorpher)    {     $testMorpher->russian->userDict->GetAll();     }],//dataset #8
-            //[function ($testMorpher)    {     $testMorpher->russian->userDict->AddOrUpdate(new Russian\CorrectionEntry(['singular'=>['И'=>'чебуратор','Р'=>'чебурыла']]));     }],//dataset #9
+            //[function ($testMorpher)    {     $testMorpher->russian->userDict->AddOrUpdate(new Russian\CorrectionEntry(['singular' => ['И' => 'чебуратор','Р' => 'чебурыла']]));     }],//dataset #9
             //[function ($testMorpher)    {     $testMorpher->russian->userDict->Remove('чебуратор');     }],//dataset #10
             [function ($testMorpher)    {     $testMorpher->ukrainian->Parse('тест');     }],//dataset #11        
             [function ($testMorpher)    {     $testMorpher->ukrainian->userDict->GetAll();     }],//dataset #12
-            //[function ($testMorpher)    {     $testMorpher->ukrainian->userDict->AddOrUpdate(new Ukrainian\CorrectionEntry(['singular'=>['Н'=>'чебуратор','Р'=>'чебурыла']]));     }],//dataset #13
+            //[function ($testMorpher)    {     $testMorpher->ukrainian->userDict->AddOrUpdate(new Ukrainian\CorrectionEntry(['singular' => ['Н' => 'чебуратор','Р' => 'чебурыла']]));     }],//dataset #13
             //[function ($testMorpher)    {     $testMorpher->ukrainian->userDict->Remove('чебуратор');     }],//dataset #14
             [function ($testMorpher)    {     $testMorpher->getQueriesLeftForToday();     }],//dataset #15
      
@@ -41,13 +41,13 @@ final class InvalidJsonTest extends TestCase
      */    
     public function testInvalidJsonResponse(callable $callback): void
     {
-        $token='23525555555555555555555555555555555555555555555555';// incorrect format token
-        $return_text='{"И":"тест","Р":"тесте",-}';
+        $token = '23525555555555555555555555555555555555555555555555';// incorrect format token
+        $return_text = '{"И":"тест","Р":"тесте",-}';
         try 
         {
             $container = [];
 
-            $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+            $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
             $callback($testMorpher);
         }
         catch (\Morpher\Ws3Client\InvalidServerResponse $ex)

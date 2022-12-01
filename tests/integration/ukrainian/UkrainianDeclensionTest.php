@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -14,9 +14,9 @@ final class UkrainianDeclensionTest extends IntegrationBase
 {
     public function testParse_Success(): void
     {
-        $lemma='тест';
+        $lemma = 'тест';
 
-        $declensionResult=self::$testMorpher->ukrainian->Parse($lemma);
+        $declensionResult = self::$testMorpher->ukrainian->Parse($lemma);
 
         $this->assertInstanceOf(Ukrainian\DeclensionResult::class,$declensionResult);
 
@@ -36,7 +36,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->expectException(Ukrainian\UkrainianWordsNotFound::class);
         $this->expectExceptionMessage('Не найдено украинских слов.');
    
-        $lemma='test';
+        $lemma = 'test';
         self::$testMorpher->ukrainian->Parse($lemma);
     }
 
@@ -45,7 +45,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-        $lemma='';
+        $lemma = '';
         self::$testMorpher->ukrainian->Parse($lemma);
     }
 
@@ -54,7 +54,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->expectException(Ukrainian\InvalidFlags::class);
         $this->expectExceptionMessage('Указаны неправильные флаги.');
    
-        $lemma='тест';
+        $lemma = 'тест';
         self::$testMorpher->ukrainian->Parse($lemma,["AAA","BBB"]);
     }
 }

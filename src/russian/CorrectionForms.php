@@ -15,13 +15,13 @@ class CorrectionForms
 
     function __construct($data)
     {
-        $this->Nominative=$data['И'] ?? null;         
-        $this->Genitive  =$data['Р'] ?? null;     
-        $this->Dative    =$data['Д'] ?? null;
-        $this->Accusative=$data['В'] ?? null; 
-        $this->Instrumental=$data['Т'] ?? null; 
-        $this->Prepositional=$data['П'] ?? null; 
-        $this->Locative=$data['М'] ?? null; 
+        $this->Nominative = $data['И'] ?? null;         
+        $this->Genitive  = $data['Р'] ?? null;     
+        $this->Dative    = $data['Д'] ?? null;
+        $this->Accusative = $data['В'] ?? null; 
+        $this->Instrumental = $data['Т'] ?? null; 
+        $this->Prepositional = $data['П'] ?? null; 
+        $this->Locative = $data['М'] ?? null; 
     }
 
     /*
@@ -29,16 +29,16 @@ class CorrectionForms
     */
     public function getArray():array
     {        
-        $data=[];
-        $data['И']=$this->Nominative;         
-        $data['Р']=$this->Genitive;     
-        $data['Д']=$this->Dative;
-        $data['В']=$this->Accusative; 
-        $data['Т']=$this->Instrumental; 
-        $data['П']=$this->Prepositional; 
-        $data['М']=$this->Locative;        
+        $data = [];
+        $data['И'] = $this->Nominative;         
+        $data['Р'] = $this->Genitive;     
+        $data['Д'] = $this->Dative;
+        $data['В'] = $this->Accusative; 
+        $data['Т'] = $this->Instrumental; 
+        $data['П'] = $this->Prepositional; 
+        $data['М'] = $this->Locative;        
 
-        $data=array_filter($data,function($var){ return !($var===null); } );
+        $data = array_filter($data,function($var){ return !($var === null); } );
         return $data;
     }
 }

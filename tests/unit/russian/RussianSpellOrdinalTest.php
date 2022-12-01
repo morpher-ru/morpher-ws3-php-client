@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
@@ -14,42 +14,42 @@ final class RussianSpellOrdinalTest extends TestCase
 
     public function testSpellOrdinal_Success(): void
     {
-        $parseResults=[            
-                "n"=>[
-                  "И"=>"семь тысяч пятьсот восемнадцатое",
-                  "Р"=>"семь тысяч пятьсот восемнадцатого",
-                  "Д"=>"семь тысяч пятьсот восемнадцатому",
-                  "В"=>"семь тысяч пятьсот восемнадцатое",
-                  "Т"=>"семь тысяч пятьсот восемнадцатым",
-                  "П"=>"семь тысяч пятьсот восемнадцатом"
+        $parseResults = [            
+                "n" => [
+                  "И" => "семь тысяч пятьсот восемнадцатое",
+                  "Р" => "семь тысяч пятьсот восемнадцатого",
+                  "Д" => "семь тысяч пятьсот восемнадцатому",
+                  "В" => "семь тысяч пятьсот восемнадцатое",
+                  "Т" => "семь тысяч пятьсот восемнадцатым",
+                  "П" => "семь тысяч пятьсот восемнадцатом"
                 ],
-                "unit"=>[
-                  "И"=>"колесо",
-                  "Р"=>"колеса",
-                  "Д"=>"колесу",
-                  "В"=>"колесо",
-                  "Т"=>"колесом",
-                  "П"=>"колесе"
+                "unit" => [
+                  "И" => "колесо",
+                  "Р" => "колеса",
+                  "Д" => "колесу",
+                  "В" => "колесо",
+                  "Т" => "колесом",
+                  "П" => "колесе"
                 ]         
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $unit="колесо";
-        $num=7518;
+        $unit = "колесо";
+        $num = 7518;
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $spellingResult=$testMorpher->russian->SpellOrdinal($num,$unit);
+        $spellingResult = $testMorpher->russian->SpellOrdinal($num,$unit);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/spell-ordinal',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('n='.$num.'&unit='.rawurlencode($unit),$uri->getQuery());
@@ -82,8 +82,8 @@ final class RussianSpellOrdinalTest extends TestCase
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
 
-        $declensionResult=$testMorpher->russian->SpellOrdinal(1,'   ');
+        $declensionResult = $testMorpher->russian->SpellOrdinal(1,'   ');
     }
 }

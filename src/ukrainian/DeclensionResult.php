@@ -17,7 +17,7 @@ class DeclensionResult extends DeclensionForms
         parent::__construct($data);
 
    
-        $this->Gender=isset($data["рід"]) ? Gender::DecodeName($data["рід"]) : null;
+        $this->Gender = isset($data["рід"]) ? Gender::DecodeName($data["рід"]) : null;
 
 
 

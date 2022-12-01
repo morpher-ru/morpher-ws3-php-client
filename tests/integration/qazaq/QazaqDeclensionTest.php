@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -13,9 +13,9 @@ final class QazaqDeclensionTest extends IntegrationBase
 {
     public function testQazaqParse_Success(): void
     {
-        $lemma='тест';
+        $lemma = 'тест';
 
-        $declensionResult=self::$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = self::$testMorpher->qazaq->Parse($lemma);
 
         $this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
         $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
@@ -40,9 +40,9 @@ final class QazaqDeclensionTest extends IntegrationBase
 
     public function testQazaqParse_Personal_Success():void
     {
-        $lemma='бала';
+        $lemma = 'бала';
 
-        $declensionResult=self::$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = self::$testMorpher->qazaq->Parse($lemma);
 
         $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
         $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
@@ -215,7 +215,7 @@ final class QazaqDeclensionTest extends IntegrationBase
         $this->expectException(Qazaq\QazaqWordsNotFound::class);
         $this->expectExceptionMessage('Не найдено казахских слов.');
 
-        $lemma='test';
+        $lemma = 'test';
     
         self::$testMorpher->qazaq->Parse($lemma);
     }
@@ -225,7 +225,7 @@ final class QazaqDeclensionTest extends IntegrationBase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-        $lemma='';
+        $lemma = '';
     
         self::$testMorpher->qazaq->Parse($lemma);
     }

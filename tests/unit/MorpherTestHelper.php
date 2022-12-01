@@ -12,7 +12,7 @@ use Morpher\Ws3Client\WebClient;
 
 class MorpherTestHelper
 {
-    public static function createMockMorpher(Array &$container,string $return_text='',int $code=200,$token='testtoken'): \Morpher\Ws3Client\Morpher
+    public static function createMockMorpher(Array &$container,string $return_text = '',int $code = 200,$token = 'testtoken'): \Morpher\Ws3Client\Morpher
     {
          $mock = new MockHandler([
              new Response($code, [], $return_text)
@@ -25,7 +25,7 @@ class MorpherTestHelper
         // Add the history middleware to the handler stack.
         $handlerStack->push($history);
                 
-        $testMorpher=new \Morpher\Ws3Client\Morpher('https://test.uu',$token,10,$handlerStack);
+        $testMorpher = new \Morpher\Ws3Client\Morpher('https://test.uu',$token,10,$handlerStack);
 
         return $testMorpher;
     }    
@@ -38,7 +38,7 @@ class MorpherTestHelper
 
         $handlerStack = HandlerStack::create($mock);      
                 
-        $testMorpher=new \Morpher\Ws3Client\Morpher('https://test.uu','testtoken',10,$handlerStack);
+        $testMorpher = new \Morpher\Ws3Client\Morpher('https://test.uu','testtoken',10,$handlerStack);
 
         return $testMorpher;
     }    

@@ -14,12 +14,12 @@ class DeclensionForms
 
     function __construct($data)
     {
-        $this->Nominative=$data['Н'] ?? null;         
-        $this->Genitive  =$data['Р'] ?? null;     
-        $this->Dative    =$data['Д'] ?? null;
-        $this->Accusative=$data['З'] ?? null; 
-        $this->Instrumental=$data['О'] ?? null; 
-        $this->Prepositional=$data['М'] ?? null; 
-        $this->Vocative=$data['К'] ?? null; 
+        $this->Nominative = $data['Н'] ?? null;         
+        $this->Genitive  = $data['Р'] ?? null;     
+        $this->Dative    = $data['Д'] ?? null;
+        $this->Accusative = $data['З'] ?? null; 
+        $this->Instrumental = $data['О'] ?? null; 
+        $this->Prepositional = $data['М'] ?? null; 
+        $this->Vocative = $data['К'] ?? null; 
     }
 }

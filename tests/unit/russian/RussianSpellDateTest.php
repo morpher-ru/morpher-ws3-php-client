@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
@@ -25,22 +25,22 @@ final class RussianSpellDateTest extends TestCase
      */    
     public function testSpellDate_Success($date): void
     {
-        $parseResults=[
-            "И"=>"двадцать девятое июня две тысячи девятнадцатого года",
-            "Р"=>"двадцать девятого июня две тысячи девятнадцатого года",
-            "Д"=>"двадцать девятому июня две тысячи девятнадцатого года",
-            "В"=>"двадцать девятое июня две тысячи девятнадцатого года",
-            "Т"=>"двадцать девятым июня две тысячи девятнадцатого года",
-            "П"=>"двадцать девятом июня две тысячи девятнадцатого года"
+        $parseResults = [
+            "И" => "двадцать девятое июня две тысячи девятнадцатого года",
+            "Р" => "двадцать девятого июня две тысячи девятнадцатого года",
+            "Д" => "двадцать девятому июня две тысячи девятнадцатого года",
+            "В" => "двадцать девятое июня две тысячи девятнадцатого года",
+            "Т" => "двадцать девятым июня две тысячи девятнадцатого года",
+            "П" => "двадцать девятом июня две тысячи девятнадцатого года"
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
 
-        $dateSpellingResult=$testMorpher->russian->SpellDate($date);
+        $dateSpellingResult = $testMorpher->russian->SpellDate($date);
 
         $this->assertInstanceOf(Russian\DateSpellingResult::class,$dateSpellingResult);
 
@@ -59,16 +59,16 @@ final class RussianSpellDateTest extends TestCase
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,'{}');
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,'{}');
 
-        $declensionResult=$testMorpher->russian->SpellDate('   ');
+        $declensionResult = $testMorpher->russian->SpellDate('   ');
     }
 
     public function testSpellDate_Exception(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $container = [];
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,'{}');
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,'{}');
         $testMorpher->russian->SpellDate(null);
     }
     
@@ -77,7 +77,7 @@ final class RussianSpellDateTest extends TestCase
         $this->expectException(Russian\IncorrectDateFormat::class);
         $this->expectExceptionMessage("Дата указана в некорректном формате.");
         $container = [];
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,'{"code":8,"message":"Дата указана в некорректном формате."}',499);    
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,'{"code":8,"message":"Дата указана в некорректном формате."}',499);    
         $testMorpher->russian->SpellDate("2022.10.01");
     }
 }

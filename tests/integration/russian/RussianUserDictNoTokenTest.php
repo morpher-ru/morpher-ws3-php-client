@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -18,19 +18,19 @@ final class RussianUserDictNoTokenTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        $token='';
+        $token = '';
 
-        self::$testMorpher=new Morpher(IntegrationBase::BASE_URL,$token);
+        self::$testMorpher = new Morpher(IntegrationBase::BASE_URL,$token);
     }
 
     public function testUserDict_NoTokenError_AddOrUpdate(): void
     {
         $this->expectException(\Morpher\Ws3Client\TokenRequired::class);
-        $word='чебуратор';
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебураторке';
-        $correction->Plural->Locative='в чебураториях';
+        $word = 'чебуратор';
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = $word;
+        $correction->Singular->Locative = 'в чебураторке';
+        $correction->Plural->Locative = 'в чебураториях';
 
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
     }
@@ -44,7 +44,7 @@ final class RussianUserDictNoTokenTest extends TestCase
     public function testUserDict_NoTokenError_Remove(): void
     {
         $this->expectException(\Morpher\Ws3Client\TokenRequired::class);
-        $word='чебуратор';
+        $word = 'чебуратор';
         self::$testMorpher->russian->userDict->Remove($word);
     }
 }

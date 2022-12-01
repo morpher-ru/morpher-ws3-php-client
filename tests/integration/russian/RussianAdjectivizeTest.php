@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -14,7 +14,7 @@ final class RussianAdjectivizeTest extends IntegrationBase
 {
     public function testAdjectivize_Success(): void
     {
-        $list=self::$testMorpher->russian->Adjectivize("мытыщи");
+        $list = self::$testMorpher->russian->Adjectivize("мытыщи");
 
         $this->assertNotNull($list);
         $this->assertIsArray($list);

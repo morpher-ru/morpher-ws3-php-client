@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -14,7 +14,7 @@ final class RussianSpellTest extends IntegrationBase
 {
     public function testSpell_Success(): void
     {
-        $spellingResult=self::$testMorpher->russian->Spell(10,'рубль');
+        $spellingResult = self::$testMorpher->russian->Spell(10,'рубль');
 
         $this->assertInstanceOf(Russian\NumberSpellingResult::class,$spellingResult);
     

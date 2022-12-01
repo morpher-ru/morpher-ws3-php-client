@@ -4,46 +4,46 @@ namespace Morpher\Ws3Client\Ukrainian;
 
 class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
 {
-    public ?CorrectionForms $Singular=null;
-    //public ?CorrectionForms $Plural=null;
+    public ?CorrectionForms $Singular = null;
+    //public ?CorrectionForms $Plural = null;
     //public ?string $Gender;
 
-    function __construct(array $data=[])
+    function __construct(array $data = [])
     {
-        $this->Singular=new CorrectionForms($data['singular'] ?? null);
-        //$this->Plural=new CorrectionForms($data['plural'] ?? null);
+        $this->Singular = new CorrectionForms($data['singular'] ?? null);
+        //$this->Plural = new CorrectionForms($data['plural'] ?? null);
     }
 
     /*
-    *  returned array is compatible with __construct(array $data=[])
+    *  returned array is compatible with __construct(array $data = [])
     */
     public function getArray()
     {
-        $data=[];
-        if (!($this->Singular===null))
-            $data['singular']=$this->Singular->getArray();
-        // if (!($this->Plural===null))
-        //     $data['plural']=$this->Plural->getArray();
+        $data = [];
+        if (!($this->Singular === null))
+            $data['singular'] = $this->Singular->getArray();
+        // if (!($this->Plural === null))
+        //     $data['plural'] = $this->Plural->getArray();
         return $data;
     }
 
     /*
-    *  returned array is not compatible with __construct(array $data=[]).  
+    *  returned array is not compatible with __construct(array $data = []).  
     *  returned array is compatible with server request format.
     */
     public function getArrayForRequest():array
     {
-        $data=[];
+        $data = [];
         if (!($this->Singular === null))
-            $data=$this->Singular->getArray();
+            $data = $this->Singular->getArray();
         // if (!($this->Plural === null))
         // {
-        //     $data_plural=$this->Plural->getArray();
-        //     foreach ($data_plural as $key=>$val)
+        //     $data_plural = $this->Plural->getArray();
+        //     foreach ($data_plural as $key => $val)
         //     {
-        //         if (!($val===null))
+        //         if (!($val === null))
         //         {
-        //             $data['М_'.$key]=$val;
+        //             $data['М_'.$key] = $val;
         //         }
         //     }
 
@@ -54,7 +54,7 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
 
     public function SingularNominativeExists():bool
     {
-        if ($this->Singular===null) return false;
+        if ($this->Singular === null) return false;
         return !empty(trim($this->Singular->Nominative));
     }
 }

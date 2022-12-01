@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
@@ -18,45 +18,45 @@ final class RussianUserDictTest extends TestCase
 {
     public function testUserDictGet_Success(): void
     {
-        $parseResults=[
+        $parseResults = [
                 [
-                    "singular"=> [
-                        "И"=> "Кошка",
-                        "Р"=> "Пантеры",
-                        "Д"=> "Пантере",
-                        "В"=> "Пантеру",
-                        "Т"=> "Пантерой",
-                        "П"=> "о Пантере",
-                        "М"=> "в Пантере"
+                    "singular" => [
+                        "И" => "Кошка",
+                        "Р" => "Пантеры",
+                        "Д" => "Пантере",
+                        "В" => "Пантеру",
+                        "Т" => "Пантерой",
+                        "П" => "о Пантере",
+                        "М" => "в Пантере"
                     ],
-                    "plural"=> [
-                        "И"=> "Пантеры",
-                        "Р"=> "Пантер",
-                        "Д"=> "Пантерам",
-                        "В"=> "Пантер",
-                        "Т"=> "Пантерами",
-                        "П"=> "о Пантерах",
-                        "М"=> "в Пантерах"
+                    "plural" => [
+                        "И" => "Пантеры",
+                        "Р" => "Пантер",
+                        "Д" => "Пантерам",
+                        "В" => "Пантер",
+                        "Т" => "Пантерами",
+                        "П" => "о Пантерах",
+                        "М" => "в Пантерах"
                     ]
                 ]
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $list=$testMorpher->russian->userDict->GetAll();
+        $list = $testMorpher->russian->userDict->GetAll();
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];
+        $request = $transaction['request'];
 
         $this->assertEquals('GET',$request->getMethod());
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/userdict',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('',$uri->getQuery());
@@ -66,7 +66,7 @@ final class RussianUserDictTest extends TestCase
         $this->assertCount(1,$list);
 
         $this->assertInstanceOf(CorrectionEntry::class, $list[0]);
-        $entry=$list[0];
+        $entry = $list[0];
 
         $this->assertEquals("Кошка",$entry->Singular->Nominative);
         $this->assertEquals("Пантеры",$entry->Singular->Genitive);
@@ -87,23 +87,23 @@ final class RussianUserDictTest extends TestCase
 
     public function testUserDictRemove_Success(): void
     {
-        $parseResults=[];
+        $parseResults = [];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $lemma='кошка';
-        $lresult=$testMorpher->russian->userDict->Remove($lemma);
+        $lemma = 'кошка';
+        $lresult = $testMorpher->russian->userDict->Remove($lemma);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
         $this->assertEquals('DELETE',$request->getMethod());
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/userdict',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('s='.  rawurlencode($lemma) ,$uri->getQuery());
@@ -115,42 +115,42 @@ final class RussianUserDictTest extends TestCase
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Передана пустая строка.');
 
-        $parseResults=[
+        $parseResults = [
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $result=$testMorpher->russian->userDict->Remove('');
+        $result = $testMorpher->russian->userDict->Remove('');
     }
 
     public function testUserDicPost_Success(): void
     {
-        $parseResults=[
+        $parseResults = [
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative='чебуратор';
-        $correction->Singular->Locative='в чебураторе';
-        $correction->Plural->Locative='в чебураторах';
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = 'чебуратор';
+        $correction->Singular->Locative = 'в чебураторе';
+        $correction->Plural->Locative = 'в чебураторах';
 
-        $lresult=$testMorpher->russian->userDict->AddOrUpdate($correction);
+        $lresult = $testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
         $this->assertEquals('POST',$request->getMethod());
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/userdict',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEmpty($uri->getQuery());
@@ -159,27 +159,27 @@ final class RussianUserDictTest extends TestCase
 
     public function testUserDicPost_Success2(): void
     {
-        $parseResults=[
+        $parseResults = [
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative='чебуратор';
-        $correction->Plural->Locative='в чебураторах';
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = 'чебуратор';
+        $correction->Plural->Locative = 'в чебураторах';
 
-        $lresult=$testMorpher->russian->userDict->AddOrUpdate($correction);
+        $lresult = $testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
         $this->assertEquals('POST',$request->getMethod());
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/userdict',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEmpty($uri->getQuery());
@@ -191,21 +191,21 @@ final class RussianUserDictTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Обязательно должен быть указан именительный падеж единственного числа.');
 
-        $parseResults=[
+        $parseResults = [
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $correction=new CorrectionEntry();
-        //$correction->Singular->Nominative='чебуратор';
-        $correction->Singular->Locative='в чебураторе';
-        $correction->Plural->Locative='в чебураторах';
+        $correction = new CorrectionEntry();
+        //$correction->Singular->Nominative = 'чебуратор';
+        $correction->Singular->Locative = 'в чебураторе';
+        $correction->Plural->Locative = 'в чебураторах';
  
-        $lresult=$testMorpher->russian->userDict->AddOrUpdate($correction);
+        $lresult = $testMorpher->russian->userDict->AddOrUpdate($correction);
     }
 
     public function testUserDicPost_Exception2(): void
@@ -213,20 +213,20 @@ final class RussianUserDictTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Нужно указать хотя бы одну косвенную форму.');
 
-        $parseResults=[
+        $parseResults = [
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative='чебуратор';
-        //$correction->Singular->Locative='в чебураторе';
-        //$correction->Plural->Locative='в чебураторах';
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = 'чебуратор';
+        //$correction->Singular->Locative = 'в чебураторе';
+        //$correction->Plural->Locative = 'в чебураторах';
  
-        $lresult=$testMorpher->russian->userDict->AddOrUpdate($correction);
+        $lresult = $testMorpher->russian->userDict->AddOrUpdate($correction);
     }
 }

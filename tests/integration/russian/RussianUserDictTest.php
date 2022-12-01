@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
@@ -18,10 +18,10 @@ final class RussianUserDictTest extends IntegrationBase
 {
     public function testUserDict_Success(): void
     {
-        $word='чебуратор';
+        $word = 'чебуратор';
         self::$testMorpher->russian->userDict->Remove($word);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->GetAll();
 
         foreach ($list as $item)
         {
@@ -31,20 +31,20 @@ final class RussianUserDictTest extends IntegrationBase
             }
         }
         
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебураторке';
-        $correction->Plural->Locative='в чебураториях';
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = $word;
+        $correction->Singular->Locative = 'в чебураторке';
+        $correction->Plural->Locative = 'в чебураториях';
 
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
-        $found=false;
+        $list = self::$testMorpher->russian->userDict->GetAll();
+        $found = false;
         foreach ($list as $item)
         {
             if ($item->Singular->Nominative == $word)
             {
-                $found=true;
+                $found = true;
 
                 $this->assertNull( $item->Singular->Genitive); 
                 $this->assertNull($item->Singular->Dative);
@@ -66,20 +66,20 @@ final class RussianUserDictTest extends IntegrationBase
         }       
         $this->assertTrue($found,"Слово не найдено в словаре после добавления.");
 
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебурелии';
-        $correction->Plural->Locative='в чебурелиях';
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = $word;
+        $correction->Singular->Locative = 'в чебурелии';
+        $correction->Plural->Locative = 'в чебурелиях';
 
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
-        $found=false;
+        $list = self::$testMorpher->russian->userDict->GetAll();
+        $found = false;
         foreach ($list as $item)
         {
             if ($item->Singular->Nominative == $word)
             {
-                $found=true;
+                $found = true;
 
                 $this->assertNull( $item->Singular->Genitive); 
                 $this->assertNull($item->Singular->Dative);
@@ -103,7 +103,7 @@ final class RussianUserDictTest extends IntegrationBase
 
         self::$testMorpher->russian->userDict->Remove($word);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->GetAll();
 
         foreach ($list as $item)
         {
@@ -117,10 +117,10 @@ final class RussianUserDictTest extends IntegrationBase
 /* 
     public function testUserDictGender_Success(): void
     {
-        $word='чебуратор';
+        $word = 'чебуратор';
         self::$testMorpher->russian->userDict->Remove($word);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->GetAll();
 
         foreach ($list as $item)
         {
@@ -130,21 +130,21 @@ final class RussianUserDictTest extends IntegrationBase
             }
         }
         
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебураторке';
-        $correction->Plural->Locative='в чебураториях';
-        $correction->Gender=Gender::Feminine;
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = $word;
+        $correction->Singular->Locative = 'в чебураторке';
+        $correction->Plural->Locative = 'в чебураториях';
+        $correction->Gender = Gender::Feminine;
 
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
-        $found=false;
+        $list = self::$testMorpher->russian->userDict->GetAll();
+        $found = false;
         foreach ($list as $item)
         {
             if ($item->Singular->Nominative == $word)
             {
-                $found=true;
+                $found = true;
 
                 $this->assertNull( $item->Singular->Genitive); 
                 $this->assertNull($item->Singular->Dative);
@@ -166,21 +166,21 @@ final class RussianUserDictTest extends IntegrationBase
         }       
         $this->assertTrue($found,"Слово не найдено в словаре после добавления.");
 
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative=$word;
-        $correction->Singular->Locative='в чебурелии';
-        $correction->Plural->Locative='в чебурелиях';
-        $correction->Gender=Gender::Masculine;
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = $word;
+        $correction->Singular->Locative = 'в чебурелии';
+        $correction->Plural->Locative = 'в чебурелиях';
+        $correction->Gender = Gender::Masculine;
 
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
-        $found=false;
+        $list = self::$testMorpher->russian->userDict->GetAll();
+        $found = false;
         foreach ($list as $item)
         {
             if ($item->Singular->Nominative == $word)
             {
-                $found=true;
+                $found = true;
 
                 $this->assertNull( $item->Singular->Genitive); 
                 $this->assertNull($item->Singular->Dative);
@@ -205,7 +205,7 @@ final class RussianUserDictTest extends IntegrationBase
 
         self::$testMorpher->russian->userDict->Remove($word);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->GetAll();
 
         foreach ($list as $item)
         {
@@ -218,29 +218,29 @@ final class RussianUserDictTest extends IntegrationBase
  */
     public function testUserDict2_Success(): void
     {
-        $word='чебуратор';
+        $word = 'чебуратор';
 
-        $correction=new CorrectionEntry();
-        $correction->Singular->Nominative=$word;
-        $correction->Singular->Genitive="чебурилу";
-        $correction->Singular->Dative="чербурозавру";
-        $correction->Singular->Accusative="чебурень";
-        $correction->Singular->Instrumental="чебурылом";
-        $correction->Singular->Prepositional="чебурени";
-        $correction->Singular->Locative='в чебураторке';
+        $correction = new CorrectionEntry();
+        $correction->Singular->Nominative = $word;
+        $correction->Singular->Genitive = "чебурилу";
+        $correction->Singular->Dative = "чербурозавру";
+        $correction->Singular->Accusative = "чебурень";
+        $correction->Singular->Instrumental = "чебурылом";
+        $correction->Singular->Prepositional = "чебурени";
+        $correction->Singular->Locative = 'в чебураторке';
 
-        $correction->Plural->Nominative="чебуреки";
-        $correction->Plural->Genitive="чебуроботов";
-        $correction->Plural->Dative="чебуруням";
-        $correction->Plural->Accusative="отчебурочь";
-        $correction->Plural->Instrumental="чебурулями";
-        $correction->Plural->Prepositional="чебуречках";        
-        $correction->Plural->Locative='в чебураториях';
+        $correction->Plural->Nominative = "чебуреки";
+        $correction->Plural->Genitive = "чебуроботов";
+        $correction->Plural->Dative = "чебуруням";
+        $correction->Plural->Accusative = "отчебурочь";
+        $correction->Plural->Instrumental = "чебурулями";
+        $correction->Plural->Prepositional = "чебуречках";        
+        $correction->Plural->Locative = 'в чебураториях';
 
         //1. удалить слово из словаря
         self::$testMorpher->russian->userDict->Remove($word);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->GetAll();
 
         foreach ($list as $item)
         {
@@ -251,7 +251,7 @@ final class RussianUserDictTest extends IntegrationBase
         }
 
         //проверить что склонение работает стандартным образом
-        $declension1=self::$testMorpher->russian->parse($word);
+        $declension1 = self::$testMorpher->russian->parse($word);
         //print_r($declension1);
         
         $this->assertNotEquals($correction->Singular->Genitive,$declension1->Genitive); 
@@ -274,13 +274,13 @@ final class RussianUserDictTest extends IntegrationBase
         //добавить слово в словарь
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
-        $found=false;
+        $list = self::$testMorpher->russian->userDict->GetAll();
+        $found = false;
         foreach ($list as $item)
         {
             if ($item->Singular->Nominative == $word)
             {
-                $found=true;
+                $found = true;
 
                 $this->assertEquals($correction->Singular->Genitive,$item->Singular->Genitive); 
                 $this->assertEquals($correction->Singular->Dative,$item->Singular->Dative);
@@ -303,7 +303,7 @@ final class RussianUserDictTest extends IntegrationBase
         $this->assertTrue($found,"Слово не найдено в словаре после добавления.");
 
         //проверить что склонение работает по словарю
-        $declension2=self::$testMorpher->russian->parse($word);
+        $declension2 = self::$testMorpher->russian->parse($word);
         //print_r($declension2);
 
         $this->assertEquals($correction->Singular->Genitive,$declension2->Genitive); 
@@ -327,7 +327,7 @@ final class RussianUserDictTest extends IntegrationBase
         //удалить слово из словаря
         self::$testMorpher->russian->userDict->Remove($word);
 
-        $list=self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->GetAll();
 
         foreach ($list as $item)
         {
@@ -338,7 +338,7 @@ final class RussianUserDictTest extends IntegrationBase
         }
 
         //проверить что склонение работает стандартным образом
-        $declension3=self::$testMorpher->russian->parse($word);
+        $declension3 = self::$testMorpher->russian->parse($word);
         //print_r($declension1);
         
         $this->assertNotEquals($correction->Singular->Genitive,$declension3->Genitive); 

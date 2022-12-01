@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
@@ -13,41 +13,41 @@ final class RussianSpellTest extends TestCase
 {
     public function testSpell_Success(): void
     {
-        $parseResults=[
-                "n"=> [
-                    "И"=> "десять",
-                    "Р"=> "десяти",
-                    "Д"=> "десяти",
-                    "В"=> "десять",
-                    "Т"=> "десятью",
-                    "П"=> "десяти"
+        $parseResults = [
+                "n" => [
+                    "И" => "десять",
+                    "Р" => "десяти",
+                    "Д" => "десяти",
+                    "В" => "десять",
+                    "Т" => "десятью",
+                    "П" => "десяти"
                 ],
-                "unit"=> [
-                    "И"=> "рублей",
-                    "Р"=> "рублей",
-                    "Д"=> "рублям",
-                    "В"=> "рублей",
-                    "Т"=> "рублями",
-                    "П"=> "рублях"
+                "unit" => [
+                    "И" => "рублей",
+                    "Р" => "рублей",
+                    "Д" => "рублям",
+                    "В" => "рублей",
+                    "Т" => "рублями",
+                    "П" => "рублях"
                 ]
         ];
 
-        $return_text=json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
-        $unit="рубль";
+        $unit = "рубль";
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $spellingResult=$testMorpher->russian->Spell(10,$unit);
+        $spellingResult = $testMorpher->russian->Spell(10,$unit);
 
-        $transaction=reset($container);//get first element of requests history
+        $transaction = reset($container);//get first element of requests history
 
         //check request parameters, headers, uri
-        $request=$transaction['request'];        
+        $request = $transaction['request'];        
 
-        $uri=$request->getUri();
+        $uri = $request->getUri();
         $this->assertEquals('/russian/spell',$uri->getPath());
         $this->assertEquals('test.uu',$uri->getHost());
         $this->assertEquals('n=10&unit='.rawurlencode($unit),$uri->getQuery());
@@ -79,8 +79,8 @@ final class RussianSpellTest extends TestCase
 
         $container = [];
 
-        $testMorpher=MorpherTestHelper::createMockMorpher($container,'');
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
 
-        $declensionResult=$testMorpher->russian->Spell(1,'   ');
+        $declensionResult = $testMorpher->russian->Spell(1,'   ');
     }
 }
