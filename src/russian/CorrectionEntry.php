@@ -63,6 +63,8 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
     public function SingularNominativeExists():bool
     {
         if ($this->Singular === null) return false;
-        return !empty(trim($this->Singular->Nominative));
+        if ($this->Singular->Nominative === null) return false;
+        return $this->Singular->Nominative != ''
+            && !ctype_space($this->Singular->Nominative);
     }
 }
