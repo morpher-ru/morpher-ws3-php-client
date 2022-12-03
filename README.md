@@ -422,22 +422,6 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 # <a name="dev"></a>Разработка
 
-## <a name="devsys"></a>Системные требования
-Должны быть установлены:
-* PHP 7.0 или выше
-* composer
-  
-## <a name="devinstall"></a>Установка
-  
-Если в вашем проекте отсутствует файл composer.json,
-то необходимо выполнить:
-
-    $ composer init
-  
-И ответить на вопросы программы (название проекта и т.д.). Обратите внимание на параметр ``minimum-stability`` - он должен быть не выше чем указано в той версии пакета morpher которую вы будете устанавливать в свой проект. Если не получилось установить пакет, попробуйте задать в файле composer.json :    ``"minimum-stability": "dev"``.   
-
-Файл composer.json и папка vendor будут созданы.  
-  
 Сделайте форк репозитория [morpher-ws3-php-client](https://github.com/morpher-ru/morpher-ws3-php-client).  
 Затем выполните:  
 
