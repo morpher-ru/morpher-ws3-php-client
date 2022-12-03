@@ -33,7 +33,7 @@ class WebClient
         return $headers;
     }
 
-    public function send(string $Endpoint,$QueryParameters = [],string $Method = 'GET',$Headers = null,$body = null,$form_params = null): string
+    public function send(string $Endpoint, $QueryParameters = [], string $Method = 'GET', $Headers = null, $body = null, $form_params = null): string
     {
         if ($Headers === null)
         {
@@ -60,20 +60,18 @@ class WebClient
                 if ($code>= 400)
                 {
                     $data = json_decode($response->getBody(),true);
-                    if (empty($data['message']))
-                        throw new InvalidServerResponse();
                     if (empty($data['code']))
                         throw new InvalidServerResponse();
                     
                     $msg = (string)($data['message'] ?? "Неизвестная ошибка");
-                    $morpher_code = (int)($data['code'] ?? $code);
+                    $morpher_code = (int)($data['code']);
 
-                    if ($morpher_code == 6) throw new InvalidArgumentEmptyString();
-                    if ($morpher_code == 1) throw new RequestsDailyLimit($data['message']);
-                    if ($morpher_code == 3) throw new IpBlocked($data['message']);
-                    if ($morpher_code == 9) throw new TokenNotFound($data['message']);
-                    if ($morpher_code == 10) throw new TokenIncorrectFormat($data['message']);
-                    if ($morpher_code == 25) throw new TokenRequired($data['message']);
+                    if ($morpher_code == 6) throw new InvalidArgumentEmptyString($msg);
+                    if ($morpher_code == 1) throw new RequestsDailyLimit($msg);
+                    if ($morpher_code == 3) throw new IpBlocked($msg);
+                    if ($morpher_code == 9) throw new TokenNotFound($msg);
+                    if ($morpher_code == 10) throw new TokenIncorrectFormat($msg);
+                    if ($morpher_code == 25) throw new TokenRequired($msg);
 
                     throw new MorpherError($msg, $morpher_code);
                 }

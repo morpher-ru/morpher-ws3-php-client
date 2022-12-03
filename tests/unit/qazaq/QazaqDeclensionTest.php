@@ -453,10 +453,12 @@ final class QazaqDeclensionTest extends TestCase
     public function testParse_ExceptionNoS(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        $this->expectExceptionMessage('Передана пустая строка.');
+        $this->expectExceptionMessage('Не указан обязательный параметр: s.');
 
-        $parseResults = [        'code' => 6,
-        'message' => 'Не указан обязательный параметр: s.']; //тело сообщения об ошибке содержит информацию
+        $parseResults = [
+            'code' => 6,
+            'message' => 'Не указан обязательный параметр: s.'];
+
         $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
@@ -472,10 +474,12 @@ final class QazaqDeclensionTest extends TestCase
     public function testParse_ExceptionNoS2(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        $this->expectExceptionMessage('Передана пустая строка.');
+        $this->expectExceptionMessage('Другое сообщение от сервера');
 
-        $parseResults = [        'code' => 6,
-        'message' => 'Другое сообщение от сервера']; //с кодом 6 любое сообшение от сервера не учитывается
+        $parseResults = [
+            'code' => 6,
+            'message' => 'Другое сообщение от сервера'];
+
         $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];
