@@ -5,13 +5,11 @@ use GuzzleHttp\Exception\ClientException;
 
 class WebClient
 {
-    private string $_token = '';    
-    private string $_tokenBase64 = '';    
+    private string $_tokenBase64 = '';
     private \GuzzleHttp\Client $client;
 
     function __construct(string $url = 'https://ws3.morpher.ru',string $token = '',float $timeout = 10.0,$handler = null)
     {
-        $this->_token = $token;
         $this->_tokenBase64 = base64_encode($token);
 
         $this->client = new \GuzzleHttp\Client([
