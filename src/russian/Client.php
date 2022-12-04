@@ -1,9 +1,8 @@
 <?php
+
 namespace Morpher\Ws3Client\Russian;
 
-
 use Morpher\Ws3Client\WebClient;
-use Morpher\Ws3Client\Russian\DeclensionResult;
 
 
 class Client
