@@ -219,7 +219,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 ## <a name="ukrdecl"></a>Склонение по падежам на украинском языке  
   
-Украинский вариант склонения — метод ``$morpher->ukrainian->Parse($lemma,$flags)``.
+Украинский вариант склонения — метод ``$morpher->ukrainian->Parse($lemma, $flags)``.
 
 Входные параметры:
 
@@ -246,13 +246,14 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 При платном доступе возвращаются дополнительные свойства:
 
-  * Gender — род, тип – строка, принимает значения констант из класса ``Morpher\Ws3Client\Ukrainian\Gender``, варианты:
+  * Gender — род, тип — строка, принимает значения констант из класса ``Morpher\Ws3Client\Ukrainian\Gender``, варианты:
+
     * ``Gender::Masculine`` (Чоловічий)
-    * ``Gender::Feminine`` (Жіночий)
-    * ``Gender::Neuter``  (Середній)  
-    * ``Gender::Plural``  (Множина)  
+    * ``Gender::Feminine``  (Жіночий)
+    * ``Gender::Neuter``    (Середній)  
+    * ``Gender::Plural``    (Множина)  
   
-# Флаги для разрешения неоднозначностей  
+## Флаги для разрешения неоднозначностей  
 
 Пример:
 
@@ -260,12 +261,12 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
     $declensionResult=$morpher->ukrainian->Parse('Карен', [Flags::Feminine]);  
     print $declensionResult->Genitive; // Карен (женское имя не склоняется)  
   
-Флаги поддерживаемые для ``$morpher->ukrainian->Parse($lemma,$flags)``:
+Флаги, поддерживаемые функцией ``$morpher->ukrainian->Parse($lemma, $flags)``:
 
-  * ``Flags::Feminine`` — женский род  
+  * ``Flags::Feminine``  — женский род  
   * ``Flags::Masculine`` — мужской род  
-  * ``Gender::Neuter``  - средний род  
-  * ``Gender::Plural``  - множественное число  
+  * ``Gender::Neuter``   — средний род  
+  * ``Gender::Plural``   — множественное число  
   
 ## <a name="ukrspell"></a>Пропись чисел и согласование с числом на украинском языке
 
