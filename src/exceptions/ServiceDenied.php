@@ -1,7 +1,8 @@
 <?php
 namespace Morpher\Ws3Client;
 
-class IpBlocked extends ServiceDenied
+
+class ServiceDenied extends \Exception
 {
     function __construct(string $message, int $code)
     {

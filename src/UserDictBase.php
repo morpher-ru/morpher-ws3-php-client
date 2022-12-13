@@ -1,11 +1,8 @@
 <?php
 namespace Morpher\Ws3Client;
 
-
+use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
-use Morpher\Ws3Client\WebClient;
-use Morpher\Ws3Client\Russian\DeclensionResult;
-use TypeError;
 
 abstract class UserDictBase
 {
@@ -72,22 +69,32 @@ abstract class UserDictBase
         }
     }
 
+    /**
+     * @throws ServiceDenied
+     * @throws TokenNotFound
+     * @throws TokenRequired
+     * @throws GuzzleException
+     * @throws InvalidServerResponse
+     */
     public function GetAll(): array
     {
-        $result_raw = "";
         try
         {
-            $result_raw = $this->webClient->send($this->endpoint,[],'GET');
+            $result_raw = $this->webClient->send($this->endpoint);
+
+            $result = WebClient::JsonDecode($result_raw);
+
+            $array = array_map(function (array $item) { return new $this->CorrectionEntryClassName($item);}, $result );
+
+            return $array;
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (MorpherError $ex)
         {
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            $error_code = $ex->getCode();
+            $msg = $ex->getMessage();
+            if ($error_code == 25) throw new TokenRequired($msg);
+
+            throw new InvalidServerResponse("Неизвестный код ошибки");
         }
-
-        $result = WebClient::JsonDecode($result_raw);
-
-        $array = array_map(function (array $item) { return new $this->CorrectionEntryClassName($item);}, $result );
-
-        return $array;
     }
 }

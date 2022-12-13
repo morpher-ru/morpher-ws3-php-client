@@ -1,7 +1,10 @@
 <?php
 namespace Morpher\Ws3Client;
 
-class RequestsDailyLimit extends \Exception
+use Morpher\Ws3Client\ServiceDenied;
+
+
+class RequestsDailyLimit extends ServiceDenied
 {
     function __construct(string $message = 'Превышен лимит на количество запросов в сутки. Перейдите на следующий тарифный план.',int $code = 0)
     {
