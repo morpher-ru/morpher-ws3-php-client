@@ -2,6 +2,14 @@
 
 namespace Morpher\Ws3Client\Russian;
 
+use Morpher\Ws3Client\InvalidServerResponse;
+use Morpher\Ws3Client\IpBlocked;
+use Morpher\Ws3Client\MorpherError;
+use Morpher\Ws3Client\RequestsDailyLimit;
+use Morpher\Ws3Client\ServiceDenied;
+use Morpher\Ws3Client\TokenIncorrectFormat;
+use Morpher\Ws3Client\TokenNotFound;
+use Morpher\Ws3Client\TokenRequired;
 use Morpher\Ws3Client\WebClient;
 
 
@@ -15,10 +23,25 @@ class Client
         $this->webClient = $webClient;
         $this->userDict = new UserDict($webClient);
     }
-    
-    public function Parse(string $lemma,array $flags = []): DeclensionResult
+
+    /**
+     * @param string $lemma Слово или фраза в именительном падеже
+     * @param array $flags Необязательная дополнительная информация для устранения неоднозначностей,
+     * массив элементов типа Flags
+     * @return DeclensionResult Результат склонения – набор падежных форм
+     * @throws InvalidArgumentEmptyString Если $lemma пустая
+     * @throws RussianWordsNotFound Не найдено русских слов в параметре $lemma
+     * @throws InvalidFlags Недопустимое сочетание флагов (например, мужской + женский)
+     * @throws DeclensionNotSupportedUseSpell Если $lemma содержит числительное. Для склонения числительных есть функция Spell().
+     * @throws ServiceDenied Если превышен лимит на количество запросов или ваш IP заблокирован
+     * @throws TokenNotFound
+     * @throws InvalidServerResponse Если сервер вернул неправильный ответ
+     * @throws TokenIncorrectFormat
+     * @throws TokenRequired
+     */
+    public function Parse(string $lemma, array $flags = []): DeclensionResult
     {
-        if (trim($lemma) == '') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
+        if (trim($lemma) == '') throw new InvalidArgumentEmptyString();
 
         $query = ["s" => $lemma];
 
@@ -31,15 +54,15 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/declension", $query);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (MorpherError $ex)
         {
-            $morpher_code = $ex->getCode();
+            $error_code = $ex->getCode();
             $msg = $ex->getMessage();
-            if ($morpher_code == 5) throw new RussianWordsNotFound($msg);
-            if ($morpher_code == 12) throw new InvalidFlags($msg);
-            if ($morpher_code == 4) throw new DeclensionNotSupportedUseSpell($msg);
+            if ($error_code == 5) throw new RussianWordsNotFound($msg);
+            if ($error_code == 12) throw new InvalidFlags($msg);
+            if ($error_code == 4) throw new DeclensionNotSupportedUseSpell($msg);
             
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw new InvalidServerResponse("Неизвестный код ошибки");
         }
 
         $result = WebClient::JsonDecode($result_raw);
@@ -47,7 +70,6 @@ class Client
         $result['И'] = $lemma;
 
         $declensionResult = new DeclensionResult($result);
-
 
         return $declensionResult;
     }

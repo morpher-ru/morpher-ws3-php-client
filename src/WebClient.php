@@ -2,6 +2,7 @@
 namespace Morpher\Ws3Client;
 
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\GuzzleException;
 
 class WebClient
 {
@@ -31,6 +32,14 @@ class WebClient
         return $headers;
     }
 
+    /**
+     * @throws IpBlocked
+     * @throws InvalidServerResponse
+     * @throws TokenNotFound
+     * @throws MorpherError
+     * @throws GuzzleException
+     * @throws ServiceDenied
+     */
     public function send(string $Endpoint, $QueryParameters = [], string $Method = 'GET', $Headers = null, $body = null, $form_params = null): string
     {
         if ($Headers === null)
@@ -55,11 +64,11 @@ class WebClient
             {
                 $response = $ex->getResponse();
                 $code = $response->getStatusCode();
-                if ($code>= 400)
+                if ($code >= 400)
                 {
                     $data = json_decode($response->getBody(),true);
                     if (empty($data['code']))
-                        throw new InvalidServerResponse();
+                        throw new InvalidServerResponse("В ответе сервера не найден параметр code.");
                     
                     $msg = (string)($data['message'] ?? "Неизвестная ошибка");
                     $morpher_code = (int)($data['code']);
@@ -75,7 +84,7 @@ class WebClient
                 }
             }
 
-            throw $ex;
+            throw new InvalidServerResponse("В ответе сервера нет тела.");
         }
 
         return $result;
