@@ -482,6 +482,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
 ## См. также
 
+* [masterweber/morpher-ws3-php-client](https://github.com/masterweber/morpher-ws3-php-client), неофициальный клиент ws3.morpher.ru от MasterWeber
 * [doctrine/inflector](https://github.com/doctrine/inflector), a popular pluralization library for English  
 * [Mikulas/inflection](https://github.com/Mikulas/inflection), a declension library for the Czech language  
   
