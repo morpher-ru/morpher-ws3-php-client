@@ -1,6 +1,6 @@
 # PHP-клиент веб-сервиса ws3.morpher.ru  
   
-[Composer package](https://packagist.org/packages/morpher/ws3-client)  
+[![Latest Stable Version](http://poser.pugx.org/morpher/ws3-client/v)](https://packagist.org/packages/morpher/ws3-client) [![Total Downloads](http://poser.pugx.org/morpher/ws3-client/downloads)](https://packagist.org/packages/morpher/ws3-client) [![Latest Unstable Version](http://poser.pugx.org/morpher/ws3-client/v/unstable)](https://packagist.org/packages/morpher/ws3-client) [![License](http://poser.pugx.org/morpher/ws3-client/license)](https://packagist.org/packages/morpher/ws3-client) [![PHP Version Require](http://poser.pugx.org/morpher/ws3-client/require/php)](https://packagist.org/packages/morpher/ws3-client)
 
 История изменений:
 
