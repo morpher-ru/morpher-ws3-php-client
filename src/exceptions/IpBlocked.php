@@ -3,8 +3,8 @@ namespace Morpher\Ws3Client;
 
 class IpBlocked extends ServiceDenied
 {
-    function __construct(string $message, int $code)
+    function __construct(string $message)
     {
-        parent::__construct($message, $code);
+        parent::__construct($message, 3);
     }
 }
