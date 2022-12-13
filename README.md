@@ -10,7 +10,7 @@
 (с помощью веб-сервиса "Морфер 3.0"):  
   
 На русском языке:  
-  * [Склонение по падежам;](#rusdecl)  
+  * [Склонение слов и фраз по падежам;](#rusdecl)  
   * [Выделение в строке фамилии, имени и отчества;](#rusfio)  
   * [Пропись чисел и склонение единицы измерения (3 новых письма, 10 комментариев);](#russpell)  
   * [Пропись чисел в виде порядковых числительных («сто первый километр»);](#russpellord)  
@@ -59,12 +59,12 @@
     require_once __DIR__."/vendor/autoload.php";  
     use Morpher\Ws3Client\Morpher;  
     $base_url = 'https://ws3.morpher.ru';  
-    $token="";  
-    $morpher=new Morpher($base_url,$token);  
-    $declensionResult  = $morpher->russian->Parse('трамвай');
+    $token = "";  
+    $morpher = new Morpher($base_url, $token);  
+    $declensionResult = $morpher->russian->Parse('трамвай');
     print_r($declensionResult);
   
-Где  ``$token="";``   в кавычках укажите токен, который получили при регистрации на сайте https://morpher.ru  .  
+Где  ``$token="";``   в кавычках укажите токен, который получили при регистрации на сайте https://morpher.ru.  
 Если токен пустой, сервис будет работать с ограничениями бесплатной версии.  
 Можно вызвать конструктор без аргументов, в этом случае будут использоваться параметры по умолчанию.  
   
@@ -78,8 +78,7 @@
 
 Пример:  
   
-    $lemma='фраза на русском';  
-    $declensionResult    =   $morpher->russian->Parse($lemma);  
+    $declensionResult = $morpher->russian->Parse('фраза на русском');  
   
 $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`` со следующими свойствами:  
   * $declensionResult->Nominative — текст в именительном падеже;  
@@ -102,18 +101,20 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   * $declensionResult->To – куда — в направительном падеже (аллатив) с предлогом;  
   * $declensionResult->From –откуда — в исходном падеже (аблатив) с предлогом.  
   
-# Флаги для разрешения неоднозначностей  
+### Флаги для разрешения неоднозначностей
+
 Есть слова, которые могут склоняться по-разному, например:  
   * фамилия Резник склоняется у мужчин и не склоняется у женщин;  
   * Ростов в творительном падеже будет Ростовым, если это фамилия, и Ростовом, если это город;  
   * тестер в винительном падеже будет тестера, если это человек, и тестер, если имеется в виду прибор.  
   
-Для повышения качества склонения вы можете сообщить веб-сервису дополнительную информацию через флаги. Флаги принимают значения констант из класса ``Morpher\Ws3Client\Russian\Flags`` . Флаги нужно передавать в массиве:  
+Для повышения качества склонения вы можете сообщить веб-сервису дополнительную информацию через флаги. Флаги принимают значения констант из класса ``Morpher\Ws3Client\Russian\Flags``. Флаги нужно передавать в массиве:  
   
     use Morpher\Ws3Client\Russian\Flags;  
-    $morpher->russian->Parse( 'Слепов Сергей Николаевич', [Flags::Name, Flags::Masculine]);  
+    $morpher->russian->Parse('Резник', [Flags::Name, Flags::Masculine]);  
   
-# Флаги для ``$morpher->russian->Parse``:  
+Флаги для ``$morpher->russian->Parse``:
+
   * Flags::Feminine — Женский род;  
   * Flags::Masculine — Мужской род;  
   * Flags::Animate — Одушевлённое;  
@@ -121,13 +122,15 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   * Flags::Common — Нарицательное;  
   * Flags::Name — ФИО.
   
-## <a name="rusfio"></a>Выделение в строке фамилии, имени и отчества  
-Если входная строка распознана как ФИО, то объект ``$declensionResult->FullName`` будет содержать разбивку строки на фамилию, имя и отчество:  
+## <a name="rusfio"></a>Выделение в строке фамилии, имени и отчества
+
+Если входная строка распознана как ФИО, то объект ``$declensionResult->FullName`` будет содержать разбивку строки на фамилию, имя и отчество:
+
   * $declensionResult->FullName->Name - имя;  
   * $declensionResult->FullName->Surname - фамилия;  
   * $declensionResult->FullName->Pantronymic – отчество.  
   
-## <a name="russpell"></a>Пропись чисел и согласование с числом  
+## <a name="russpell"></a>Пропись чисел и согласование с числом
 
 Метод ``$morpher->russian->Spell($number, $unit)`` решает задачу получения прописи числа (тысяча сто двадцать пять) и согласование единицы измерения с предшествующем числом (1 попугай, 2 попугая, 5 попугаев).   
 
@@ -141,8 +144,8 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 Оба свойства содержат склонения по всем падежам:
 
     $numberSpellingResult=$morpher->russian->Spell(235, 'рубль');  
-    print $numberSpellingResult->NumberDeclension->Dative; //двумстам тридцати пяти  
-    print $numberSpellingResult->UnitDeclension->Dative; //рублям  
+    print $numberSpellingResult->NumberDeclension->Dative; // двумстам тридцати пяти  
+    print $numberSpellingResult->UnitDeclension->Dative; // рублям  
   
 ## <a name="russpellord"></a>Пропись чисел в виде порядковых числительных
 
@@ -267,7 +270,9 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 ## <a name="ukrspell"></a>Пропись чисел и согласование с числом на украинском языке
 
 Метод ``$morpher->ukrainian->Spell($number, $unit)`` решает задачу получения прописи числа (одна тисяча сто двадцять п'ять) и согласование единицы измерения с предшествующем числом (один рубль, два рубля, п'ять рублів).  
-Входные параметры:  
+
+Входные параметры:
+
 * $number – целое число;  
 * $unit – строка.  
    
@@ -299,7 +304,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
     …  
     $declensionResult->ThirdPersonPlural->Dative  
 
-А также содержит объект Plural, в котором 7 падежей множественного числа, и ещё 8 лицевых форм склонений множественного числа, каждая себе содержит 7 падежей:
+А также содержит объект Plural, в котором 7 падежей множественного числа, и ещё 8 личных форм склонений множественного числа, каждая себе содержит 7 падежей:
 
     $declensionResult->Plural->Locative  
     $declensionResult->Plural->FirstPerson->Locative  
@@ -315,8 +320,10 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
     print $declensionResult->Plural->Genitive;  // менеджерлердің  
     print $declensionResult->Plural->FirstPerson->Genitive; // менеджерлеріміздің  
   
-# Свойства объекта Morpher\Ws3Client\Qazaq\DeclensionResult:  
-Свойства-Падежи ед. числа:  
+# Свойства объекта Morpher\Ws3Client\Qazaq\DeclensionResult: 
+
+Свойства - падежи ед. числа:
+
   * Nominative  - атау — текст в именительном падеже;  
   * Genitive - ілік — текст в родительном падеже;  
   * Dative - барыс — текст в дательно-направительном падеже;  
@@ -325,7 +332,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   * Locative - жатыс — текст в местном падеже;  
   * Instrumental - көмектес — текст в творительном падеже;
 
-Свойства – лицевые формы ед. числа (в каждой свои падежи):
+Свойства – личные формы ед. числа (в каждой свои падежи):
 
 - FirstPerson - "менің"  
 - SecondPerson -  "сенің"  
@@ -338,19 +345,20 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 Свойство множественного числа:  
 
-  * Plural - көпше — возвращает аналогичный объект со свойствами-падежами и свойствами-лицевыми формами для текста во множественном числе.  
-  
+  * Plural - көпше — возвращает аналогичный объект со свойствами-падежами и свойствами-личными формами для текста во множественном числе.  
+
 ## <a name="queriesleft"></a>Остаток запросов
 
 Метод ``$morpher->getQueriesLeftForToday()`` возвращает остаток запросов на данный момент. Лимит на запросы восстанавливается в 00:00 UTC.  
          
     print  $morpher->getQueriesLeftForToday(); // 939    
 
-# <a name="userdict"></a>Пользовательский словарь  
+# <a name="userdict"></a>Пользовательский словарь
+
 Веб-сервис поддерживает исправление склонения по требованию пользователя. Для этого имеются 3 метода:  
   * Получить список всех добавленных исправлений;  
   * Добавить или изменить исправление;  
-  * Удалить исправление.  
+  * Удалить исправление.
   
 ## Получить список исправлений
 
@@ -399,7 +407,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 ## Добавить или изменить исправление
 
-Для добавления или изменения исправления использовать метод   
+Для добавления или изменения исправления использовать метод
 ``$morpher->russian->userDict->AddOrUpdate($entry)``,  
 или аналогично   
 ``$morpher->ukrainian->userDict->AddOrUpdate($entry)``:  
@@ -426,33 +434,36 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   
 # <a name="dev"></a>Разработка
 
+Этот раздел для тех, кто хочет помочь с разработкой данной библиотеки.
+
 Сделайте форк репозитория [morpher-ws3-php-client](https://github.com/morpher-ru/morpher-ws3-php-client).  
-Затем выполните:  
+Затем выполните:
 
     $ git clone https://github.com/<your-github-username>/morpher-ws3-php-client  
     $ cd morpher-ws3-php-client  
-    $ composer install  
+    $ composer install
+
 Должна появиться папка vendor.
   
-## Запуск тестов  
+## Запуск тестов
   
 Запуск юнит теста:
 
-    $ vendor\bin\phpunit  tests\unit  
+    $ vendor\bin\phpunit tests\unit  
   
 Для запуска интеграционных тестов задать секретный токен, иначе тесты частично будут выполнены с ошибкой.
 Есть два способа задать токен:
 
-1)    Подходит для локального запуска. Создать файл ``secret.php`` , в котором объявить константу:  
+1) Подходит для локального запуска. Создать файл ``secret.php`` , в котором объявить константу:  
   
     <?php  
     DEFINE("MORPHER_RU_TOKEN" ,"xxxxx-xxxxxx-xxxxxxx");  
   
-2)    Подходит для запуска в контейнере GitHub Actions. В GitHub Actions, в разделе Secrets, создать переменную окружения MORPHER_RU_TOKEN, и сохранить токен в неё.  
+2) Подходит для запуска в контейнере GitHub Actions. В GitHub Actions, в разделе Secrets, создать переменную окружения MORPHER_RU_TOKEN, и сохранить токен в неё.  
   
 Запуск интеграционного теста:  
   
-    $ vendor\bin\phpunit  tests\integration  
+    $ vendor\bin\phpunit tests\integration  
   
 ## Обновление зависимостей  
   
@@ -468,8 +479,8 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
   * Добавить новый релиз на Гитхабе.
   * В личном кабинете на https://packagist.org опубликовать пакет.  
 
-## See also   
-  
+## См. также
+
 * [doctrine/inflector](https://github.com/doctrine/inflector), a popular pluralization library for English  
 * [Mikulas/inflection](https://github.com/Mikulas/inflection), a declension library for the Czech language  
   
