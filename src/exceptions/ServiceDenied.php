@@ -1,11 +1,11 @@
 <?php
-namespace Morpher\Ws3Client;
 
+namespace Morpher\Ws3Client;
 
 class ServiceDenied extends \Exception
 {
-    function __construct(string $message, int $code)
+    public function __construct(string $message)
     {
-        parent::__construct($message, $code);
+        parent::__construct($message);
     }
 }

@@ -215,9 +215,7 @@ final class QazaqDeclensionTest extends IntegrationBase
         $this->expectException(Qazaq\QazaqWordsNotFound::class);
         $this->expectExceptionMessage('Не найдено казахских слов.');
 
-        $lemma = 'test';
-    
-        self::$testMorpher->qazaq->Parse($lemma);
+        self::$testMorpher->qazaq->Parse('test');
     }
 
     public function testParse_ExceptionNoS(): void

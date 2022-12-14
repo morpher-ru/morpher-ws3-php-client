@@ -1,7 +1,7 @@
 <?php
 namespace Morpher\Ws3Client;
 
-class TokenIncorrectFormat extends InvalidServerResponse
+class TokenIncorrectFormat extends TokenNotFound
 {
     function __construct(string $message, int $code = 0)
     {

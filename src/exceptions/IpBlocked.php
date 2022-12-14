@@ -5,6 +5,6 @@ class IpBlocked extends ServiceDenied
 {
     function __construct(string $message)
     {
-        parent::__construct($message, 3);
+        parent::__construct($message);
     }
 }

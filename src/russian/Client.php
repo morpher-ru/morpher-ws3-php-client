@@ -2,9 +2,10 @@
 
 namespace Morpher\Ws3Client\Russian;
 
+use Morpher\Ws3Client\InvalidArgumentEmptyString;
 use Morpher\Ws3Client\InvalidServerResponse;
 use Morpher\Ws3Client\IpBlocked;
-use Morpher\Ws3Client\MorpherError;
+use Morpher\Ws3Client\UnknownErrorCode;
 use Morpher\Ws3Client\RequestsDailyLimit;
 use Morpher\Ws3Client\ServiceDenied;
 use Morpher\Ws3Client\TokenIncorrectFormat;
@@ -54,7 +55,7 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/declension", $query);
         }
-        catch (MorpherError $ex)
+        catch (UnknownErrorCode $ex)
         {
             $error_code = $ex->getCode();
             $msg = $ex->getMessage();
@@ -62,7 +63,7 @@ class Client
             if ($error_code == 12) throw new InvalidFlags($msg);
             if ($error_code == 4) throw new DeclensionNotSupportedUseSpell($msg);
             
-            throw new InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);
@@ -87,13 +88,13 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/spell",$queryParam);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
         {
             $morpher_code = $ex->getCode();
             $msg = $ex->getMessage();
             if ($morpher_code == 5) throw new RussianWordsNotFound($msg);
 
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);
@@ -116,13 +117,13 @@ class Client
 
             $result_raw = $this->webClient->send("/russian/spell-ordinal",$queryParam);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
         {
             $morpher_code = $ex->getCode();
             $msg = $ex->getMessage();
             if ($morpher_code == 5) throw new RussianWordsNotFound($msg);
 
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);
@@ -165,13 +166,13 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/spell-date",$queryParam);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
         {
             $morpher_code = $ex->getCode();
             $msg = $ex->getMessage();
             if ($morpher_code == 8) throw new IncorrectDateFormat($msg);
 
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);
@@ -190,9 +191,9 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/genders",$query);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
         {
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);
@@ -214,9 +215,9 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/adjectivize",$query);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
         {
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);
@@ -239,9 +240,9 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/addstressmarks",[],'POST',$headers,$text);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
         {
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);

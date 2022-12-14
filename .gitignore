@@ -11,3 +11,5 @@ composer.lock
 
 .idea/
 /.phpunit.result.cache
+
+/tests/integration/secret.php

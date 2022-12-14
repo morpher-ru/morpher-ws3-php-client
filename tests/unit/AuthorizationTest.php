@@ -4,6 +4,8 @@ require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/MorpherTestHelper.php";
 
 
+use Morpher\Ws3Client\ConnectionError;
+use Morpher\Ws3Client\ServerError;
 use PHPUnit\Framework\TestCase;
 use Morpher\Ws3Client\Russian as Russian;
 use Morpher\Ws3Client\Ukrainian as Ukrainian;
@@ -66,8 +68,8 @@ class AuthorizationTest extends TestCase
      */ 
     public function testServerError500(string $method,string $requestResult,callable $callback): void
     {
-        $this->expectException(\GuzzleHttp\Exception\ServerException::class);
-        $this->expectExceptionMessage('Error 500');
+        $this->expectException(ServerError::class);
+        $this->expectExceptionMessage('Ошибка сервера');
 
         $testMorpher = MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ServerException(
             'Error 500', 
@@ -100,7 +102,8 @@ class AuthorizationTest extends TestCase
      */ 
     public function testParse_NetworkError1(string $method,string $requestResult,callable $callback): void
     {
-        $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
+        $this->expectException(ConnectionError::class);
+        $this->expectExceptionMessage("Ошибка связи");
         $testMorpher = MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\ConnectException('connection cannot be established', new \GuzzleHttp\Psr7\Request($method, 'test')));
         $callback($testMorpher);
     }
@@ -110,7 +113,8 @@ class AuthorizationTest extends TestCase
      */ 
     public function testParse_NetworkError2(string $method,string $requestResult,callable $callback): void
     {
-        $this->expectException(\GuzzleHttp\Exception\RequestException::class);
+        $this->expectException(ConnectionError::class);
+        $this->expectExceptionMessage("Ошибка связи");
         $testMorpher = MorpherTestHelper::createMockMorpherWithException(new \GuzzleHttp\Exception\RequestException('connection cannot be established', new \GuzzleHttp\Psr7\Request($method, 'test')));
         $callback($testMorpher);
     }
@@ -121,10 +125,13 @@ class AuthorizationTest extends TestCase
     public function testParse_UnknownError(string $method,string $requestResult,callable $callback): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidServerResponse::class);
-        $this->expectExceptionMessage('Неизвестный код ошибки');
+        $this->expectExceptionMessage('Непонятная ошибка.');
 
-        $parseResults = [        'code' => 100,
-        'message' => 'Непонятная ошибка.']; 
+        $parseResults = [
+            'code' => 100,
+            'message' => 'Непонятная ошибка.'
+        ];
+
         $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
 
         $container = [];

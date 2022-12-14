@@ -1,6 +1,8 @@
 <?php
 namespace Morpher\Ws3Client;
 
+use GuzzleHttp\Exception\ServerException;
+use Morpher\Ws3Client\UnknownErrorCode;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -33,19 +35,25 @@ class WebClient
     }
 
     /**
-     * @throws IpBlocked
      * @throws InvalidServerResponse
      * @throws TokenNotFound
-     * @throws MorpherError
+     * @throws UnknownErrorCode
      * @throws GuzzleException
      * @throws ServiceDenied
      */
-    public function send(string $Endpoint, $QueryParameters = [], string $Method = 'GET', $Headers = null, $body = null, $form_params = null): string
+    public function send(
+        string $Endpoint,
+        $QueryParameters = [],
+        string $Method = 'GET',
+        $Headers = null,
+        $body = null,
+        $form_params = null): string
     {
         if ($Headers === null)
         {
             $Headers = $this->getStandardHeaders();
         }
+
         try
         {
             $response = $this->client->request($Method, $Endpoint, [
@@ -60,31 +68,35 @@ class WebClient
         }
         catch (ClientException $ex)
         {
-            if ($ex->hasResponse())
-            {
-                $response = $ex->getResponse();
-                $code = $response->getStatusCode();
-                if ($code >= 400)
-                {
-                    $data = json_decode($response->getBody(),true);
-                    if (empty($data['code']))
-                        throw new InvalidServerResponse("В ответе сервера не найден параметр code.");
-                    
-                    $msg = (string)($data['message'] ?? "Неизвестная ошибка");
-                    $morpher_code = (int)($data['code']);
-
-                    if ($morpher_code == 6) throw new InvalidArgumentEmptyString($msg);
-                    if ($morpher_code == 1) throw new RequestsDailyLimit($msg);
-                    if ($morpher_code == 3) throw new IpBlocked($msg);
-                    if ($morpher_code == 9) throw new TokenNotFound($msg);
-                    if ($morpher_code == 10) throw new TokenIncorrectFormat($msg);
-                    if ($morpher_code == 25) throw new TokenRequired($msg);
-
-                    throw new MorpherError($msg, $morpher_code);
-                }
+            if (!$ex->hasResponse()) {
+                throw new InvalidServerResponse("В ответе сервера нет тела.", "");
             }
 
-            throw new InvalidServerResponse("В ответе сервера нет тела.");
+            $response = $ex->getResponse();
+            $responseBody = $response->getBody();
+            $data = json_decode($responseBody, true);
+            if (empty($data['code'])) {
+                throw new InvalidServerResponse("В ответе сервера не найден параметр code.", $responseBody);
+            }
+
+            $msg = (string)($data['message'] ?? "Неизвестная ошибка");
+            $errorCode = (int)($data['code']);
+
+            if ($errorCode == 6) throw new InvalidArgumentEmptyString($msg);
+            if ($errorCode == 1) throw new RequestsDailyLimit($msg);
+            if ($errorCode == 3) throw new IpBlocked($msg);
+            if ($errorCode == 9) throw new TokenNotFound($msg);
+            if ($errorCode == 10) throw new TokenIncorrectFormat($msg);
+
+            throw new UnknownErrorCode($errorCode, $msg, $responseBody);
+        }
+        catch (ServerException $ex)
+        {
+            throw new ServerError($ex);
+        }
+        catch (GuzzleException $ex)
+        {
+            throw new ConnectionError($ex);
         }
 
         return $result;
