@@ -3,6 +3,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
 
+use Morpher\Ws3Client\InvalidArgumentEmptyString;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\Russian as Russian;
@@ -75,7 +76,7 @@ final class RussianSpellTest extends TestCase
 
     public function testSpell_Empty(): void
     {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(InvalidArgumentEmptyString::class);
 
         $container = [];
 

@@ -2,6 +2,7 @@
 namespace Morpher\Ws3Client\Qazaq;
 
 
+use Morpher\Ws3Client\UnknownErrorCode;
 use Morpher\Ws3Client\WebClient;
 
 class Client
@@ -23,11 +24,11 @@ class Client
         {
             $result_raw = $this->webClient->send("/qazaq/declension", $query);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (UnknownErrorCode $ex)
         {
             if ($ex->getCode() == 5) throw new QazaqWordsNotFound($ex->getMessage());
 
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);

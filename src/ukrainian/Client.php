@@ -32,14 +32,14 @@ class Client
 
             $result_raw = $this->webClient->send("/ukrainian/declension",$query,'GET');
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
         {
             $morpher_code = $ex->getCode();
             $msg = $ex->getMessage();
             if ($morpher_code == 5) throw new UkrainianWordsNotFound($msg);
             if ($morpher_code == 12) throw new InvalidFlags($msg);
             
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);
@@ -68,12 +68,12 @@ class Client
 
             $result_raw = $this->webClient->send("/ukrainian/spell",$queryParam,'GET');
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
         {
             //$morpher_code = $ex->getCode();
             //$msg = $ex->getMessage();
 
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
 
         $result = WebClient::JsonDecode($result_raw);

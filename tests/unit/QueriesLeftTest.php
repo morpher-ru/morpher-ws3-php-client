@@ -3,25 +3,25 @@ require_once __DIR__."/../../vendor/autoload.php";
 
 require_once __DIR__."/MorpherTestHelper.php";
 
-use Morpher\Ws3Client\InvalidArgumentEmptyString;
+use Morpher\Ws3Client\InvalidServerResponse;
 use PHPUnit\Framework\TestCase;
 
 final class QueriesLeftTest extends TestCase
 {
-    public  function testQueriesLeft(): void
+    public function testQueriesLeft(): void
     {
-        $parseResults = 111;
-        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $queriesLeft = 111;
+        $return_text = json_encode($queriesLeft, JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $return_text);
         
         $result = $testMorpher->getQueriesLeftForToday();
 
-        $transaction = reset($container);//get first element of requests history
+        $transaction = reset($container); // get first element of requests history
 
-        //check request parameters, headers, uri
+        // check request parameters, headers, uri
         $request = $transaction['request'];       
         $this->assertEquals('GET', $request->getMethod());
 
@@ -34,6 +34,23 @@ final class QueriesLeftTest extends TestCase
         $this->assertEquals('',$uri->getQuery());
 
         $this->assertIsInt($result);
-        $this->assertEquals(111,$result);
+        $this->assertEquals($queriesLeft, $result);
+    }
+
+    public function testInvalidJsonThrowsInvalidServerResponse(): void
+    {
+        $this->expectException(InvalidServerResponse::class);
+
+        $queriesLeft = "invalid response";
+        $return_text = json_encode($queriesLeft, JSON_UNESCAPED_UNICODE);
+
+        $container = [];
+
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $return_text);
+
+        $result = $testMorpher->getQueriesLeftForToday();
+
+        $this->assertIsInt($result);
+        $this->assertEquals($queriesLeft, $result);
     }
 }

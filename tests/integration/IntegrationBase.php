@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-@include_once __DIR__."/../../secret.php";//файл секретов есть только локально, на github не выгружаю. отсутствие файла - не ошибка.
+@include_once __DIR__."/secret.php";//файл секретов есть только локально, на github не выгружаю. отсутствие файла - не ошибка.
 
 use PHPUnit\Framework\TestCase;
 
@@ -12,7 +12,7 @@ use Morpher\Ws3Client\Russian as Russian;
 
 class IntegrationBase extends TestCase
 {
-    const BASE_URL = 'https://ws3.morpher.ru';
+    const BASE_URL = 'http://ws3.morpher.ru';
 
     protected static Morpher $testMorpher;
 

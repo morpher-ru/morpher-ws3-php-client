@@ -33,7 +33,7 @@ abstract class UserDictBase
 
         $formParam = $entry->getArrayForRequest();
 
-        if (count($formParam)<2)
+        if (count($formParam) < 2)
         {
             throw new \InvalidArgumentException("Нужно указать хотя бы одну косвенную форму.");
         }
@@ -42,11 +42,12 @@ abstract class UserDictBase
         {
             $this->webClient->send($this->endpoint,[],'POST',null,null,$formParam);
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (UnknownErrorCode $ex)
         {
             // todo: проверить ошибку 6
+            if ($ex->getCode() == 25) throw new TokenRequired($ex->getMessage());
 
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
     }
 
@@ -63,9 +64,11 @@ abstract class UserDictBase
         {
             $this->webClient->send($this->endpoint,$queryParam,'DELETE');
         }
-        catch (\Morpher\Ws3Client\MorpherError $ex)
+        catch (UnknownErrorCode $ex)
         {
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Неизвестный код ошибки");
+            if ($ex->getCode() == 25) throw new TokenRequired($ex->getMessage());
+
+            throw $ex;
         }
     }
 
@@ -88,13 +91,11 @@ abstract class UserDictBase
 
             return $array;
         }
-        catch (MorpherError $ex)
+        catch (UnknownErrorCode $ex)
         {
-            $error_code = $ex->getCode();
-            $msg = $ex->getMessage();
-            if ($error_code == 25) throw new TokenRequired($msg);
+            if ($ex->getCode() == 25) throw new TokenRequired($ex->getMessage());
 
-            throw new InvalidServerResponse("Неизвестный код ошибки");
+            throw $ex;
         }
     }
 }

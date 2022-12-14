@@ -3,6 +3,7 @@ require_once __DIR__."/../../vendor/autoload.php";
 
 require_once __DIR__."/IntegrationBase.php";
 
+use Morpher\Ws3Client\ConnectionError;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\Morpher;
@@ -69,11 +70,10 @@ final class ServiceLevelErrorsTest extends TestCase
      */ 
     public function testTimeoutError(callable $callback): void
     {
- 
-        //not existing ip, timeout in 0.1 sec
+        // non-existing ip, timeout in 0.1 sec
         $testMorpher = new Morpher('http://10.200.200.200','',0.1);     
 
-        $this->expectException(\GuzzleHttp\Exception\ConnectException::class);
+        $this->expectException(ConnectionError::class);
 
         $callback($testMorpher);
     }
