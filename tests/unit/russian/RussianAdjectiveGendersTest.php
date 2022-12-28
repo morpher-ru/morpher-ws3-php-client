@@ -3,6 +3,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
 
+use Morpher\Ws3Client\Russian\AdjectiveFormIncorrect;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\Russian as Russian;
@@ -70,11 +71,17 @@ final class RussianAdjectiveGendersTest extends TestCase
 
     public function testAdjectiveGenders_Empty(): void
     {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(AdjectiveFormIncorrect::class);
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
+        $responseJson = '{
+          "feminine": "ERROR",
+          "neuter": "ERROR",
+          "plural": "ERROR"
+        }';
+
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson);
 
         $declensionResult = $testMorpher->russian->AdjectiveGenders('   ');
     }

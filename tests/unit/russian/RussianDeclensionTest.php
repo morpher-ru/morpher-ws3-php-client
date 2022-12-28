@@ -218,9 +218,9 @@ final class RussianDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,400);
     
-        $lemma = '+++';
+        $lemma = '   ';
     
-        $declensionResult = $testMorpher->russian->Parse($lemma);
+        $testMorpher->russian->Parse($lemma);
 
     }
 
@@ -239,9 +239,9 @@ final class RussianDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,400);
     
-        $lemma = '+++';
+        $lemma = '   ';
     
-        $declensionResult = $testMorpher->russian->Parse($lemma);
+        $testMorpher->russian->Parse($lemma);
     }
 
     public function testParse_DeclensionNotSupportedUseSpell(): void
