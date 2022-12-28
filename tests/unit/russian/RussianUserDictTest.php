@@ -3,6 +3,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
 
+use Morpher\Ws3Client\InvalidArgumentEmptyString;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\Russian as Russian;
@@ -112,17 +113,21 @@ final class RussianUserDictTest extends TestCase
 
     public function testUserDictRemoveEmpty_Exception(): void
     {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        $this->expectExceptionMessage('Передана пустая строка.');
+        $message = 'Передана пустая строка.';
+
+        $this->expectException(InvalidArgumentEmptyString::class);
+        $this->expectExceptionMessage($message);
 
         $parseResults = [
+            "code" => 6,
+            "message" => $message
         ];
 
-        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults, JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $return_text, 400);
         
         $testMorpher->russian->userDict->Remove('');
     }

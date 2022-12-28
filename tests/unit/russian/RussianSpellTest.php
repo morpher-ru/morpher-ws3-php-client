@@ -77,11 +77,28 @@ final class RussianSpellTest extends TestCase
     public function testSpell_Empty(): void
     {
         $this->expectException(InvalidArgumentEmptyString::class);
+        $this->expectExceptionMessage("empty");
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
+        $responseJson = '{"code": 6, "message": "empty"}';
 
-        $declensionResult = $testMorpher->russian->Spell(1,'   ');
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
+
+        $testMorpher->russian->Spell(1,'   ');
+    }
+
+    public function testSpell_NoRussianWords(): void
+    {
+        $this->expectException(Russian\RussianWordsNotFound::class);
+        $this->expectExceptionMessage("empty");
+
+        $container = [];
+
+        $responseJson = '{"code": 5, "message": "empty"}';
+
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 496);
+
+        $testMorpher->russian->Spell(1,'   ');
     }
 }

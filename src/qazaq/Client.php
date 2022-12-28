@@ -2,6 +2,7 @@
 namespace Morpher\Ws3Client\Qazaq;
 
 
+use Morpher\Ws3Client\InvalidArgumentEmptyString;
 use Morpher\Ws3Client\UnknownErrorCode;
 use Morpher\Ws3Client\WebClient;
 
@@ -16,8 +17,6 @@ class Client
     
     public function Parse(string $lemma): DeclensionResult
     {
-        if (trim($lemma) == '') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
-
         $query = ["s" => $lemma];
 
         try
@@ -26,7 +25,11 @@ class Client
         }
         catch (UnknownErrorCode $ex)
         {
-            if ($ex->getCode() == 5) throw new QazaqWordsNotFound($ex->getMessage());
+            $error_code = $ex->getCode();
+            $msg = $ex->getMessage();
+
+            if ($error_code == 5) throw new QazaqWordsNotFound($msg);
+            if ($error_code == 6) throw new InvalidArgumentEmptyString($msg);
 
             throw $ex;
         }

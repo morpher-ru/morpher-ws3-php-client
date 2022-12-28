@@ -51,22 +51,29 @@ abstract class UserDictBase
         }
     }
 
+    /**
+     * @throws ServiceDenied
+     * @throws UnknownErrorCode
+     * @throws TokenNotFound
+     * @throws GuzzleException
+     * @throws TokenRequired
+     * @throws InvalidServerResponse
+     */
     public function Remove(string $NominativeForm): void
     {
-        if (empty(trim($NominativeForm)))
-        {
-            throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
-        }
-
         $queryParam = ["s" => $NominativeForm];
 
         try
         {
-            $this->webClient->send($this->endpoint,$queryParam,'DELETE');
+            $this->webClient->send($this->endpoint,$queryParam, 'DELETE');
         }
         catch (UnknownErrorCode $ex)
         {
-            if ($ex->getCode() == 25) throw new TokenRequired($ex->getMessage());
+            $error_code = $ex->getCode();
+            $msg = $ex->getMessage();
+
+            if ($error_code == 25) throw new TokenRequired($msg);
+            if ($error_code == 6) throw new InvalidArgumentEmptyString($msg);
 
             throw $ex;
         }

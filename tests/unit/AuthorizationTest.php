@@ -66,7 +66,7 @@ class AuthorizationTest extends TestCase
     /**
      * @dataProvider  CallbacksProvider
      */ 
-    public function testServerError500(string $method,string $requestResult,callable $callback): void
+    public function testServerError500(string $method, string $requestResult, callable $callback): void
     {
         $this->expectException(ServerError::class);
         $this->expectExceptionMessage('Ошибка сервера');

@@ -53,7 +53,9 @@ final class RussianAdjectivizeTest extends TestCase
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
+        $responseJson = '{"code": 6, "message": "empty"}';
+
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
     
         $declensionResult = $testMorpher->russian->Adjectivize('   ');
     }

@@ -56,10 +56,13 @@ final class RussianSpellDateTest extends TestCase
     public function testSpellDate_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectExceptionMessage("blah");
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,'{}');
+        $responseJson = '{"code": 6, "message": "blah"}';
+
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
 
         $declensionResult = $testMorpher->russian->SpellDate('   ');
     }

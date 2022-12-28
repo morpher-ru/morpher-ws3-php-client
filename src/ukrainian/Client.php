@@ -2,6 +2,8 @@
 namespace Morpher\Ws3Client\Ukrainian;
 
 
+use Morpher\Ws3Client\InvalidArgumentEmptyString;
+use Morpher\Ws3Client\UnknownErrorCode;
 use Morpher\Ws3Client\WebClient;
 //use Morpher\Ws3Client\Ukrainian\DeclensionResult;
 
@@ -19,38 +21,36 @@ class Client
     
     public function Parse(string $lemma,array $flags = []): DeclensionResult
     {
-        if (trim($lemma) == '') throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
-
         $query = ["s" => $lemma];
+
         if (!empty($flags))
         {
             $query['flags'] = implode(',',$flags);
         }
 
-        $result_raw = "";
-        try{
+        try
+        {
+            $result_raw = $this->webClient->send("/ukrainian/declension", $query, 'GET');
 
-            $result_raw = $this->webClient->send("/ukrainian/declension",$query,'GET');
+            $result = WebClient::JsonDecode($result_raw);
+
+            $result['Н'] = $lemma;
+
+            $declensionResult = new DeclensionResult($result);
+
+            return $declensionResult;
         }
-        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
+        catch (UnknownErrorCode $ex)
         {
             $morpher_code = $ex->getCode();
             $msg = $ex->getMessage();
+
+            if ($morpher_code == 6) throw new InvalidArgumentEmptyString($msg);
             if ($morpher_code == 5) throw new UkrainianWordsNotFound($msg);
             if ($morpher_code == 12) throw new InvalidFlags($msg);
             
             throw $ex;
         }
-
-        $result = WebClient::JsonDecode($result_raw);
-        //
-        //parse result
-
-        $result['Н'] = $lemma;
-        $declensionResult = new DeclensionResult($result);
-
-
-        return $declensionResult;
     }
     
 
@@ -68,7 +68,7 @@ class Client
 
             $result_raw = $this->webClient->send("/ukrainian/spell",$queryParam,'GET');
         }
-        catch (\Morpher\Ws3Client\UnknownErrorCode $ex)
+        catch (UnknownErrorCode $ex)
         {
             //$morpher_code = $ex->getCode();
             //$msg = $ex->getMessage();

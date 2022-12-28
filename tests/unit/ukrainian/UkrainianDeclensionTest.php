@@ -104,27 +104,28 @@ final class UkrainianDeclensionTest extends TestCase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Не указан обязательный параметр: s.');
 
         $parseResults = [
             'code' => 6,
-            'message' => 'Не указан обязательный параметр: s.'];
+            'message' => 'Не указан обязательный параметр: s.'
+        ];
 
-        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = json_encode($parseResults, JSON_UNESCAPED_UNICODE);
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text,400);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $return_text, 400);
     
-        $lemma = '+++';
+        $lemma = '   ';
     
-        $declensionResult = $testMorpher->ukrainian->Parse($lemma);
+        $testMorpher->ukrainian->Parse($lemma);
     }
 
     public function testParse_ExceptionNoS2(): void
     {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(InvalidArgumentEmptyString::class);
         $this->expectExceptionMessage('Другое сообщение от сервера');
 
         $parseResults = [

@@ -82,7 +82,6 @@ class WebClient
             $msg = (string)($data['message'] ?? "Неизвестная ошибка");
             $errorCode = (int)($data['code']);
 
-            if ($errorCode == 6) throw new InvalidArgumentEmptyString($msg);
             if ($errorCode == 1) throw new RequestsDailyLimit($msg);
             if ($errorCode == 3) throw new IpBlocked($msg);
             if ($errorCode == 9) throw new TokenNotFound($msg);

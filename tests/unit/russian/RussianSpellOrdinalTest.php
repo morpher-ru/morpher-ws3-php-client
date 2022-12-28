@@ -3,6 +3,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
 
+use Morpher\Ws3Client\russian\RussianWordsNotFound;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\Russian as Russian;
@@ -76,13 +77,30 @@ final class RussianSpellOrdinalTest extends TestCase
         $this->assertEquals("колесе", $spellingResult->UnitDeclension->Prepositional);
     }
 
-    public function testSpell_Empty(): void
+    public function testSpellOrdinal_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectExceptionMessage("empty");
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
+        $responseJson = '{"code": 6, "message": "empty"}';
+
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
+
+        $declensionResult = $testMorpher->russian->SpellOrdinal(1,'   ');
+    }
+
+    public function testSpellOrdinal_NoRussianWords(): void
+    {
+        $this->expectException(RussianWordsNotFound::class);
+        $this->expectExceptionMessage("empty");
+
+        $container = [];
+
+        $responseJson = '{"code": 5, "message": "empty"}';
+
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 496);
 
         $declensionResult = $testMorpher->russian->SpellOrdinal(1,'   ');
     }

@@ -46,16 +46,4 @@ final class RussianAddStressmarksTest extends TestCase
 
         $this->assertEquals('Бале́т Петра́ Чайко́вского "Щелку́нчик"',$result);
     }
-
-    public function testAdjectivize_Empty(): void
-    {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        $this->expectExceptionMessage('Передана пустая строка.');
-
-        $container = [];
-
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
-    
-        $declensionResult = $testMorpher->russian->AddStressmarks('  ');
-    }
 }
