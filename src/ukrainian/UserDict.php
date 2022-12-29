@@ -18,9 +18,9 @@ class UserDict extends UserDictBase
     /**
      * @throws TokenRequired
      * @throws SystemError
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
-    public function AddOrUpdate(CorrectionEntry $entry): void
+    public function addOrUpdate(CorrectionEntry $entry): void
     {
         $this->addOrUpdateBase($entry);
     }
