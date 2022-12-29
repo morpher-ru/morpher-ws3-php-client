@@ -34,7 +34,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         $correction->Singular->Nominative = $word;
         $correction->Singular->Vocative = 'в чебураторке';
 
-        self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
+        self::$testMorpher->ukrainian->userDict->addOrUpdate($correction);
 
         $list = self::$testMorpher->ukrainian->userDict->getAll();
         $found = false;
@@ -59,7 +59,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         $correction->Singular->Nominative = $word;
         $correction->Singular->Vocative = 'в чебурелии';
 
-        self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
+        self::$testMorpher->ukrainian->userDict->addOrUpdate($correction);
 
         $list = self::$testMorpher->ukrainian->userDict->getAll();
         $found = false;
@@ -218,7 +218,7 @@ final class UkrainianUserDictTest extends IntegrationBase
         unset($declension1);
 
         //добавить слово в словарь
-        self::$testMorpher->ukrainian->userDict->AddOrUpdate($correction);
+        self::$testMorpher->ukrainian->userDict->addOrUpdate($correction);
 
         $list = self::$testMorpher->ukrainian->userDict->getAll();
         $found = false;

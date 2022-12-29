@@ -116,7 +116,7 @@ final class UkrainianUserDictTest extends TestCase
         $correction->Singular->Nominative = 'чебуратор';
         $correction->Singular->Vocative = 'в чебураторе';
 
-        $testMorpher->ukrainian->userDict->AddOrUpdate($correction);
+        $testMorpher->ukrainian->userDict->addOrUpdate($correction);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -152,7 +152,7 @@ final class UkrainianUserDictTest extends TestCase
         $correction->Singular->Vocative = 'в чебураторе';
         //$correction->Plural->Vocative = 'в чебураторах';
  
-        $testMorpher->ukrainian->userDict->AddOrUpdate($correction);
+        $testMorpher->ukrainian->userDict->addOrUpdate($correction);
     }
 
     public function testUserDicPost_Exception2(): void
@@ -174,6 +174,6 @@ final class UkrainianUserDictTest extends TestCase
         //$correction->Singular->Vocative = 'в чебураторе';
         //$correction->Plural->Vocative = 'в чебураторах';
  
-        $testMorpher->ukrainian->userDict->AddOrUpdate($correction);
+        $testMorpher->ukrainian->userDict->addOrUpdate($correction);
     }
 }
