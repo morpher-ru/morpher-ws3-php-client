@@ -131,7 +131,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 Если входная строка распознана как ФИО, то объект ``$declensionResult->FullName`` будет содержать разбивку строки на фамилию, имя и отчество:  
   * $declensionResult->FullName->Name - имя;  
   * $declensionResult->FullName->Surname - фамилия;  
-  * $declensionResult->FullName->Pantronymic – отчество.  
+  * $declensionResult->FullName->Patronymic – отчество.  
   
 ## <a name="russpell"></a>Пропись чисел и согласование с числом  
 
