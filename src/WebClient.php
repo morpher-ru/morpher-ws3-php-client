@@ -99,7 +99,7 @@ class WebClient
     /**
      * @throws InvalidServerResponse
      */
-    public static function JsonDecode(string $text)
+    public static function jsonDecode(string $text)
     {
         try
         {

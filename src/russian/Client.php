@@ -47,7 +47,7 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/declension", $query);
 
-            $result = WebClient::JsonDecode($result_raw);
+            $result = WebClient::jsonDecode($result_raw);
 
             $result['И'] = $lemma;
 
@@ -111,7 +111,7 @@ class Client
         {
             $result_raw = $this->webClient->send($urlSlug, $queryParam);
 
-            $result = WebClient::JsonDecode($result_raw);
+            $result = WebClient::jsonDecode($result_raw);
 
             $spellResult = new NumberSpellingResult($result);
 
@@ -157,7 +157,7 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/spell-date", $queryParam);
 
-            $result = WebClient::JsonDecode($result_raw);
+            $result = WebClient::jsonDecode($result_raw);
             $spellResult = new DateSpellingResult($result);
 
             return $spellResult;
@@ -187,7 +187,7 @@ class Client
         try {
             $result_raw = $this->webClient->send("/russian/genders", $query);
 
-            $result = WebClient::JsonDecode($result_raw);
+            $result = WebClient::jsonDecode($result_raw);
 
             $genders = new AdjectiveGenders($result);
 
@@ -223,7 +223,7 @@ class Client
         {
             $result_raw = $this->webClient->send("/russian/adjectivize", $query);
 
-            $result = WebClient::JsonDecode($result_raw);
+            $result = WebClient::jsonDecode($result_raw);
 
             return $result;
         }
@@ -245,7 +245,7 @@ class Client
         $headers = $this->webClient->getStandardHeaders();
         $headers['Content-Type'] = 'text/plain; charset=utf-8';
         $result_raw = $this->webClient->send("/russian/addstressmarks",[],'POST',$headers,$text);
-        $result = WebClient::JsonDecode($result_raw);
+        $result = WebClient::jsonDecode($result_raw);
         return $result;
     }
 }

@@ -28,7 +28,7 @@ class Morpher
         try
         {
             $json = $this->webClient->send("/get_queries_left_for_today");
-            $result = WebClient::JsonDecode($json);
+            $result = WebClient::jsonDecode($json);
 
             if (!is_numeric($result)) {
                 throw new InvalidServerResponse("Ожидалось число.", $json);

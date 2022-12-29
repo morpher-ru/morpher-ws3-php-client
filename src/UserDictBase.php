@@ -90,7 +90,7 @@ abstract class UserDictBase
         {
             $result_raw = $this->webClient->send($this->endpoint);
 
-            $result = WebClient::JsonDecode($result_raw);
+            $result = WebClient::jsonDecode($result_raw);
 
             $array = array_map(function (array $item) { return new $this->CorrectionEntryClassName($item);}, $result );
 

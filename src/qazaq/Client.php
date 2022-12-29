@@ -43,7 +43,7 @@ class Client
             throw $ex;
         }
 
-        $result = WebClient::JsonDecode($result_raw);
+        $result = WebClient::jsonDecode($result_raw);
 
         $result['A'] = $lemma;
 
