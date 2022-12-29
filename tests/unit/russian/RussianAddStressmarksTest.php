@@ -24,7 +24,7 @@ final class RussianAddStressmarksTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $result = $testMorpher->russian->AddStressmarks($text);
+        $result = $testMorpher->russian->addStressMarks($text);
 
         $transaction = reset($container);//get first element of requests history
 

@@ -14,7 +14,7 @@ final class UkrainianSpellTest extends IntegrationBase
 {
     public function testSpell_Success(): void
     {
-        $spellingResult = self::$testMorpher->ukrainian->Spell(10,'рубль');
+        $spellingResult = self::$testMorpher->ukrainian->spell(10,'рубль');
 
         $this->assertInstanceOf(Ukrainian\NumberSpellingResult::class,$spellingResult);
     
@@ -43,6 +43,6 @@ final class UkrainianSpellTest extends IntegrationBase
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         
-        self::$testMorpher->ukrainian->Spell(1,"   ");
+        self::$testMorpher->ukrainian->spell(1,"   ");
     }
 }

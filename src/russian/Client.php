@@ -76,7 +76,7 @@ class Client
      * @throws InvalidArgumentEmptyString Если параметр $unit пустой
      * @throws SystemError
      */
-    public function Spell(int $number, string $unit): NumberSpellingResult
+    public function spell(int $number, string $unit): NumberSpellingResult
     {
         return $this->spellNumber($number, $unit, "/russian/spell");
     }
@@ -90,7 +90,7 @@ class Client
      * @throws InvalidArgumentEmptyString Если параметр $unit пустой
      * @throws SystemError
      */
-    public function SpellOrdinal(int $number, string $unit): NumberSpellingResult
+    public function spellOrdinal(int $number, string $unit): NumberSpellingResult
     {
         return $this->spellNumber($number, $unit, "/russian/spell-ordinal");
     }
@@ -135,7 +135,7 @@ class Client
      * @throws SystemError
      * @throws InvalidArgumentException
      */
-    public function SpellDate($date): DateSpellingResult
+    public function spellDate($date): DateSpellingResult
     {
         if (is_int($date))
         {
@@ -180,7 +180,7 @@ class Client
      * @throws SystemError
      * @throws InvalidArgumentEmptyString
      */
-    public function AdjectiveGenders(string $adjective): AdjectiveGenders
+    public function getAdjectiveGenders(string $adjective): AdjectiveGenders
     {
         $query = ['s' => $adjective];
 
@@ -215,7 +215,7 @@ class Client
      * @return array
      * @throws SystemError
      */
-    public function Adjectivize(string $name): array
+    public function adjectivize(string $name): array
     {
         $query = ['s' => $name];
 
@@ -240,11 +240,11 @@ class Client
      * @return string
      * @throws SystemError
      */
-    public function AddStressmarks(string $text): string
+    public function addStressMarks(string $text): string
     {
         $headers = $this->webClient->getStandardHeaders();
         $headers['Content-Type'] = 'text/plain; charset=utf-8';
-        $result_raw = $this->webClient->send("/russian/addstressmarks",[],'POST',$headers,$text);
+        $result_raw = $this->webClient->send("/russian/addstressmarks", [], 'POST', $headers, $text);
         $result = WebClient::jsonDecode($result_raw);
         return $result;
     }

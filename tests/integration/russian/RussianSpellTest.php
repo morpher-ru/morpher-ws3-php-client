@@ -14,7 +14,7 @@ final class RussianSpellTest extends IntegrationBase
 {
     public function testSpell_Success(): void
     {
-        $spellingResult = self::$testMorpher->russian->Spell(10,'рубль');
+        $spellingResult = self::$testMorpher->russian->spell(10,'рубль');
 
         $this->assertInstanceOf(Russian\NumberSpellingResult::class,$spellingResult);
     
@@ -41,6 +41,6 @@ final class RussianSpellTest extends IntegrationBase
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         
-        self::$testMorpher->russian->Spell(1,"   ");
+        self::$testMorpher->russian->spell(1,"   ");
     }
 }

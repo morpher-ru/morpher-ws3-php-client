@@ -22,7 +22,7 @@ final class RussianSpellDateTest extends IntegrationBase
      */    
     public function testSpellDate_Success($date): void
     {
-        $dateSpellingResult = self::$testMorpher->russian->SpellDate($date);
+        $dateSpellingResult = self::$testMorpher->russian->spellDate($date);
 
         $this->assertInstanceOf(Russian\DateSpellingResult::class,$dateSpellingResult);
     
@@ -40,20 +40,20 @@ final class RussianSpellDateTest extends IntegrationBase
     {
         $this->expectException(InvalidArgumentException::class);
         
-        self::$testMorpher->russian->SpellDate(null);
+        self::$testMorpher->russian->spellDate(null);
     }
 
     public function testSpellDate_Empty(): void
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         
-        self::$testMorpher->russian->SpellDate("   ");
+        self::$testMorpher->russian->spellDate("   ");
     }
 
     public function testSpellDate_IncorrectFormat(): void
     {
         $this->expectException(Russian\IncorrectDateFormat::class);
         
-        self::$testMorpher->russian->SpellDate("2022.10.01");
+        self::$testMorpher->russian->spellDate("2022.10.01");
     }
 }
