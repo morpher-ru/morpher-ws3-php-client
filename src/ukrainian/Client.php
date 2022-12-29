@@ -42,7 +42,7 @@ class Client
         {
             $result_raw = $this->webClient->send("/ukrainian/declension", $query, 'GET');
 
-            $result = WebClient::JsonDecode($result_raw);
+            $result = WebClient::jsonDecode($result_raw);
 
             $result['Н'] = $lemma;
 
@@ -80,7 +80,7 @@ class Client
         {
             $result_raw = $this->webClient->send("/ukrainian/spell", $queryParam);
 
-            $result = WebClient::JsonDecode($result_raw);
+            $result = WebClient::jsonDecode($result_raw);
             $spellResult = new NumberSpellingResult($result);
 
             return $spellResult;
