@@ -32,7 +32,7 @@ final class RussianUserDictNoTokenTest extends TestCase
         $correction->Singular->Locative = 'в чебураторке';
         $correction->Plural->Locative = 'в чебураториях';
 
-        self::$testMorpher->russian->userDict->AddOrUpdate($correction);
+        self::$testMorpher->russian->userDict->addOrUpdate($correction);
     }
 
     public function testUserDict_NoTokenError_GetAll(): void
