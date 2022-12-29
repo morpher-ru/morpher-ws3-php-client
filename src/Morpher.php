@@ -20,27 +20,18 @@ class Morpher
 
     /**
      * Возвращает количество запросов, оставшихся на текущие сутки.
+     * @return int
      * @throws SystemError
-     * @throws TokenRequired
      */
-    public function getQueriesLeftForToday():int
+    public function getQueriesLeftForToday(): int
     {
-        try
-        {
-            $json = $this->webClient->send("/get_queries_left_for_today");
-            $result = WebClient::jsonDecode($json);
+        $json = $this->webClient->send("/get_queries_left_for_today");
+        $result = WebClient::jsonDecode($json);
 
-            if (!is_numeric($result)) {
-                throw new InvalidServerResponse("Ожидалось число.", $json);
-            }
-
-            return (int)$result;
+        if (!is_numeric($result)) {
+            throw new InvalidServerResponse("Ожидалось число.", $json);
         }
-        catch (UnknownErrorCode $ex)
-        {
-            if ($ex->getCode() == 25) throw new TokenRequired($ex->getMessage());
 
-            throw $ex;
-        }
+        return (int)$result;
     }
 }
