@@ -229,7 +229,7 @@ final class RussianUserDictTest extends IntegrationBase
         $correction->Plural->Prepositional = "чебуречках";        
         $correction->Plural->Locative = 'в чебураториях';
 
-        //1. удалить слово из словаря
+        // 1. удалить слово из словаря
         self::$testMorpher->russian->userDict->remove($word);
 
         $list = self::$testMorpher->russian->userDict->getAll();
