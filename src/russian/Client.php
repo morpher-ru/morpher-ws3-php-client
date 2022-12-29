@@ -34,7 +34,7 @@ class Client
      * @throws DeclensionNotSupportedUseSpell Если $lemma содержит числительное. Для склонения числительных есть функция Spell().
      * @throws SystemError
      */
-    public function Parse(string $lemma, array $flags = []): DeclensionResult
+    public function parse(string $lemma, array $flags = []): DeclensionResult
     {
         $query = ["s" => $lemma];
 

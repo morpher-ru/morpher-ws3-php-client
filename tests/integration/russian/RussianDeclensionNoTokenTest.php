@@ -30,7 +30,7 @@ final class RussianDeclensionNoTokenTest extends TestCase
     {
         $lemma = 'тест';
 
-        $declensionResult = self::$testMorpher->russian->Parse($lemma);
+        $declensionResult = self::$testMorpher->russian->parse($lemma);
 
         $this->assertInstanceOf(Russian\DeclensionResult::class,$declensionResult);
 
