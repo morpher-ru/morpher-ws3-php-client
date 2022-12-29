@@ -18,7 +18,7 @@ final class RussianDeclensionTest extends IntegrationBase
     {
         $lemma = 'тест';
 
-        $declensionResult = self::$testMorpher->russian->Parse($lemma);
+        $declensionResult = self::$testMorpher->russian->parse($lemma);
 
         $this->assertInstanceOf(Russian\DeclensionResult::class,$declensionResult);
 
@@ -52,7 +52,7 @@ final class RussianDeclensionTest extends IntegrationBase
     {
         $lemma = "Пушкин Александр Сергеевич";
 
-        $declensionResult = self::$testMorpher->russian->Parse($lemma, [Russian\Flags::Name]);
+        $declensionResult = self::$testMorpher->russian->parse($lemma, [Russian\Flags::Name]);
 
         $this->assertInstanceOf(Russian\DeclensionForms::class, $declensionResult);
         $this->assertNotNull($declensionResult->FullName);
@@ -68,7 +68,7 @@ final class RussianDeclensionTest extends IntegrationBase
     
         $lemma = '';
     
-        self::$testMorpher->russian->Parse($lemma);
+        self::$testMorpher->russian->parse($lemma);
     }
 
 
@@ -76,7 +76,7 @@ final class RussianDeclensionTest extends IntegrationBase
     {
         $lemma = 'теля';
    
-        $genitive = self::$testMorpher->russian->Parse($lemma)->Genitive;
+        $genitive = self::$testMorpher->russian->parse($lemma)->Genitive;
 
         $this->assertNull($genitive);
     }
@@ -88,7 +88,7 @@ final class RussianDeclensionTest extends IntegrationBase
         $this->expectExceptionMessage('Не найдено русских слов.');
    
         $lemma = 'test';
-        self::$testMorpher->russian->Parse($lemma);
+        self::$testMorpher->russian->parse($lemma);
     }
 
     public function testParse_ExceptionNoS(): void
@@ -96,7 +96,7 @@ final class RussianDeclensionTest extends IntegrationBase
         $this->expectException(InvalidArgumentEmptyString::class);
 
         $lemma = '';
-        self::$testMorpher->russian->Parse($lemma);
+        self::$testMorpher->russian->parse($lemma);
     }
 
     public function testParse_DeclensionNotSupportedUseSpell(): void
@@ -105,7 +105,7 @@ final class RussianDeclensionTest extends IntegrationBase
         $this->expectExceptionMessage('Склонение числительных в declension не поддерживается. Используйте метод spell.');
    
         $lemma = 'двадцать';
-        self::$testMorpher->russian->Parse($lemma);
+        self::$testMorpher->russian->parse($lemma);
     }
 
     public function testParse_InvalidFlags(): void
@@ -114,6 +114,6 @@ final class RussianDeclensionTest extends IntegrationBase
         $this->expectExceptionMessage('Указаны неправильные флаги.');
    
         $lemma = 'тест';
-        self::$testMorpher->russian->Parse($lemma,["AAA","BBB"]);
+        self::$testMorpher->russian->parse($lemma,["AAA","BBB"]);
     }
 }

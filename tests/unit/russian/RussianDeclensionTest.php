@@ -25,7 +25,7 @@ final class RussianDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult = $testMorpher->russian->Parse($lemma,['flagA','flagB','flagC']);
+        $declensionResult = $testMorpher->russian->parse($lemma,['flagA','flagB','flagC']);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -69,7 +69,7 @@ final class RussianDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult = $testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->parse($lemma);
 
 
         $transaction = reset($container);//get first element of requests history
@@ -135,7 +135,7 @@ final class RussianDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult = $testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->parse($lemma);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -170,7 +170,7 @@ final class RussianDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $genitive = $testMorpher->russian->Parse($lemma)->Genitive;
+        $genitive = $testMorpher->russian->parse($lemma)->Genitive;
 
         $transaction = reset($container);//get first element of requests history
 
@@ -200,7 +200,7 @@ final class RussianDeclensionTest extends TestCase
     
         $lemma = 'test';
     
-        $declensionResult = $testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->parse($lemma);
     }
 
     public function testParse_ExceptionNoS(): void
@@ -220,7 +220,7 @@ final class RussianDeclensionTest extends TestCase
     
         $lemma = '   ';
     
-        $testMorpher->russian->Parse($lemma);
+        $testMorpher->russian->parse($lemma);
 
     }
 
@@ -241,7 +241,7 @@ final class RussianDeclensionTest extends TestCase
     
         $lemma = '   ';
     
-        $testMorpher->russian->Parse($lemma);
+        $testMorpher->russian->parse($lemma);
     }
 
     public function testParse_DeclensionNotSupportedUseSpell(): void
@@ -259,7 +259,7 @@ final class RussianDeclensionTest extends TestCase
     
         $lemma = 'двадцать';
     
-        $declensionResult = $testMorpher->russian->Parse($lemma);
+        $declensionResult = $testMorpher->russian->parse($lemma);
     }
 
 
@@ -278,7 +278,7 @@ final class RussianDeclensionTest extends TestCase
     
         $lemma = 'двадцать';
     
-        $declensionResult = $testMorpher->russian->Parse($lemma,["AAA","BBB"]);
+        $declensionResult = $testMorpher->russian->parse($lemma,["AAA","BBB"]);
     }
 
     public function testInvalidJsonResponse(): void
@@ -290,7 +290,7 @@ final class RussianDeclensionTest extends TestCase
             $lemma = 'тест';
             $container = [];
             $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);       
-            $declensionResult = $testMorpher->russian->Parse($lemma);
+            $declensionResult = $testMorpher->russian->parse($lemma);
         }
         catch (\Morpher\Ws3Client\InvalidServerResponse $ex)
         {
