@@ -152,7 +152,7 @@ final class RussianDeclensionTest extends TestCase
         $this->assertInstanceOf(Russian\FullName::class ,$declensionResult->FullName);        
         $this->assertEquals("Пушкин", $declensionResult->FullName->Surname);
         $this->assertEquals("Александр", $declensionResult->FullName->Name);
-        $this->assertEquals("Сергеевич", $declensionResult->FullName->Pantronymic);
+        $this->assertEquals("Сергеевич", $declensionResult->FullName->Patronymic);
     }
 
 

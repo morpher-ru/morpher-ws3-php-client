@@ -134,7 +134,7 @@ $declensionResult — объект ``Morpher\Ws3Client\Russian\DeclensionResult`
 
   * $declensionResult->FullName->Name - имя;  
   * $declensionResult->FullName->Surname - фамилия;  
-  * $declensionResult->FullName->Pantronymic – отчество.  
+  * $declensionResult->FullName->Patronymic – отчество.  
   
 ## <a name="russpell"></a>Пропись чисел и согласование с числом
 
