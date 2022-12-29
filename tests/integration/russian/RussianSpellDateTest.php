@@ -14,7 +14,7 @@ final class RussianSpellDateTest extends IntegrationBase
 {
     public function SpellDateProvider(): array
     {
-        return [["2019-06-29"],[new \DateTime('29.06.2019')],[(new \DateTime('29.06.2019'))->getTimestamp()]];
+        return [["2019-06-29"],[new DateTime('29.06.2019')],[(new DateTime('29.06.2019'))->getTimestamp()]];
     }
 
     /**
