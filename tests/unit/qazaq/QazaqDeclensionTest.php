@@ -447,7 +447,7 @@ final class QazaqDeclensionTest extends TestCase
     
         $lemma = 'test';
     
-        $declensionResult = $testMorpher->qazaq->parse($lemma);
+        $testMorpher->qazaq->parse($lemma);
     }
 
     public function testParse_ExceptionNoS(): void
@@ -467,9 +467,8 @@ final class QazaqDeclensionTest extends TestCase
     
         $lemma = '+++';
     
-        $declensionResult = $testMorpher->qazaq->parse($lemma);
+        $testMorpher->qazaq->parse($lemma);
     }
-
 
     public function testParse_ExceptionNoS2(): void
     {
@@ -488,6 +487,6 @@ final class QazaqDeclensionTest extends TestCase
     
         $lemma = '+++';
     
-        $declensionResult = $testMorpher->qazaq->parse($lemma);
+        $testMorpher->qazaq->parse($lemma);
     }
 }
