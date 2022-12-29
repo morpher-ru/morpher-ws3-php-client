@@ -2,8 +2,6 @@
 namespace Morpher\Ws3Client;
 
 
-use GuzzleHttp\Exception\GuzzleException;
-
 class Morpher
 {
     public Russian\Client $russian;
@@ -21,9 +19,9 @@ class Morpher
     }
 
     /**
-     * @throws ServiceDenied
-     * @throws TokenNotFound
-     * @throws InvalidServerResponse
+     * Возвращает количество запросов, оставшихся на текущие сутки.
+     * @throws SystemError
+     * @throws TokenRequired
      */
     public function getQueriesLeftForToday():int
     {

@@ -18,11 +18,4 @@ final class RussianAddStressmarksTest extends IntegrationBase
 
         $this->assertEquals('Бале́т Петра́ Чайко́вского "Щелку́нчик"',$result);
     }
-
-    public function testStressmarks_Empty(): void
-    {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        
-        self::$testMorpher->russian->AddStressmarks("   ");
-    }
 }

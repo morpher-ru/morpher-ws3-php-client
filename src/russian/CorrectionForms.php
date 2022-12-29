@@ -5,13 +5,13 @@ namespace Morpher\Ws3Client\Russian;
 
 class CorrectionForms
 {
-    public  ?string $Nominative;
-    public  ?string $Genitive;
-    public  ?string $Dative;
-    public  ?string $Accusative;
-    public  ?string $Instrumental;
-    public  ?string $Prepositional;
-    public  ?string $Locative;    
+    public ?string $Nominative;
+    public ?string $Genitive;
+    public ?string $Dative;
+    public ?string $Accusative;
+    public ?string $Instrumental;
+    public ?string $Prepositional;
+    public ?string $Locative;
 
     function __construct($data)
     {

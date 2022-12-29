@@ -1,7 +1,11 @@
 <?php
 namespace Morpher\Ws3Client;
 
-class InvalidServerResponse extends \Exception
+/**
+ * Выбрасывается, если сервер вернул неожиданный ответ.
+ * На практике скорее всего означает, что у вас устаревшая версия клиента.
+ */
+class InvalidServerResponse extends SystemError
 {
     public string $response;
 

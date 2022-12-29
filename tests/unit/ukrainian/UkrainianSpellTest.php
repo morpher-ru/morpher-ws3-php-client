@@ -3,6 +3,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
 
+use Morpher\Ws3Client\InvalidArgumentEmptyString;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\Ukrainian as Ukrainian;
@@ -79,12 +80,17 @@ final class UkrainianSpellTest extends TestCase
 
     public function testSpell_Empty(): void
     {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
+        $this->expectException(InvalidArgumentEmptyString::class);
 
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,'');
+        $responseJson = '{
+          "code": 6,
+          "message": "Не указан обязательный параметр: unit."
+        }';
+
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
     
-        $declensionResult = $testMorpher->ukrainian->Spell(1,'   ');
+        $testMorpher->ukrainian->Spell(1,'   ');
     }
 }

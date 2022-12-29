@@ -3,6 +3,7 @@ namespace Morpher\Ws3Client\Qazaq;
 
 
 use Morpher\Ws3Client\InvalidArgumentEmptyString;
+use Morpher\Ws3Client\SystemError;
 use Morpher\Ws3Client\UnknownErrorCode;
 use Morpher\Ws3Client\WebClient;
 
@@ -14,7 +15,15 @@ class Client
     {
         $this->webClient = $webClient;
     }
-    
+
+    /**
+     * Склоняет по падежам, лицам и числам на казахском языке.
+     * @param string $lemma Слово или фраза для склонения
+     * @return DeclensionResult Результат склонения
+     * @throws SystemError
+     * @throws QazaqWordsNotFound
+     * @throws InvalidArgumentEmptyString
+     */
     public function Parse(string $lemma): DeclensionResult
     {
         $query = ["s" => $lemma];
@@ -36,7 +45,7 @@ class Client
 
         $result = WebClient::JsonDecode($result_raw);
 
-        $result['A'] = $lemma;    
+        $result['A'] = $lemma;
 
         $declensionResult = new DeclensionResult($result);
 

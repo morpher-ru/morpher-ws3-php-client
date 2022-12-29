@@ -2,7 +2,7 @@
 
 namespace Morpher\Ws3Client;
 
-class ConnectionError extends \Exception
+class ConnectionError extends SystemError
 {
     public function __construct(\Throwable $ex)
     {

@@ -3,9 +3,9 @@ namespace Morpher\Ws3Client\Ukrainian;
 
 
 use Morpher\Ws3Client\InvalidArgumentEmptyString;
+use Morpher\Ws3Client\SystemError;
 use Morpher\Ws3Client\UnknownErrorCode;
 use Morpher\Ws3Client\WebClient;
-//use Morpher\Ws3Client\Ukrainian\DeclensionResult;
 
 
 class Client
@@ -18,14 +18,24 @@ class Client
         $this->webClient = $webClient;
         $this->userDict = new UserDict($webClient);
     }
-    
+
+    /**
+     * Склоняет по падежам ФИО на украинском языке.
+     * @param string $lemma ФИО
+     * @param array $flags
+     * @return DeclensionResult
+     * @throws InvalidArgumentEmptyString
+     * @throws UkrainianWordsNotFound
+     * @throws InvalidFlags
+     * @throws SystemError
+     */
     public function Parse(string $lemma,array $flags = []): DeclensionResult
     {
         $query = ["s" => $lemma];
 
         if (!empty($flags))
         {
-            $query['flags'] = implode(',',$flags);
+            $query['flags'] = implode(',', $flags);
         }
 
         try
@@ -42,49 +52,47 @@ class Client
         }
         catch (UnknownErrorCode $ex)
         {
-            $morpher_code = $ex->getCode();
+            $error_code = $ex->getCode();
             $msg = $ex->getMessage();
 
-            if ($morpher_code == 6) throw new InvalidArgumentEmptyString($msg);
-            if ($morpher_code == 5) throw new UkrainianWordsNotFound($msg);
-            if ($morpher_code == 12) throw new InvalidFlags($msg);
+            if ($error_code == 6) throw new InvalidArgumentEmptyString($msg);
+            if ($error_code == 5) throw new UkrainianWordsNotFound($msg);
+            if ($error_code == 12) throw new InvalidFlags($msg);
             
             throw $ex;
         }
     }
-    
 
+    /**
+     * Помогает строить фразы типа «двісті метрів», «три учасники»
+     * из числа и единицы измерения
+     * @param int $number Число
+     * @param string $unit Единица измерения
+     * @return NumberSpellingResult
+     * @throws SystemError
+     * @throws InvalidArgumentEmptyString
+     */
     public function Spell(int $number, string $unit): NumberSpellingResult
     {
-        if (empty(trim($unit)))
+        $queryParam = ["n" => $number, 'unit' => $unit];
+
+        try
         {
-            throw new \Morpher\Ws3Client\InvalidArgumentEmptyString();
-        }
+            $result_raw = $this->webClient->send("/ukrainian/spell", $queryParam);
 
-        $queryParam = ["n" => $number,'unit' => $unit];
+            $result = WebClient::JsonDecode($result_raw);
+            $spellResult = new NumberSpellingResult($result);
 
-        $result_raw = "";
-        try{
-
-            $result_raw = $this->webClient->send("/ukrainian/spell",$queryParam,'GET');
+            return $spellResult;
         }
         catch (UnknownErrorCode $ex)
         {
-            //$morpher_code = $ex->getCode();
-            //$msg = $ex->getMessage();
+            $error_code = $ex->getCode();
+            $msg = $ex->getMessage();
+
+            if ($error_code == 6) throw new InvalidArgumentEmptyString($msg);
 
             throw $ex;
         }
-
-        $result = WebClient::JsonDecode($result_raw);
-        $spellResult = new NumberSpellingResult($result);
-
-        return $spellResult;
-
-
     }
-
-
-
-    
 }

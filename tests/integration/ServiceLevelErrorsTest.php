@@ -4,6 +4,7 @@ require_once __DIR__."/../../vendor/autoload.php";
 require_once __DIR__."/IntegrationBase.php";
 
 use Morpher\Ws3Client\ConnectionError;
+use Morpher\Ws3Client\TokenIncorrectFormat;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\Morpher;
@@ -45,10 +46,9 @@ final class ServiceLevelErrorsTest extends TestCase
 
         $testMorpher = new Morpher(IntegrationBase::BASE_URL,$token);     
 
-        $this->expectException(\Morpher\Ws3Client\TokenIncorrectFormat::class);
+        $this->expectException(TokenIncorrectFormat::class);
 
         $callback($testMorpher);
-        
     }
 
     /**

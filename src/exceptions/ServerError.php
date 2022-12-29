@@ -2,7 +2,7 @@
 
 namespace Morpher\Ws3Client;
 
-class ServerError extends \Exception
+class ServerError extends SystemError
 {
     public function __construct(\Throwable $ex)
     {

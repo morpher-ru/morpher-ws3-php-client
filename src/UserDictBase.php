@@ -18,15 +18,19 @@ abstract class UserDictBase
         $this->endpoint = $endpoint;
         $this->CorrectionEntryClassName = $CorrectionEntryClassName;
     }
-    
+
+    /**
+     * @throws TokenRequired
+     * @throws SystemError
+     */
     protected function AddOrUpdateBase(CorrectionEntryInterface $entry): void
     {
         if (!($entry instanceof $this->CorrectionEntryClassName))
         {
-            throw new InvalidArgumentException("$entry не является экземпляром подходящего класса.");
+            throw new InvalidArgumentException("\$entry не является экземпляром подходящего класса.");
         }
 
-         if (!$entry->SingularNominativeExists())
+        if (!$entry->SingularNominativeExists())
         {
             throw new \InvalidArgumentException("Обязательно должен быть указан именительный падеж единственного числа.");
         }
@@ -52,12 +56,9 @@ abstract class UserDictBase
     }
 
     /**
-     * @throws ServiceDenied
-     * @throws UnknownErrorCode
-     * @throws TokenNotFound
-     * @throws GuzzleException
+     * @throws SystemError
      * @throws TokenRequired
-     * @throws InvalidServerResponse
+     * @throws InvalidArgumentEmptyString
      */
     public function Remove(string $NominativeForm): void
     {
@@ -80,11 +81,8 @@ abstract class UserDictBase
     }
 
     /**
-     * @throws ServiceDenied
-     * @throws TokenNotFound
+     * @throws SystemError
      * @throws TokenRequired
-     * @throws GuzzleException
-     * @throws InvalidServerResponse
      */
     public function GetAll(): array
     {

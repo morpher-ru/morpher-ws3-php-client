@@ -2,6 +2,8 @@
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
+
+use Morpher\Ws3Client\InvalidArgumentEmptyString;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\WebClient;
@@ -31,7 +33,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->assertEquals(Ukrainian\Gender::Masculine, $declensionResult->Gender);
     }
 
-    public function testParse_ExceptionNoWords(): void
+    public function testParse_ExceptionNoUkrainianWords(): void
     {
         $this->expectException(Ukrainian\UkrainianWordsNotFound::class);
         $this->expectExceptionMessage('Не найдено украинских слов.');
@@ -42,8 +44,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
 
     public function testParse_InvalidArgumentEmptyString(): void
     {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        $this->expectExceptionMessage('Передана пустая строка.');
+        $this->expectException(InvalidArgumentEmptyString::class);
 
         $lemma = '';
         self::$testMorpher->ukrainian->Parse($lemma);

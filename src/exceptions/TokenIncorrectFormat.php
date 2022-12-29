@@ -1,10 +1,10 @@
 <?php
 namespace Morpher\Ws3Client;
 
-class TokenIncorrectFormat extends TokenNotFound
+class TokenIncorrectFormat extends AuthenticationError
 {
-    function __construct(string $message, int $code = 0)
+    function __construct(string $message)
     {
-        parent::__construct($message, $code);
+        parent::__construct($message);
     }
 }
