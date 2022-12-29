@@ -5,7 +5,7 @@ use Morpher\Ws3Client\CorrectionEntryInterface;
 
 
 
-class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
+class CorrectionEntry implements CorrectionEntryInterface
 {
     public ?CorrectionForms $Singular = null;
     public ?CorrectionForms $Plural = null;

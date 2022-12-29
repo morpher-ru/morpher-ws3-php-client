@@ -135,7 +135,7 @@ final class UkrainianUserDictTest extends TestCase
 
     public function testUserDicPost_Exception(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Обязательно должен быть указан именительный падеж единственного числа.');
 
         $parseResults = [
@@ -157,7 +157,7 @@ final class UkrainianUserDictTest extends TestCase
 
     public function testUserDicPost_Exception2(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Нужно указать хотя бы одну косвенную форму.');
 
         $parseResults = [
