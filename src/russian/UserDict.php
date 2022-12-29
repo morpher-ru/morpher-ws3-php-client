@@ -20,7 +20,7 @@ class UserDict extends UserDictBase
      * @throws SystemError
      * @throws InvalidArgumentException
      */
-    public function AddOrUpdate(CorrectionEntry $entry): void
+    public function addOrUpdate(CorrectionEntry $entry): void
     {
         $this->addOrUpdateBase($entry);
     }

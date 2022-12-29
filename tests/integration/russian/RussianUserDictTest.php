@@ -28,7 +28,7 @@ final class RussianUserDictTest extends IntegrationBase
         $correction->Singular->Locative = 'в чебураторке';
         $correction->Plural->Locative = 'в чебураториях';
 
-        self::$testMorpher->russian->userDict->AddOrUpdate($correction);
+        self::$testMorpher->russian->userDict->addOrUpdate($correction);
 
         $list = self::$testMorpher->russian->userDict->getAll();
         $found = false;
@@ -63,7 +63,7 @@ final class RussianUserDictTest extends IntegrationBase
         $correction->Singular->Locative = 'в чебурелии';
         $correction->Plural->Locative = 'в чебурелиях';
 
-        self::$testMorpher->russian->userDict->AddOrUpdate($correction);
+        self::$testMorpher->russian->userDict->addOrUpdate($correction);
 
         $list = self::$testMorpher->russian->userDict->getAll();
         $found = false;
@@ -264,7 +264,7 @@ final class RussianUserDictTest extends IntegrationBase
         unset($declension1);
         
         //добавить слово в словарь
-        self::$testMorpher->russian->userDict->AddOrUpdate($correction);
+        self::$testMorpher->russian->userDict->addOrUpdate($correction);
 
         $list = self::$testMorpher->russian->userDict->getAll();
         $found = false;
