@@ -1,6 +1,6 @@
 {
     "name": "morpher/ws3-client",
-    "version": "0.2.2",
+    "version": "1.0.0",
     "description": "Склонение по падежам на русском, украинском и казахском языках, расстановка ударений в текстах - PHP-клиент для API morpher.ru.",
     "keywords": ["declension","inflection","pluralization","russian","ukrainian","qazaq"],
     "homepage": "https://github.com/morpher-ru/morpher-ws3-php-client",
