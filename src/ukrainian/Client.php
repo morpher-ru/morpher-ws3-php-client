@@ -40,7 +40,7 @@ class Client
 
         try
         {
-            $result_raw = $this->webClient->send("/ukrainian/declension", $query, 'GET');
+            $result_raw = $this->webClient->send("/ukrainian/declension", $query);
 
             $result = WebClient::jsonDecode($result_raw);
 
