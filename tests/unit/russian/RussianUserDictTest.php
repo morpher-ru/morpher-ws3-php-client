@@ -88,7 +88,7 @@ final class RussianUserDictTest extends TestCase
 
     public function testUserDictRemove_Success(): void
     {
-        $return_text = '';
+        $return_text = 'true';
 
         $container = [];
 

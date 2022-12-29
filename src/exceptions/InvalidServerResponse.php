@@ -11,7 +11,7 @@ class InvalidServerResponse extends SystemError
 
     function __construct(string $message, string $response, int $error_code = 0)
     {
-        parent::__construct($message, $error_code);
+        parent::__construct($message.'. Ответ сервера: "'.$response.'"', $error_code);
         $this->response = $response;
     }
 }
