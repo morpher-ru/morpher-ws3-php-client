@@ -39,7 +39,7 @@ final class QazaqDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult = $testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->parse($lemma);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -252,7 +252,7 @@ final class QazaqDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult = $testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->parse($lemma);
 
 
         $transaction = reset($container);//get first element of requests history
@@ -447,7 +447,7 @@ final class QazaqDeclensionTest extends TestCase
     
         $lemma = 'test';
     
-        $declensionResult = $testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->parse($lemma);
     }
 
     public function testParse_ExceptionNoS(): void
@@ -467,7 +467,7 @@ final class QazaqDeclensionTest extends TestCase
     
         $lemma = '+++';
     
-        $declensionResult = $testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->parse($lemma);
     }
 
 
@@ -488,6 +488,6 @@ final class QazaqDeclensionTest extends TestCase
     
         $lemma = '+++';
     
-        $declensionResult = $testMorpher->qazaq->Parse($lemma);
+        $declensionResult = $testMorpher->qazaq->parse($lemma);
     }
 }

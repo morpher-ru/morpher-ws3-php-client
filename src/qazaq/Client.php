@@ -24,7 +24,7 @@ class Client
      * @throws QazaqWordsNotFound
      * @throws InvalidArgumentEmptyString
      */
-    public function Parse(string $lemma): DeclensionResult
+    public function parse(string $lemma): DeclensionResult
     {
         $query = ["s" => $lemma];
 
