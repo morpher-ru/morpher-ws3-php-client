@@ -29,7 +29,7 @@ class Client
      * @throws InvalidFlags
      * @throws SystemError
      */
-    public function Parse(string $lemma,array $flags = []): DeclensionResult
+    public function parse(string $lemma, array $flags = []): DeclensionResult
     {
         $query = ["s" => $lemma];
 
