@@ -14,7 +14,7 @@ final class RussianSpellOrdinalTest extends IntegrationBase
 {
     public function testSpellOrdinal_Success(): void
     {
-        $spellingResult = self::$testMorpher->russian->SpellOrdinal(7518 ,'колесо');
+        $spellingResult = self::$testMorpher->russian->spellOrdinal(7518 ,'колесо');
 
         $this->assertInstanceOf(Russian\NumberSpellingResult::class,$spellingResult);
     
@@ -41,6 +41,6 @@ final class RussianSpellOrdinalTest extends IntegrationBase
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         
-        self::$testMorpher->russian->SpellOrdinal(1,"   ");
+        self::$testMorpher->russian->spellOrdinal(1,"   ");
     }
 }

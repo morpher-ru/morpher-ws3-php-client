@@ -21,7 +21,7 @@ class WebClient
         ]);    
     }
 
-    public function getStandardHeaders():array
+    public function getStandardHeaders(): array
     {
         $headers = ['Accept' => 'application/json'];
 

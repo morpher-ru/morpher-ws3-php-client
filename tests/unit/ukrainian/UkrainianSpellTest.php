@@ -43,7 +43,7 @@ final class UkrainianSpellTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $spellingResult = $testMorpher->ukrainian->Spell(10,$unit);
+        $spellingResult = $testMorpher->ukrainian->spell(10,$unit);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -91,6 +91,6 @@ final class UkrainianSpellTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
     
-        $testMorpher->ukrainian->Spell(1,'   ');
+        $testMorpher->ukrainian->spell(1,'   ');
     }
 }

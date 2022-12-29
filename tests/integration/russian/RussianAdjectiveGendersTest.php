@@ -14,7 +14,7 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
 {
     public function testAdjectiveGenders_Success(): void
     {
-        $adjectiveGenders = self::$testMorpher->russian->AdjectiveGenders("уважаемый");
+        $adjectiveGenders = self::$testMorpher->russian->getAdjectiveGenders("уважаемый");
 
         $this->assertNotNull($adjectiveGenders);
         $this->assertInstanceOf(Russian\AdjectiveGenders::class,$adjectiveGenders);
@@ -27,7 +27,7 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
     public function testAdjectiveGenders_error(): void
     {
         $this->expectException(Russian\AdjectiveFormIncorrect::class);
-        $adjectiveGenders = self::$testMorpher->russian->AdjectiveGenders("уважаемого");
+        $adjectiveGenders = self::$testMorpher->russian->getAdjectiveGenders("уважаемого");
 
  /*       $this->assertNotNull($adjectiveGenders);
         $this->assertInstanceOf(Russian\AdjectiveGenders::class,$adjectiveGenders);
@@ -41,6 +41,6 @@ final class RussianAdjectiveGendersTest extends IntegrationBase
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         
-        self::$testMorpher->russian->AdjectiveGenders("   ");
+        self::$testMorpher->russian->getAdjectiveGenders("   ");
     }
 }

@@ -28,7 +28,7 @@ final class RussianAdjectiveGendersTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $adjectiveGenders = $testMorpher->russian->AdjectiveGenders($adj);
+        $adjectiveGenders = $testMorpher->russian->getAdjectiveGenders($adj);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -66,7 +66,7 @@ final class RussianAdjectiveGendersTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $adjectiveGenders = $testMorpher->russian->AdjectiveGenders($adj);
+        $adjectiveGenders = $testMorpher->russian->getAdjectiveGenders($adj);
     }
 
     public function testAdjectiveGenders_Empty(): void
@@ -83,6 +83,6 @@ final class RussianAdjectiveGendersTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson);
 
-        $declensionResult = $testMorpher->russian->AdjectiveGenders('   ');
+        $declensionResult = $testMorpher->russian->getAdjectiveGenders('   ');
     }
 }

@@ -43,7 +43,7 @@ final class RussianSpellOrdinalTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $spellingResult = $testMorpher->russian->SpellOrdinal($num,$unit);
+        $spellingResult = $testMorpher->russian->spellOrdinal($num,$unit);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -88,7 +88,7 @@ final class RussianSpellOrdinalTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
 
-        $declensionResult = $testMorpher->russian->SpellOrdinal(1,'   ');
+        $declensionResult = $testMorpher->russian->spellOrdinal(1,'   ');
     }
 
     public function testSpellOrdinal_NoRussianWords(): void
@@ -102,6 +102,6 @@ final class RussianSpellOrdinalTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 496);
 
-        $declensionResult = $testMorpher->russian->SpellOrdinal(1,'   ');
+        $declensionResult = $testMorpher->russian->spellOrdinal(1,'   ');
     }
 }

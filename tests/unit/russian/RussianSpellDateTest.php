@@ -40,7 +40,7 @@ final class RussianSpellDateTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
 
-        $dateSpellingResult = $testMorpher->russian->SpellDate($date);
+        $dateSpellingResult = $testMorpher->russian->spellDate($date);
 
         $this->assertInstanceOf(Russian\DateSpellingResult::class,$dateSpellingResult);
 
@@ -64,7 +64,7 @@ final class RussianSpellDateTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
 
-        $declensionResult = $testMorpher->russian->SpellDate('   ');
+        $declensionResult = $testMorpher->russian->spellDate('   ');
     }
 
     public function testSpellDate_Exception(): void
@@ -72,7 +72,7 @@ final class RussianSpellDateTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $container = [];
         $testMorpher = MorpherTestHelper::createMockMorpher($container,'{}');
-        $testMorpher->russian->SpellDate(null);
+        $testMorpher->russian->spellDate(null);
     }
     
     public function testSpellDate_IncorrectFormat(): void
@@ -81,6 +81,6 @@ final class RussianSpellDateTest extends TestCase
         $this->expectExceptionMessage("Дата указана в некорректном формате.");
         $container = [];
         $testMorpher = MorpherTestHelper::createMockMorpher($container,'{"code":8,"message":"Дата указана в некорректном формате."}',499);    
-        $testMorpher->russian->SpellDate("2022.10.01");
+        $testMorpher->russian->spellDate("2022.10.01");
     }
 }

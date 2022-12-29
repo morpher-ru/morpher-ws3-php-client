@@ -27,7 +27,7 @@ final class RussianAdjectivizeTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $list = $testMorpher->russian->Adjectivize($name);
+        $list = $testMorpher->russian->adjectivize($name);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -57,6 +57,6 @@ final class RussianAdjectivizeTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
     
-        $declensionResult = $testMorpher->russian->Adjectivize('   ');
+        $declensionResult = $testMorpher->russian->adjectivize('   ');
     }
 }

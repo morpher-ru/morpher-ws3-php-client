@@ -14,7 +14,7 @@ final class RussianAdjectivizeTest extends IntegrationBase
 {
     public function testAdjectivize_Success(): void
     {
-        $list = self::$testMorpher->russian->Adjectivize("мытыщи");
+        $list = self::$testMorpher->russian->adjectivize("мытыщи");
 
         $this->assertNotNull($list);
         $this->assertIsArray($list);
@@ -28,6 +28,6 @@ final class RussianAdjectivizeTest extends IntegrationBase
     {
         $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
         
-        self::$testMorpher->russian->Adjectivize("   ");
+        self::$testMorpher->russian->adjectivize("   ");
     }
 }

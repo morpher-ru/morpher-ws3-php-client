@@ -41,7 +41,7 @@ final class RussianSpellTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $spellingResult = $testMorpher->russian->Spell(10,$unit);
+        $spellingResult = $testMorpher->russian->spell(10,$unit);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -85,7 +85,7 @@ final class RussianSpellTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 400);
 
-        $testMorpher->russian->Spell(1,'   ');
+        $testMorpher->russian->spell(1,'   ');
     }
 
     public function testSpell_NoRussianWords(): void
@@ -99,6 +99,6 @@ final class RussianSpellTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $responseJson, 496);
 
-        $testMorpher->russian->Spell(1,'   ');
+        $testMorpher->russian->spell(1,'   ');
     }
 }

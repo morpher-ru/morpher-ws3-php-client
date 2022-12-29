@@ -72,7 +72,7 @@ class Client
      * @throws SystemError
      * @throws InvalidArgumentEmptyString
      */
-    public function Spell(int $number, string $unit): NumberSpellingResult
+    public function spell(int $number, string $unit): NumberSpellingResult
     {
         $queryParam = ["n" => $number, 'unit' => $unit];
 
