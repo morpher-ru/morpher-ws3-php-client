@@ -38,13 +38,13 @@ final class RussianUserDictNoTokenTest extends TestCase
     public function testUserDict_NoTokenError_GetAll(): void
     {
         $this->expectException(\Morpher\Ws3Client\TokenRequired::class);
-        self::$testMorpher->russian->userDict->GetAll();
+        self::$testMorpher->russian->userDict->getAll();
     }
 
     public function testUserDict_NoTokenError_Remove(): void
     {
         $this->expectException(\Morpher\Ws3Client\TokenRequired::class);
         $word = 'чебуратор';
-        self::$testMorpher->russian->userDict->Remove($word);
+        self::$testMorpher->russian->userDict->remove($word);
     }
 }

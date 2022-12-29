@@ -60,6 +60,8 @@ class WebClient
             ]);
 
             $result = $response->getBody();
+
+            return $result;
         }
         catch (ClientException $ex)
         {
@@ -92,8 +94,6 @@ class WebClient
         {
             throw new ConnectionError($ex);
         }
-
-        return $result;
     }
 
     /**

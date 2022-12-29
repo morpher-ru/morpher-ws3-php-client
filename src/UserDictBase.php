@@ -23,7 +23,7 @@ abstract class UserDictBase
      * @throws TokenRequired
      * @throws SystemError
      */
-    protected function AddOrUpdateBase(CorrectionEntryInterface $entry): void
+    protected function addOrUpdateBase(CorrectionEntryInterface $entry): void
     {
         if (!($entry instanceof $this->CorrectionEntryClassName))
         {
@@ -44,7 +44,11 @@ abstract class UserDictBase
 
         try
         {
-            $this->webClient->send($this->endpoint,[],'POST',null,null,$formParam);
+            $responseBody = $this->webClient->send($this->endpoint, [], 'POST', null, null, $formParam);
+            if (!empty($responseBody))
+            {
+                throw new InvalidServerResponse('Ожидался пустой ответ.', $responseBody);
+            }
         }
         catch (UnknownErrorCode $ex)
         {
@@ -60,13 +64,18 @@ abstract class UserDictBase
      * @throws TokenRequired
      * @throws InvalidArgumentEmptyString
      */
-    public function Remove(string $NominativeForm): void
+    public function remove(string $NominativeForm): void
     {
         $queryParam = ["s" => $NominativeForm];
 
         try
         {
-            $this->webClient->send($this->endpoint,$queryParam, 'DELETE');
+            $responseBody = $this->webClient->send($this->endpoint, $queryParam, 'DELETE');
+
+            if (!empty($responseBody))
+            {
+                throw new InvalidServerResponse('Ожидался пустой ответ.', $responseBody);
+            }
         }
         catch (UnknownErrorCode $ex)
         {
@@ -84,7 +93,7 @@ abstract class UserDictBase
      * @throws SystemError
      * @throws TokenRequired
      */
-    public function GetAll(): array
+    public function getAll(): array
     {
         try
         {

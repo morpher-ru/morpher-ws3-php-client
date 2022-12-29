@@ -38,7 +38,7 @@ final class UkrainianUserDictTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $list = $testMorpher->ukrainian->userDict->GetAll();
+        $list = $testMorpher->ukrainian->userDict->getAll();
 
         $transaction = reset($container);//get first element of requests history
 
@@ -70,17 +70,14 @@ final class UkrainianUserDictTest extends TestCase
 
     public function testUserDictRemove_Success(): void
     {
-        $parseResults = [
-        ];
-
-        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = '';
 
         $container = [];
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
         $lemma = 'кошка';
-        $testMorpher->ukrainian->userDict->Remove($lemma);
+        $testMorpher->ukrainian->userDict->remove($lemma);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -111,15 +108,12 @@ final class UkrainianUserDictTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container, $return_text, 400);
         
-        $testMorpher->ukrainian->userDict->Remove('');
+        $testMorpher->ukrainian->userDict->remove('');
     }
 
     public function testUserDicPost_Success(): void
     {
-        $parseResults = [
-        ];
-
-        $return_text = json_encode($parseResults,JSON_UNESCAPED_UNICODE);
+        $return_text = '';
 
         $container = [];
 

@@ -39,13 +39,13 @@ final class RussianUserDictIncorrectTokenTest extends TestCase
     public function testUserDict_NoTokenError_GetAll(): void
     {
         $this->expectException(TokenIncorrectFormat::class);
-        self::$testMorpher->russian->userDict->GetAll();
+        self::$testMorpher->russian->userDict->getAll();
     }
 
     public function testUserDict_NoTokenError_Remove(): void
     {
         $this->expectException(TokenIncorrectFormat::class);
         $word = 'чебуратор';
-        self::$testMorpher->russian->userDict->Remove($word);
+        self::$testMorpher->russian->userDict->remove($word);
     }
 }
