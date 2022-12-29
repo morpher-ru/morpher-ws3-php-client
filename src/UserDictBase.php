@@ -1,9 +1,6 @@
 <?php
 namespace Morpher\Ws3Client;
 
-use GuzzleHttp\Exception\GuzzleException;
-use InvalidArgumentException;
-
 abstract class UserDictBase
 {
     protected WebClient $webClient;
@@ -27,7 +24,7 @@ abstract class UserDictBase
     {
         if (!($entry instanceof $this->CorrectionEntryClassName))
         {
-            throw new InvalidArgumentException("\$entry не является экземпляром подходящего класса.");
+            throw new \InvalidArgumentException("\$entry не является экземпляром подходящего класса.");
         }
 
         if (!$entry->SingularNominativeExists())
@@ -64,7 +61,7 @@ abstract class UserDictBase
      * @throws TokenRequired
      * @throws InvalidArgumentEmptyString
      */
-    public function remove(string $NominativeForm): void
+    public function remove(string $NominativeForm): bool
     {
         $queryParam = ["s" => $NominativeForm];
 
@@ -72,10 +69,14 @@ abstract class UserDictBase
         {
             $responseBody = $this->webClient->send($this->endpoint, $queryParam, 'DELETE');
 
-            if (!empty($responseBody))
+            $result = WebClient::jsonDecode($responseBody);
+
+            if (!is_bool($result))
             {
-                throw new InvalidServerResponse('Ожидался пустой ответ.', $responseBody);
+                throw new InvalidServerResponse('Ожидался bool.', $responseBody);
             }
+
+            return $result;
         }
         catch (UnknownErrorCode $ex)
         {

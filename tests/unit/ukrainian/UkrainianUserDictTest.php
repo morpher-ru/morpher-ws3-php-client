@@ -4,15 +4,8 @@ require_once __DIR__."/../../../vendor/autoload.php";
 require_once __DIR__."/../MorpherTestHelper.php";
 
 use Morpher\Ws3Client\InvalidArgumentEmptyString;
-use PHPUnit\Framework\TestCase;
-
-
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Middleware;
 use Morpher\Ws3Client\Ukrainian\CorrectionEntry;
-use Morpher\Ws3Client\WebClient;
+use PHPUnit\Framework\TestCase;
 
 final class UkrainianUserDictTest extends TestCase
 {
@@ -70,7 +63,7 @@ final class UkrainianUserDictTest extends TestCase
 
     public function testUserDictRemove_Success(): void
     {
-        $return_text = '';
+        $return_text = 'true';
 
         $container = [];
 
