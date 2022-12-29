@@ -15,21 +15,21 @@ class AuthorizationTest extends TestCase
     public function CallbacksProvider():array
     {
         return [  //список функций для прогонки через тесты [текст ответа (json), функция вызова запроса]
-            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->Parse('тест');     }],//dataset #0
-            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->qazaq->Parse('тест');       }],//dataset #1
-            ['GET','{"n":[],"unit":[]}'   ,function ($testMorpher)    {     $testMorpher->russian->Spell(10,'тест');  }],//dataset #2
-            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->SpellDate('1988-07-01');  }],//dataset #3
-            ['GET','{"n":[],"unit":[]}'   ,function ($testMorpher)    {     $testMorpher->russian->SpellOrdinal(10,'тест');  }],//dataset #4
-            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->AdjectiveGenders("уважаемый");  }],//dataset #5
-            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->Adjectivize("мытыщи");  }],//dataset #6
-            ['POST','"тест"'              ,function ($testMorpher)    {     $testMorpher->russian->AddStressmarks("тест");  }],//dataset #7
-            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->userDict->GetAll();     }],//dataset #8
-            ['POST','[]'                  ,function ($testMorpher)    {     $testMorpher->russian->userDict->AddOrUpdate(new Russian\CorrectionEntry(['singular' => ['И' => 'чебуратор','Р' => 'чебурыла']]));     }],//dataset #9
-            ['DELETE','[]'                ,function ($testMorpher)    {     $testMorpher->russian->userDict->Remove('чебуратор');     }],//dataset #10
-            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->ukrainian->Parse('тест');     }],//dataset #11       
-            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->GetAll();     }],//dataset #12
-            ['POST','[]'                  ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->AddOrUpdate(new Ukrainian\CorrectionEntry(['singular' => ['Н' => 'чебуратор','Р' => 'чебурыла']]));     }],//dataset #13
-            ['DELETE','[]'                ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->Remove('чебуратор');     }],//dataset #14
+            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->parse('тест');     }],//dataset #0
+            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->qazaq->parse('тест');       }],//dataset #1
+            ['GET','{"n":[],"unit":[]}'   ,function ($testMorpher)    {     $testMorpher->russian->spell(10,'тест');  }],//dataset #2
+            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->spellDate('1988-07-01');  }],//dataset #3
+            ['GET','{"n":[],"unit":[]}'   ,function ($testMorpher)    {     $testMorpher->russian->spellOrdinal(10,'тест');  }],//dataset #4
+            ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->getAdjectiveGenders("уважаемый");  }],//dataset #5
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->adjectivize("мытыщи");  }],//dataset #6
+            ['POST','"тест"'              ,function ($testMorpher)    {     $testMorpher->russian->addStressMarks("тест");  }],//dataset #7
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->userDict->getAll();     }],//dataset #8
+            ['POST',''                    ,function ($testMorpher)    {     $testMorpher->russian->userDict->addOrUpdate(new Russian\CorrectionEntry(['singular' => ['И' => 'чебуратор','Р' => 'чебурыла']]));     }],//dataset #9
+            ['DELETE',''                  ,function ($testMorpher)    {     $testMorpher->russian->userDict->remove('чебуратор');     }],//dataset #10
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->ukrainian->parse('тест');     }],//dataset #11
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->getAll();     }],//dataset #12
+            ['POST',''                    ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->addOrUpdate(new Ukrainian\CorrectionEntry(['singular' => ['Н' => 'чебуратор','Р' => 'чебурыла']]));     }],//dataset #13
+            ['DELETE',''                  ,function ($testMorpher)    {     $testMorpher->ukrainian->userDict->remove('чебуратор');     }],//dataset #14
             ['GET','111'                  ,function ($testMorpher)    {     $testMorpher->getQueriesLeftForToday();     }],//dataset #15
         ];
     }
@@ -37,15 +37,15 @@ class AuthorizationTest extends TestCase
     /**
     * @dataProvider  CallbacksProvider
     */
-    public function testAuthorization(string $method,string $requestResult, callable $callback): void
+    public function testAuthorization(string $method, string $requestResult, callable $callback): void
     {
         $container = [];
 
-        $testMorpher = MorpherTestHelper::createMockMorpher($container,$requestResult);
+        $testMorpher = MorpherTestHelper::createMockMorpher($container, $requestResult);
         
         $callback($testMorpher);
 
-        $this->assertAuthorization(reset($container)['request'],$method);
+        $this->assertAuthorization(reset($container)['request'], $method);
     }
 
 

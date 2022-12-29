@@ -19,9 +19,9 @@ final class RussianUserDictTest extends IntegrationBase
     public function testUserDict_Success(): void
     {
         $word = 'чебуратор';
-        self::$testMorpher->russian->userDict->Remove($word);
+        self::$testMorpher->russian->userDict->remove($word);
 
-        $list = self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->getAll();
 
         foreach ($list as $item)
         {
@@ -38,7 +38,7 @@ final class RussianUserDictTest extends IntegrationBase
 
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $list = self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->getAll();
         $found = false;
         foreach ($list as $item)
         {
@@ -73,7 +73,7 @@ final class RussianUserDictTest extends IntegrationBase
 
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $list = self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->getAll();
         $found = false;
         foreach ($list as $item)
         {
@@ -101,9 +101,9 @@ final class RussianUserDictTest extends IntegrationBase
         }       
         $this->assertTrue($found,"Слово не найдено в словаре после обновления.");
 
-        self::$testMorpher->russian->userDict->Remove($word);
+        self::$testMorpher->russian->userDict->remove($word);
 
-        $list = self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->getAll();
 
         foreach ($list as $item)
         {
@@ -238,9 +238,9 @@ final class RussianUserDictTest extends IntegrationBase
         $correction->Plural->Locative = 'в чебураториях';
 
         //1. удалить слово из словаря
-        self::$testMorpher->russian->userDict->Remove($word);
+        self::$testMorpher->russian->userDict->remove($word);
 
-        $list = self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->getAll();
 
         foreach ($list as $item)
         {
@@ -274,7 +274,7 @@ final class RussianUserDictTest extends IntegrationBase
         //добавить слово в словарь
         self::$testMorpher->russian->userDict->AddOrUpdate($correction);
 
-        $list = self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->getAll();
         $found = false;
         foreach ($list as $item)
         {
@@ -325,9 +325,9 @@ final class RussianUserDictTest extends IntegrationBase
         unset($declension2);
         
         //удалить слово из словаря
-        self::$testMorpher->russian->userDict->Remove($word);
+        self::$testMorpher->russian->userDict->remove($word);
 
-        $list = self::$testMorpher->russian->userDict->GetAll();
+        $list = self::$testMorpher->russian->userDict->getAll();
 
         foreach ($list as $item)
         {
