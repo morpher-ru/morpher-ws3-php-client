@@ -19,6 +19,7 @@ abstract class UserDictBase
     /**
      * @throws TokenRequired
      * @throws SystemError
+     * @throws InvalidArgumentException
      */
     protected function addOrUpdateBase(CorrectionEntryInterface $entry): void
     {
