@@ -26,7 +26,7 @@ final class UkrainianDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult = $testMorpher->ukrainian->Parse($lemma,['flagA','flagB','flagC']);
+        $declensionResult = $testMorpher->ukrainian->parse($lemma,['flagA','flagB','flagC']);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -59,7 +59,7 @@ final class UkrainianDeclensionTest extends TestCase
 
         $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
         
-        $declensionResult = $testMorpher->ukrainian->Parse($lemma);
+        $declensionResult = $testMorpher->ukrainian->parse($lemma);
 
         $transaction = reset($container);//get first element of requests history
 
@@ -99,7 +99,7 @@ final class UkrainianDeclensionTest extends TestCase
     
         $lemma = 'test';
     
-        $declensionResult = $testMorpher->ukrainian->Parse($lemma);
+        $declensionResult = $testMorpher->ukrainian->parse($lemma);
     }
 
     public function testParse_ExceptionNoS(): void
@@ -120,7 +120,7 @@ final class UkrainianDeclensionTest extends TestCase
     
         $lemma = '   ';
     
-        $testMorpher->ukrainian->Parse($lemma);
+        $testMorpher->ukrainian->parse($lemma);
     }
 
     public function testParse_ExceptionNoS2(): void
@@ -140,7 +140,7 @@ final class UkrainianDeclensionTest extends TestCase
     
         $lemma = '+++';
     
-        $declensionResult = $testMorpher->ukrainian->Parse($lemma);
+        $declensionResult = $testMorpher->ukrainian->parse($lemma);
     }
 
     public function testParse_InvalidFlags(): void
@@ -158,6 +158,6 @@ final class UkrainianDeclensionTest extends TestCase
     
         $lemma = 'двадцать';
     
-        $declensionResult = $testMorpher->ukrainian->Parse($lemma,["AAA","BBB"]);
+        $declensionResult = $testMorpher->ukrainian->parse($lemma,["AAA","BBB"]);
     }
 }

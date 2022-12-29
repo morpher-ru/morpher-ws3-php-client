@@ -18,7 +18,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
     {
         $lemma = 'тест';
 
-        $declensionResult = self::$testMorpher->ukrainian->Parse($lemma);
+        $declensionResult = self::$testMorpher->ukrainian->parse($lemma);
 
         $this->assertInstanceOf(Ukrainian\DeclensionResult::class,$declensionResult);
 
@@ -39,7 +39,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->expectExceptionMessage('Не найдено украинских слов.');
    
         $lemma = 'test';
-        self::$testMorpher->ukrainian->Parse($lemma);
+        self::$testMorpher->ukrainian->parse($lemma);
     }
 
     public function testParse_InvalidArgumentEmptyString(): void
@@ -47,7 +47,7 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->expectException(InvalidArgumentEmptyString::class);
 
         $lemma = '';
-        self::$testMorpher->ukrainian->Parse($lemma);
+        self::$testMorpher->ukrainian->parse($lemma);
     }
 
     public function testParse_InvalidFlags(): void
@@ -56,6 +56,6 @@ final class UkrainianDeclensionTest extends IntegrationBase
         $this->expectExceptionMessage('Указаны неправильные флаги.');
    
         $lemma = 'тест';
-        self::$testMorpher->ukrainian->Parse($lemma,["AAA","BBB"]);
+        self::$testMorpher->ukrainian->parse($lemma,["AAA","BBB"]);
     }
 }
