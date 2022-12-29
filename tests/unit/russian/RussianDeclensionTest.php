@@ -3,7 +3,7 @@ require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../MorpherTestHelper.php";
 
-use Morpher\Ws3Client\InvalidArgumentEmptyString;
+use Morpher\Ws3Client\InvalidServerResponse;
 use PHPUnit\Framework\TestCase;
 
 
@@ -284,20 +284,13 @@ final class RussianDeclensionTest extends TestCase
     public function testInvalidJsonResponse(): void
     {
         $return_text = '{"И":"тест","Р":"тесте",-}';
-        try 
-        {
 
-            $lemma = 'тест';
-            $container = [];
-            $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);       
-            $declensionResult = $testMorpher->russian->parse($lemma);
-        }
-        catch (\Morpher\Ws3Client\InvalidServerResponse $ex)
-        {
-            $this->assertEquals($ex->response, $return_text);
-            return;
-        }
+        $this->expectException(InvalidServerResponse::class);
+        $this->expectExceptionMessage($return_text);
 
-        $this->assertTrue(false); //test failed if exception not catched
+        $lemma = 'тест';
+        $container = [];
+        $testMorpher = MorpherTestHelper::createMockMorpher($container,$return_text);
+        $testMorpher->russian->parse($lemma);
     }
 }
