@@ -17,7 +17,7 @@ final class QazaqDeclensionTest extends IntegrationBase
     {
         $lemma = 'тест';
 
-        $declensionResult = self::$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = self::$testMorpher->qazaq->parse($lemma);
 
         $this->assertInstanceOf(Qazaq\DeclensionForms::class, $declensionResult);
         $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
@@ -44,7 +44,7 @@ final class QazaqDeclensionTest extends IntegrationBase
     {
         $lemma = 'бала';
 
-        $declensionResult = self::$testMorpher->qazaq->Parse($lemma);
+        $declensionResult = self::$testMorpher->qazaq->parse($lemma);
 
         $this->assertInstanceOf(Qazaq\DeclensionForms::class ,$declensionResult);
         $this->assertInstanceOf(Qazaq\SameNumberForms::class, $declensionResult->Plural);
@@ -217,7 +217,7 @@ final class QazaqDeclensionTest extends IntegrationBase
         $this->expectException(Qazaq\QazaqWordsNotFound::class);
         $this->expectExceptionMessage('Не найдено казахских слов.');
 
-        self::$testMorpher->qazaq->Parse('test');
+        self::$testMorpher->qazaq->parse('test');
     }
 
     public function testParse_ExceptionNoS(): void
@@ -226,6 +226,6 @@ final class QazaqDeclensionTest extends IntegrationBase
 
         $lemma = '';
     
-        self::$testMorpher->qazaq->Parse($lemma);
+        self::$testMorpher->qazaq->parse($lemma);
     }
 }
