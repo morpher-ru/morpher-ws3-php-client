@@ -17,7 +17,7 @@ class CorrectionEntry implements \Morpher\Ws3Client\CorrectionEntryInterface
     /*
     *  returned array is compatible with __construct(array $data = [])
     */
-    public function getArray()
+    public function getArray(): array
     {
         $data = [];
         if (!($this->Singular === null))
