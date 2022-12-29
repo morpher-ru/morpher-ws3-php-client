@@ -9,10 +9,10 @@ use Morpher\Ws3Client\Russian as Russian;
 
 
 
-final class RussianAddStressmarksTest extends TestCase
+final class RussianAddStressMarksTest extends TestCase
 {
 
-    public function testAddStressmarks_Success(): void
+    public function testAddStressMarks_Success(): void
     {
         $parseResults = 'Бале́т Петра́ Чайко́вского "Щелку́нчик"';
 

@@ -21,7 +21,7 @@ class AuthorizationTest extends TestCase
             ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->spellDate('1988-07-01');  }],//dataset #3
             ['GET','{"n":[],"unit":[]}'   ,function ($testMorpher)    {     $testMorpher->russian->spellOrdinal(10,'тест');  }],//dataset #4
             ['GET','{}'                   ,function ($testMorpher)    {     $testMorpher->russian->getAdjectiveGenders("уважаемый");  }],//dataset #5
-            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->adjectivize("мытыщи");  }],//dataset #6
+            ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->adjectivize("Мытыщи");  }],//dataset #6
             ['POST','"тест"'              ,function ($testMorpher)    {     $testMorpher->russian->addStressMarks("тест");  }],//dataset #7
             ['GET','[]'                   ,function ($testMorpher)    {     $testMorpher->russian->userDict->getAll();     }],//dataset #8
             ['POST',''                    ,function ($testMorpher)    {     $testMorpher->russian->userDict->addOrUpdate(new Russian\CorrectionEntry(['singular' => ['И' => 'чебуратор','Р' => 'чебурыла']]));     }],//dataset #9
