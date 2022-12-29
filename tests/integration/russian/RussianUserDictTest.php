@@ -19,7 +19,7 @@ final class RussianUserDictTest extends IntegrationBase
         {
             if ($item->Singular->Nominative == $word)
             {
-                $this->assertTrue(false,"Слово снова найдено в словаре после удаления.");
+                $this->fail("Слово снова найдено в словаре после удаления.");
             }
         }
         
@@ -101,7 +101,7 @@ final class RussianUserDictTest extends IntegrationBase
         {
             if ($item->Singular->Nominative == $word)
             {
-                $this->assertTrue(false,"Слово снова найдено в словаре после удаления.");
+                $this->fail("Слово снова найдено в словаре после удаления.");
             }
         }
     }
@@ -238,7 +238,7 @@ final class RussianUserDictTest extends IntegrationBase
         {
             if ($item->Singular->Nominative == $word)
             {
-                $this->assertTrue(false,"Слово снова найдено в словаре после удаления.");
+                $this->fail("Слово снова найдено в словаре после удаления.");
             }
         }
 
@@ -325,7 +325,7 @@ final class RussianUserDictTest extends IntegrationBase
         {
             if ($item->Singular->Nominative == $word)
             {
-                $this->assertTrue(false,"Слово снова найдено в словаре после удаления.");
+                $this->fail("Слово снова найдено в словаре после удаления.");
             }
         }
 
