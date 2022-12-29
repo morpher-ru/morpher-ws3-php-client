@@ -1,7 +1,9 @@
 <?php
+
 namespace Morpher\Ws3Client;
 
-class TokenNotFound extends \Exception
+
+class TokenNotFound extends AuthenticationError
 {
     function __construct(string $message)
     {

@@ -2,6 +2,8 @@
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
+
+use Morpher\Ws3Client\TokenIncorrectFormat;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\WebClient;
@@ -24,7 +26,7 @@ final class RussianUserDictIncorrectTokenTest extends TestCase
 
     public function testUserDict_NoTokenError_AddOrUpdate(): void
     {
-        $this->expectException(\Morpher\Ws3Client\TokenIncorrectFormat::class);
+        $this->expectException(TokenIncorrectFormat::class);
         $word = 'чебуратор';
         $correction = new CorrectionEntry();
         $correction->Singular->Nominative = $word;
@@ -36,13 +38,13 @@ final class RussianUserDictIncorrectTokenTest extends TestCase
 
     public function testUserDict_NoTokenError_GetAll(): void
     {
-        $this->expectException(\Morpher\Ws3Client\TokenIncorrectFormat::class);
+        $this->expectException(TokenIncorrectFormat::class);
         self::$testMorpher->russian->userDict->GetAll();
     }
 
     public function testUserDict_NoTokenError_Remove(): void
     {
-        $this->expectException(\Morpher\Ws3Client\TokenIncorrectFormat::class);
+        $this->expectException(TokenIncorrectFormat::class);
         $word = 'чебуратор';
         self::$testMorpher->russian->userDict->Remove($word);
     }

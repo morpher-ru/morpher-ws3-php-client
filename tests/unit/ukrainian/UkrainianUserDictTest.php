@@ -187,6 +187,6 @@ final class UkrainianUserDictTest extends TestCase
         //$correction->Singular->Vocative = 'в чебураторе';
         //$correction->Plural->Vocative = 'в чебураторах';
  
-        $lresult = $testMorpher->ukrainian->userDict->AddOrUpdate($correction);
+        $testMorpher->ukrainian->userDict->AddOrUpdate($correction);
     }
 }

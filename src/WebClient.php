@@ -2,18 +2,17 @@
 namespace Morpher\Ws3Client;
 
 use GuzzleHttp\Exception\ServerException;
-use Morpher\Ws3Client\UnknownErrorCode;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 
 class WebClient
 {
-    private string $_tokenBase64 = '';
+    private string $tokenBase64;
     private \GuzzleHttp\Client $client;
 
-    function __construct(string $url = 'https://ws3.morpher.ru',string $token = '',float $timeout = 10.0,$handler = null)
+    function __construct(string $url, string $token, float $timeout, $handler)
     {
-        $this->_tokenBase64 = base64_encode($token);
+        $this->tokenBase64 = base64_encode($token);
 
         $this->client = new \GuzzleHttp\Client([
             'base_uri' => $url,
@@ -26,20 +25,16 @@ class WebClient
     {
         $headers = ['Accept' => 'application/json'];
 
-        if (!empty($this->_tokenBase64))
+        if (!empty($this->tokenBase64))
         {
-            $headers['Authorization'] = 'Basic '.$this->_tokenBase64;
+            $headers['Authorization'] = 'Basic '.$this->tokenBase64;
         }
         
         return $headers;
     }
 
     /**
-     * @throws InvalidServerResponse
-     * @throws TokenNotFound
-     * @throws UnknownErrorCode
-     * @throws GuzzleException
-     * @throws ServiceDenied
+     * @throws SystemError
      */
     public function send(
         string $Endpoint,
@@ -101,15 +96,18 @@ class WebClient
         return $result;
     }
 
+    /**
+     * @throws InvalidServerResponse
+     */
     public static function JsonDecode(string $text)
     {
         try
         {
-            return json_decode($text,true,512,JSON_THROW_ON_ERROR);
+            return json_decode($text, true, 512, JSON_THROW_ON_ERROR);
         }
         catch (\JsonException $ex)
         {
-            throw new \Morpher\Ws3Client\InvalidServerResponse("Некорректный JSON ответ от сервера",$text);
+            throw new InvalidServerResponse("Некорректный JSON ответ от сервера", $text);
         }
     }
 }

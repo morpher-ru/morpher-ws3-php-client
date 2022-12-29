@@ -2,6 +2,8 @@
 require_once __DIR__."/../../../vendor/autoload.php";
 
 require_once __DIR__."/../IntegrationBase.php";
+
+use Morpher\Ws3Client\InvalidArgumentEmptyString;
 use PHPUnit\Framework\TestCase;
 
 use Morpher\Ws3Client\WebClient;
@@ -220,8 +222,7 @@ final class QazaqDeclensionTest extends IntegrationBase
 
     public function testParse_ExceptionNoS(): void
     {
-        $this->expectException(\Morpher\Ws3Client\InvalidArgumentEmptyString::class);
-        $this->expectExceptionMessage('Передана пустая строка.');
+        $this->expectException(InvalidArgumentEmptyString::class);
 
         $lemma = '';
     
